@@ -3,26 +3,27 @@
 ## 1. Design Space
 
 ### a) LLM Pool
-- Number of LLMs: 3-5 for diversity of thought
-- Consider using different LLM models or same model with different prompts/personalities
+- Number of LLMs: 3
+- Using GPT-3.5-turbo model with different prompts/personalities to simulate different experts
 
 ### b) Question/Objective Input
-- System to input and preprocess questions or intellectual objectives
-- Mechanism to break down complex objectives into smaller tasks
+- Simple text input system for questions or intellectual objectives
+- (Future improvement: Mechanism to break down complex objectives into smaller tasks)
 
 ### c) Processing Mechanism
 - Turn-based system for LLM contributions
-- Moderator/coordinator to manage discussion flow
+- Separate moderator/coordinator module to manage discussion flow
 
 ### d) Heuristics and Principles
 - Guiding principles: intellectual honesty, critical thinking, creativity
-- Heuristics for evaluating and combining ideas
+- Simple scoring system for ideas based on relevance and originality
 
 ### e) Criteria for Completion
-- Metrics: consensus reached, time limit, idea saturation
+- Time limit: maximum number of turns
+- Idea saturation: no new significant ideas in the last N turns
 
 ### f) Output Generation
-- System to synthesize final output from LLM contributions
+- Summary generation system combining most relevant and highly-scored ideas
 
 ## 2. Documentation
 
