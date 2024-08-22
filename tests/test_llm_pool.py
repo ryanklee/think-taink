@@ -40,6 +40,29 @@ def test_generate_response(mock_create, llm_pool):
 
     assert mock_create.call_count == 3
 
+@pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic"])
+def test_generate_response_for_each_expert(expert, llm_pool):
+    with patch('openai.Completion.create') as mock_create:
+        mock_create.return_value = MagicMock(choices=[MagicMock(text=f"{expert} response")])
+        
+        input_text = "Test question"
+        responses = llm_pool.generate_response(input_text)
+        
+        expert_response = next(r for r in responses if r["expert"] == expert)
+        assert expert_response["response"] == f"{expert} response"
+
+def test_llm_pool_configuration():
+    config = {
+        "model": "gpt-4",
+        "temperature": 0.5,
+        "max_tokens": 200
+    }
+    llm_pool = LLMPool(config)
+    
+    assert llm_pool.model == "gpt-4"
+    assert llm_pool.temperature == 0.5
+    assert llm_pool.max_tokens == 200
+
 @patch('openai.Completion.create')
 def test_generate_response_error_handling(mock_create, llm_pool):
     mock_create.side_effect = Exception("API Error")

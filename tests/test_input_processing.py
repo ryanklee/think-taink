@@ -26,3 +26,18 @@ def test_process_preserves_basic_punctuation(input_processor):
     input_text = "Hello, world! This is a test."
     expected_output = "Hello, world! This is a test."
     assert input_processor.process(input_text) == expected_output
+
+def test_process_empty_input(input_processor):
+    input_text = ""
+    expected_output = ""
+    assert input_processor.process(input_text) == expected_output
+
+def test_process_long_input(input_processor):
+    input_text = " ".join(["word"] * 1000)
+    expected_output = " ".join(["word"] * 1000)
+    assert input_processor.process(input_text) == expected_output
+
+def test_process_only_special_characters(input_processor):
+    input_text = "@#$%^&*()_+"
+    expected_output = ""
+    assert input_processor.process(input_text) == expected_output
