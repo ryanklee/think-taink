@@ -13,6 +13,16 @@ class LLMPool:
         ]
 
     def generate_response(self, input_text: str) -> List[Dict]:
+        # Existing implementation...
+
+    def get_expert_names(self) -> List[str]:
+        return [expert["name"] for expert in self.experts]
+
+    def get_expert_prompt(self, expert_name: str) -> str:
+        for expert in self.experts:
+            if expert["name"] == expert_name:
+                return expert["prompt"]
+        raise ValueError(f"Expert '{expert_name}' not found")
         """
         Generate responses from all experts in the LLM pool.
         
