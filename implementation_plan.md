@@ -13,6 +13,9 @@
 - [ ] Moderator/coordinator
 - [ ] Discussion flow
 - [ ] Heuristics & principles
+  - [ ] Initial set of principles and heuristics
+  - [ ] Reflection and improvement mechanism
+  - [ ] Version control for principles and heuristics
 - [ ] Completion criteria
 - [ ] Output generation
 
@@ -45,10 +48,14 @@
 2. Develop moderator/coordinator module
 3. Implement discussion flow
 4. Add heuristics & principles
+   a. Implement initial set of principles and heuristics
+   b. Develop reflection and improvement mechanism
+   c. Create version control system for principles and heuristics
 5. Implement completion criteria
 6. Develop output generation system
 7. Set up pre-commit hooks
 8. Create API documentation
 9. Address ethical considerations
+10. Implement human oversight mechanism for principles and heuristics evolution
 
 Progress: 35%

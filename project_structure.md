@@ -10,7 +10,14 @@ src/
 ├── moderator/
 │   └── __init__.py
 ├── heuristics/
-│   └── __init__.py
+│   ├── __init__.py
+│   ├── principles.py
+│   └── version_control.py
+├── principles_evolution/
+│   ├── __init__.py
+│   ├── reflector.py
+│   ├── evaluator.py
+│   └── implementer.py
 ├── output_generation/
 │   └── __init__.py
 ├── utils/
@@ -21,11 +28,13 @@ tests/
 ├── test_llm_pool.py
 ├── test_moderator.py
 ├── test_heuristics.py
+├── test_principles_evolution.py
 └── test_output_generation.py
 docs/
 ├── api/
 ├── user_guide/
 └── ethical_considerations/
 config/
-└── config.yaml
+├── config.yaml
+└── initial_principles.yaml
 ```
