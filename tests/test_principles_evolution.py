@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 from src.principles_evolution.reflector import Reflector
 from src.heuristics.principles import Principles
 from src.llm_pool.llm_pool import LLMPool
@@ -44,6 +44,27 @@ class TestReflector(unittest.TestCase):
         self.assertEqual(len(parsed), 2)
         self.assertEqual(parsed["principle1"], "Description 1")
         self.assertEqual(parsed["principle2"], "Description 2")
+
+    @patch('src.heuristics.principles.Principles.apply_reflector_suggestions')
+    def test_reflection_integration(self, mock_apply_suggestions):
+        # Mock discussion history
+        discussion_history = [
+            {"expert": "Analyst", "response": "We need to consider long-term consequences more."},
+            {"expert": "Ethicist", "response": "Ethical implications should be a primary concern."},
+        ]
+
+        # Mock LLM response
+        self.llm_pool.generate_response.return_value = "long_term_thinking: Consider long-term consequences in decision-making.\nethical_consideration: Prioritize ethical implications in all discussions."
+
+        suggestions = self.reflector.reflect_on_principles(discussion_history)
+
+        # Check if suggestions were generated correctly
+        self.assertEqual(len(suggestions), 2)
+        self.assertIn("long_term_thinking", suggestions)
+        self.assertIn("ethical_consideration", suggestions)
+
+        # Check if apply_reflector_suggestions was called with the correct arguments
+        mock_apply_suggestions.assert_called_once_with(suggestions)
 
 if __name__ == '__main__':
     unittest.main()
