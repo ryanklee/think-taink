@@ -1,0 +1,20 @@
+# LLM Configuration
+llm:
+  model: "gpt-3.5-turbo"
+  temperature: 0.7
+  max_tokens: 150
+
+# API Configuration
+api:
+  base_url: "https://api.openai.com/v1"
+  timeout: 30
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  file: "logs/app.log"
+
+# Discussion Configuration
+discussion:
+  max_turns: 10
+  idea_saturation_threshold: 3
