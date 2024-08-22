@@ -7,6 +7,13 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
+# Mock openai module if it's not installed
+try:
+    import openai
+except ImportError:
+    openai = MagicMock()
+    sys.modules['openai'] = openai
+
 from src.llm_pool.llm_pool import LLMPool
 
 @pytest.fixture
