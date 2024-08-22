@@ -85,26 +85,37 @@ j) Test and refine the system:
 ## 4. Tech Stack
 
 ### a) Programming Language
-- Python
+- Python 3.9+
 
 ### b) LLM Integration
-- OpenAI API (for GPT models)
-- Hugging Face Transformers (for open-source models)
+- OpenAI API (for GPT-3.5-turbo model)
 
 ### c) Backend Framework
-- FastAPI or Flask
+- FastAPI
 
-### d) Frontend (if needed)
-- React or Vue.js
+### d) Frontend
+- Command-line interface (CLI) for initial implementation
+- (Future improvement: Consider web-based interface using React or Vue.js)
 
 ### e) Database
-- PostgreSQL or MongoDB
+- Not required for initial implementation
+- (Future improvement: Consider PostgreSQL for storing discussion history and results)
 
 ### f) Message Queue
-- RabbitMQ or Redis
+- Not required for initial implementation
+- (Future improvement: Consider RabbitMQ for managing discussion flow in a more complex system)
 
 ### g) Containerization
-- Docker
+- Docker (for future deployment and scaling)
+
+### h) Version Control
+- Git
+
+### i) Testing
+- pytest for unit and integration testing
+
+### j) Dependency Management
+- pip and requirements.txt
 
 ## 5. Implementation Steps
 
