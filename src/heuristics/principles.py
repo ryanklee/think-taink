@@ -5,7 +5,7 @@ import logging
 
 from typing import Dict
 from src.heuristics.version_control import PrincipleVersionControl
-from src.utils.exceptions import PrincipleError
+from src.utils.exceptions import PrincipleError, VersionControlError
 
 class Principles:
     def __init__(self, version_control_file: str):
