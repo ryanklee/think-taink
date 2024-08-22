@@ -4,11 +4,20 @@ from src.principles_evolution.reflector import Reflector
 from src.heuristics.principles import Principles
 from src.llm_pool.llm_pool import LLMPool
 
+import tempfile
+import os
+
 class TestReflector(unittest.TestCase):
     def setUp(self):
-        self.principles = Principles()
+        self.temp_dir = tempfile.mkdtemp()
+        self.version_control_file = os.path.join(self.temp_dir, 'principles_version_control.json')
+        self.principles = Principles(self.version_control_file)
         self.llm_pool = MagicMock(spec=LLMPool)
         self.reflector = Reflector(self.principles, self.llm_pool)
+
+    def tearDown(self):
+        os.remove(self.version_control_file)
+        os.rmdir(self.temp_dir)
 
     def test_reflect_on_principles(self):
         # Mock discussion history
