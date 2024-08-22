@@ -14,6 +14,21 @@ class LLMPool:
             {"name": "Ethicist", "prompt": "You are an ethics expert. Consider the moral and ethical implications of ideas and decisions."}
         ]
 
+    def add_expert(self, name: str, prompt: str) -> None:
+        """Add a new expert to the pool."""
+        self.experts.append({"name": name, "prompt": prompt})
+
+    def remove_expert(self, name: str) -> None:
+        """Remove an expert from the pool."""
+        self.experts = [expert for expert in self.experts if expert["name"] != name]
+
+    def update_expert(self, name: str, new_prompt: str) -> None:
+        """Update an existing expert's prompt."""
+        for expert in self.experts:
+            if expert["name"] == name:
+                expert["prompt"] = new_prompt
+                break
+
     def generate_response(self, input_text: str) -> List[Dict]:
         """
         Generate responses from all experts in the LLM pool.
