@@ -10,10 +10,10 @@
 ## 2. Core Components [/]
 - [X] Input processing
 - [X] LLM pool (3-5 models)
-- [X] Moderator/coordinator (basic implementation)
-- [X] Discussion flow (basic implementation)
-- [ ] Heuristics & principles
-  - [ ] Initial set of principles and heuristics
+- [X] Moderator/coordinator (expanded implementation)
+- [X] Discussion flow (expanded implementation)
+- [/] Heuristics & principles
+  - [X] Initial set of principles and heuristics
   - [ ] Reflection and improvement mechanism
   - [ ] Version control for principles and heuristics
 - [X] Completion criteria (basic implementation)
@@ -44,12 +44,9 @@
 - [ ] Create error reporting mechanism
 
 ## Next Steps:
-1. Complete unit tests for existing components, including the new moderator module
-2. Refine and expand the moderator/coordinator module
-3. Implement heuristics & principles
-   a. Implement initial set of principles and heuristics
-   b. Develop reflection and improvement mechanism
-   c. Create version control system for principles and heuristics
+1. Complete unit tests for existing components, including the updated moderator module and principles
+2. Implement reflection and improvement mechanism for heuristics & principles
+3. Create version control system for principles and heuristics
 4. Develop output generation system
 5. Set up pre-commit hooks
 6. Create API documentation
@@ -58,4 +55,4 @@
 9. Implement more sophisticated completion criteria
 10. Develop integration tests
 
-Progress: 45%
+Progress: 55%
