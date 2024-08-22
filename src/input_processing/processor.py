@@ -18,8 +18,8 @@ class InputProcessor:
         Raises:
             InputProcessingError: If the input text is empty or invalid.
         """
-        if not input_text or not isinstance(input_text, str):
-            raise InputProcessingError("Input text must be a non-empty string")
+        if not isinstance(input_text, str):
+            raise InputProcessingError("Input text must be a string")
 
         try:
             # Remove extra whitespace
@@ -29,7 +29,7 @@ class InputProcessor:
             processed_text = re.sub(r'[^a-zA-Z0-9\s.,!?]', '', processed_text)
             
             if not processed_text:
-                raise InputProcessingError("Processed text is empty after removing special characters")
+                return ""
             
             if len(processed_text) < 5:
                 raise InputProcessingError("Input text is too short. Minimum length is 5 characters.")

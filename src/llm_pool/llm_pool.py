@@ -69,7 +69,10 @@ class LLMPool:
                     "response": response.choices[0].text.strip()
                 })
             except Exception as e:
-                raise LLMPoolError(f"Error generating response for expert '{expert['name']}': {str(e)}")
+                responses.append({
+                    "expert": expert["name"],
+                    "response": f"Error: {str(e)}"
+                })
         return responses
 
     def get_expert_names(self) -> List[str]:
@@ -79,4 +82,4 @@ class LLMPool:
         for expert in self.experts:
             if expert["name"] == expert_name:
                 return expert["prompt"]
-        raise LLMPoolError(f"Expert '{expert_name}' not found")
+        raise ValueError(f"Expert '{expert_name}' not found")
