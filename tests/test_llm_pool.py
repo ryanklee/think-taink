@@ -32,15 +32,15 @@ def test_generate_response(mock_create, llm_pool):
     input_text = "Test question"
     responses = llm_pool.generate_response(input_text)
     
-    assert len(responses) == 3
+    assert len(responses) == 5  # Updated to match the new number of experts
     for response in responses:
         assert "expert" in response
         assert "response" in response
         assert response["response"] == "Mocked response"
 
-    assert mock_create.call_count == 3
+    assert mock_create.call_count == 5  # Updated to match the new number of experts
 
-@pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic"])
+@pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
 def test_generate_response_for_each_expert(expert, llm_pool):
     with patch('openai.Completion.create') as mock_create:
         mock_create.return_value = MagicMock(choices=[MagicMock(text=f"{expert} response")])
@@ -70,10 +70,21 @@ def test_generate_response_error_handling(mock_create, llm_pool):
     input_text = "Test question"
     responses = llm_pool.generate_response(input_text)
     
-    assert len(responses) == 3
+    assert len(responses) == 5  # Updated to match the new number of experts
     for response in responses:
         assert "expert" in response
         assert "response" in response
         assert "Error generating response: API Error" in response["response"]
 
-    assert mock_create.call_count == 3
+    assert mock_create.call_count == 5  # Updated to match the new number of experts
+
+def test_get_expert_names(llm_pool):
+    expert_names = llm_pool.get_expert_names()
+    assert expert_names == ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"]
+
+def test_get_expert_prompt(llm_pool):
+    analyst_prompt = llm_pool.get_expert_prompt("Analyst")
+    assert analyst_prompt == "You are an analytical expert. Provide a logical and data-driven perspective."
+
+    with pytest.raises(ValueError):
+        llm_pool.get_expert_prompt("NonexistentExpert")
