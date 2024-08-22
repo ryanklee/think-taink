@@ -18,7 +18,7 @@ class Moderator:
         while self.current_turn < self.max_turns:
             for expert in self.llm_pool.get_expert_names():
                 expert_prompt = self.llm_pool.get_expert_prompt(expert)
-                response = self.llm_pool.generate_response(input_text, expert_prompt)
+                response = self.llm_pool.generate_response(f"{expert_prompt}\n\nQuestion: {input_text}")
                 evaluated_response = self.principles.evaluate_response(response)
                 discussion.append({"expert": expert, "response": evaluated_response})
                 self.current_turn += 1
@@ -38,7 +38,7 @@ class Moderator:
         summary_prompt = "Summarize the following discussion points concisely:"
         for entry in discussion[-len(self.llm_pool.get_expert_names()):]:
             summary_prompt += f"\n{entry['expert']}: {entry['response']}"
-        return self.llm_pool.generate_response(summary_prompt)
+        return self.llm_pool.generate_response(summary_prompt)[0]['response']
 
     def intervene(self, discussion: List[Dict]) -> str:
         intervention_prompt = "As a moderator, provide guidance to keep the discussion on track and productive based on the following discussion points:"
