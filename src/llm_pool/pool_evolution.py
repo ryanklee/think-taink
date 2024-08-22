@@ -39,9 +39,10 @@ class PoolEvolution:
 
     def _apply_pool_changes(self, suggestions: Dict[str, Dict]) -> None:
         for expert_name, change in suggestions.items():
-            if change["action"] == "add":
+            action = change["action"].lower()
+            if action == "add":
                 self.llm_pool.add_expert(expert_name, change["prompt"])
-            elif change["action"] == "modify":
+            elif action == "modify":
                 self.llm_pool.update_expert(expert_name, change["prompt"])
-            elif change["action"] == "remove":
+            elif action == "remove":
                 self.llm_pool.remove_expert(expert_name)
