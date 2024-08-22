@@ -70,34 +70,3 @@ class LLMPool:
             if expert["name"] == expert_name:
                 return expert["prompt"]
         raise ValueError(f"Expert '{expert_name}' not found")
-        """
-        Generate responses from all experts in the LLM pool.
-        
-        Args:
-            input_text (str): The processed input text.
-        
-        Returns:
-            List[Dict]: A list of responses from each expert.
-        """
-        responses = []
-        for expert in self.experts:
-            prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
-            try:
-                response = openai.Completion.create(
-                    engine=self.model,
-                    prompt=prompt,
-                    max_tokens=self.max_tokens,
-                    temperature=self.temperature,
-                    n=1,
-                    stop=None
-                )
-                responses.append({
-                    "expert": expert["name"],
-                    "response": response.choices[0].text.strip()
-                })
-            except Exception as e:
-                responses.append({
-                    "expert": expert["name"],
-                    "response": f"Error generating response: {str(e)}"
-                })
-        return responses
