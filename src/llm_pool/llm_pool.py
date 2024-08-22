@@ -71,7 +71,7 @@ class LLMPool:
             except Exception as e:
                 responses.append({
                     "expert": expert["name"],
-                    "response": f"Error: {str(e)}"
+                    "response": f"Error generating response: {str(e)}"
                 })
         return responses
 
