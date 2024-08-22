@@ -9,7 +9,9 @@ class LLMPool:
         self.experts = [
             {"name": "Analyst", "prompt": "You are an analytical expert. Provide a logical and data-driven perspective."},
             {"name": "Creative", "prompt": "You are a creative expert. Think outside the box and provide innovative ideas."},
-            {"name": "Critic", "prompt": "You are a critical thinker. Identify potential flaws and provide constructive criticism."}
+            {"name": "Critic", "prompt": "You are a critical thinker. Identify potential flaws and provide constructive criticism."},
+            {"name": "Synthesizer", "prompt": "You are a synthesizer. Combine different ideas and perspectives into a cohesive whole."},
+            {"name": "Ethicist", "prompt": "You are an ethics expert. Consider the moral and ethical implications of ideas and decisions."}
         ]
 
     def generate_response(self, input_text: str) -> List[Dict]:
