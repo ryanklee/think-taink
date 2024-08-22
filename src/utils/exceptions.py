@@ -25,3 +25,17 @@ class ReflectionError(ThinkTankException):
 class PoolEvolutionError(ThinkTankException):
     """Raised when there's an error in the pool evolution process"""
     pass
+
+class OutputGenerationError(ThinkTankException):
+    """Raised when there's an error generating output"""
+    pass
+
+class ConfigurationError(ThinkTankException):
+    """Raised when there's an error in the configuration"""
+    pass
+
+class VersionControlError(ThinkTankException):
+    """Raised when there's an error in version control for principles and heuristics"""
+    pass
+    """Raised when there's an error in the pool evolution process"""
+    pass

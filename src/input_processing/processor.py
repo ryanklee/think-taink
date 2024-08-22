@@ -31,6 +31,11 @@ class InputProcessor:
             if not processed_text:
                 raise InputProcessingError("Processed text is empty after removing special characters")
             
+            if len(processed_text) < 5:
+                raise InputProcessingError("Input text is too short. Minimum length is 5 characters.")
+            
             return processed_text
+        except InputProcessingError as e:
+            raise e
         except Exception as e:
-            raise InputProcessingError(f"Error processing input: {str(e)}")
+            raise InputProcessingError(f"Unexpected error during input processing: {str(e)}")
