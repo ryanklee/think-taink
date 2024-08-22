@@ -1,4 +1,5 @@
 import re
+from src.utils.exceptions import InputProcessingError
 
 class InputProcessor:
     def __init__(self):
@@ -13,11 +14,23 @@ class InputProcessor:
         
         Returns:
             str: The processed input text.
+        
+        Raises:
+            InputProcessingError: If the input text is empty or invalid.
         """
-        # Remove extra whitespace
-        processed_text = ' '.join(input_text.split())
-        
-        # Remove special characters except for basic punctuation
-        processed_text = re.sub(r'[^a-zA-Z0-9\s.,!?]', '', processed_text)
-        
-        return processed_text
+        if not input_text or not isinstance(input_text, str):
+            raise InputProcessingError("Input text must be a non-empty string")
+
+        try:
+            # Remove extra whitespace
+            processed_text = ' '.join(input_text.split())
+            
+            # Remove special characters except for basic punctuation
+            processed_text = re.sub(r'[^a-zA-Z0-9\s.,!?]', '', processed_text)
+            
+            if not processed_text:
+                raise InputProcessingError("Processed text is empty after removing special characters")
+            
+            return processed_text
+        except Exception as e:
+            raise InputProcessingError(f"Error processing input: {str(e)}")

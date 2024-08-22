@@ -1,5 +1,6 @@
 import openai
 from typing import Dict, List
+from src.utils.exceptions import LLMPoolError
 
 class LLMPool:
     def __init__(self, config: Dict):
@@ -16,18 +17,24 @@ class LLMPool:
 
     def add_expert(self, name: str, prompt: str) -> None:
         """Add a new expert to the pool."""
+        if any(expert["name"] == name for expert in self.experts):
+            raise LLMPoolError(f"Expert '{name}' already exists in the pool")
         self.experts.append({"name": name, "prompt": prompt})
 
     def remove_expert(self, name: str) -> None:
         """Remove an expert from the pool."""
+        initial_length = len(self.experts)
         self.experts = [expert for expert in self.experts if expert["name"] != name]
+        if len(self.experts) == initial_length:
+            raise LLMPoolError(f"Expert '{name}' not found in the pool")
 
     def update_expert(self, name: str, new_prompt: str) -> None:
         """Update an existing expert's prompt."""
         for expert in self.experts:
             if expert["name"] == name:
                 expert["prompt"] = new_prompt
-                break
+                return
+        raise LLMPoolError(f"Expert '{name}' not found in the pool")
 
     def generate_response(self, input_text: str) -> List[Dict]:
         """
@@ -38,7 +45,13 @@ class LLMPool:
         
         Returns:
             List[Dict]: A list of responses from each expert.
+        
+        Raises:
+            LLMPoolError: If there's an error generating responses.
         """
+        if not input_text:
+            raise LLMPoolError("Input text cannot be empty")
+
         responses = []
         for expert in self.experts:
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
@@ -56,10 +69,7 @@ class LLMPool:
                     "response": response.choices[0].text.strip()
                 })
             except Exception as e:
-                responses.append({
-                    "expert": expert["name"],
-                    "response": f"Error generating response: {str(e)}"
-                })
+                raise LLMPoolError(f"Error generating response for expert '{expert['name']}': {str(e)}")
         return responses
 
     def get_expert_names(self) -> List[str]:
@@ -69,4 +79,4 @@ class LLMPool:
         for expert in self.experts:
             if expert["name"] == expert_name:
                 return expert["prompt"]
-        raise ValueError(f"Expert '{expert_name}' not found")
+        raise LLMPoolError(f"Expert '{expert_name}' not found")
