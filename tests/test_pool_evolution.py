@@ -42,21 +42,21 @@ class TestPoolEvolution(unittest.TestCase):
         self.assertEqual(parsed["Tech Futurist"]["action"], "add")
         self.assertEqual(parsed["Analyst"]["action"], "modify")
 
-    @patch('src.llm_pool.llm_pool.LLMPool.add_expert')
-    @patch('src.llm_pool.llm_pool.LLMPool.update_expert')
-    @patch('src.llm_pool.llm_pool.LLMPool.remove_expert')
-    def test_apply_pool_changes(self, mock_remove, mock_update, mock_add):
+    def test_apply_pool_changes(self):
+        mock_llm_pool = MagicMock()
+        pool_evolution = PoolEvolution(mock_llm_pool)
+
         suggestions = {
             "Tech Futurist": {"action": "add", "prompt": "An expert on emerging technologies."},
             "Analyst": {"action": "modify", "prompt": "Focus more on technological trends."},
             "Critic": {"action": "remove", "prompt": ""}
         }
 
-        self.pool_evolution._apply_pool_changes(suggestions)
+        pool_evolution._apply_pool_changes(suggestions)
 
-        mock_add.assert_called_once_with("Tech Futurist", "An expert on emerging technologies.")
-        mock_update.assert_called_once_with("Analyst", "Focus more on technological trends.")
-        mock_remove.assert_called_once_with("Critic")
+        mock_llm_pool.add_expert.assert_called_once_with("Tech Futurist", "An expert on emerging technologies.")
+        mock_llm_pool.update_expert.assert_called_once_with("Analyst", "Focus more on technological trends.")
+        mock_llm_pool.remove_expert.assert_called_once_with("Critic")
 
 if __name__ == '__main__':
     unittest.main()
