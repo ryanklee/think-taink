@@ -13,6 +13,7 @@ class Principles:
         }
 
     def evaluate_response(self, response: str) -> Dict[str, float]:
+        # Implementation remains the same
         """
         Evaluate a response based on the current principles.
 
@@ -32,6 +33,7 @@ class Principles:
         return scores
 
     def get_principles(self) -> Dict[str, str]:
+        return self.principles.copy()
         """
         Get the current principles.
 
@@ -41,6 +43,10 @@ class Principles:
         return self.principles
 
     def add_principle(self, name: str, description: str) -> None:
+        if name in self.principles:
+            raise PrincipleError(f"Principle '{name}' already exists")
+        self.principles[name] = description
+        self.version_control.add_version(self.principles, f"Added principle: {name}")
         """
         Add a new principle.
 
@@ -65,6 +71,11 @@ class Principles:
             logging.warning(f"Attempted to remove non-existent principle: {name}")
 
     def update_principle(self, name: str, new_description: str) -> None:
+        if name not in self.principles:
+            raise PrincipleError(f"Principle '{name}' not found")
+        old_description = self.principles[name]
+        self.principles[name] = new_description
+        self.version_control.add_version(self.principles, f"Updated principle: {name}")
         """
         Update an existing principle.
 
@@ -79,6 +90,17 @@ class Principles:
             logging.warning(f"Attempted to update non-existent principle: {name}")
 
     def apply_reflector_suggestions(self, suggestions: Dict[str, str]) -> None:
+        changes = []
+        for name, suggestion in suggestions.items():
+            if name in self.principles:
+                self.principles[name] = suggestion
+                changes.append(f"Updated: {name}")
+            else:
+                self.principles[name] = suggestion
+                changes.append(f"Added: {name}")
+        
+        if changes:
+            self.version_control.add_version(self.principles, f"Applied reflector suggestions: {', '.join(changes)}")
         """
         Apply suggestions from the reflector to update principles.
 
@@ -91,3 +113,9 @@ class Principles:
             else:
                 self.add_principle(name, suggestion)
         logging.info(f"Applied {len(suggestions)} reflector suggestions")
+    def revert_to_version(self, index: int) -> None:
+        try:
+            self.principles = self.version_control.revert_to_version(index)
+            self.version_control.add_version(self.principles, f"Reverted to version {index}")
+        except VersionControlError as e:
+            raise PrincipleError(str(e))
