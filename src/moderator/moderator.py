@@ -1,11 +1,13 @@
 from typing import List, Dict
 from src.llm_pool.llm_pool import LLMPool
 from src.heuristics.principles import Principles
+from src.principles_evolution.reflector import Reflector
 
 class Moderator:
     def __init__(self, llm_pool: LLMPool, principles: Principles):
         self.llm_pool = llm_pool
         self.principles = principles
+        self.reflector = Reflector(principles, llm_pool)
         self.max_turns = 10
         self.current_turn = 0
 
@@ -21,6 +23,10 @@ class Moderator:
                 if self.current_turn >= self.max_turns:
                     break
             input_text = self._summarize_current_discussion(discussion)
+        
+        # Reflect on principles after the discussion
+        self._reflect_on_principles(discussion)
+        
         return discussion
 
     def _summarize_current_discussion(self, discussion: List[Dict]) -> str:
@@ -34,3 +40,7 @@ class Moderator:
         for entry in discussion[-3:]:  # Consider the last 3 entries
             intervention_prompt += f"\n{entry['expert']}: {entry['response']}"
         return self.llm_pool.generate_response(intervention_prompt)
+
+    def _reflect_on_principles(self, discussion: List[Dict]):
+        suggestions = self.reflector.reflect_on_principles(discussion)
+        self.principles.apply_reflector_suggestions(suggestions)

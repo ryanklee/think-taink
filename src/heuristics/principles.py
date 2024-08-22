@@ -32,3 +32,10 @@ class Principles:
     def update_principle(self, name: str, new_description: str):
         if name in self.principles:
             self.principles[name] = new_description
+
+    def apply_reflector_suggestions(self, suggestions: Dict[str, str]):
+        for name, suggestion in suggestions.items():
+            if name in self.principles:
+                self.update_principle(name, suggestion)
+            else:
+                self.add_principle(name, suggestion)
