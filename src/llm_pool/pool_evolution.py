@@ -20,21 +20,21 @@ class PoolEvolution:
         for entry in discussion_history:
             prompt += f"{entry['expert']}: {entry['response']}\n"
         prompt += "\nCurrent experts:\n"
-        for expert in self.llm_pool.experts:
-            prompt += f"- {expert['name']}: {expert['prompt']}\n"
+        for expert_name in self.llm_pool.get_expert_names():
+            prompt += f"- {expert_name}: {self.llm_pool.get_expert_prompt(expert_name)}\n"
         prompt += "\nSuggest additions, removals, or modifications to the expert pool based on the discussion."
         return prompt
 
     def _parse_evolution_response(self, response: str) -> Dict[str, Dict]:
         suggestions = {}
-        current_expert = None
         for line in response.split('\n'):
-            if line.startswith('Add:') or line.startswith('Modify:') or line.startswith('Remove:'):
-                action, expert_name = line.split(':')
-                current_expert = expert_name.strip()
-                suggestions[current_expert] = {"action": action.strip().lower(), "prompt": ""}
-            elif current_expert and ':' in line:
-                suggestions[current_expert]["prompt"] = line.split(':', 1)[1].strip()
+            parts = line.split(':', 2)
+            if len(parts) == 3:
+                action, expert_name, prompt = parts
+                action = action.strip().lower()
+                expert_name = expert_name.strip()
+                prompt = prompt.strip()
+                suggestions[expert_name] = {"action": action, "prompt": prompt}
         return suggestions
 
     def _apply_pool_changes(self, suggestions: Dict[str, Dict]) -> None:
