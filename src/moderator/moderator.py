@@ -2,12 +2,14 @@ from typing import List, Dict
 from src.llm_pool.llm_pool import LLMPool
 from src.heuristics.principles import Principles
 from src.principles_evolution.reflector import Reflector
+from src.llm_pool.pool_evolution import PoolEvolution
 
 class Moderator:
     def __init__(self, llm_pool: LLMPool, principles: Principles):
         self.llm_pool = llm_pool
         self.principles = principles
         self.reflector = Reflector(principles, llm_pool)
+        self.pool_evolution = PoolEvolution(llm_pool)
         self.max_turns = 10
         self.current_turn = 0
 
@@ -27,6 +29,9 @@ class Moderator:
         # Reflect on principles after the discussion
         self._reflect_on_principles(discussion)
         
+        # Evolve the expert pool after the discussion
+        self._evolve_expert_pool(discussion)
+        
         return discussion
 
     def _summarize_current_discussion(self, discussion: List[Dict]) -> str:
@@ -44,3 +49,6 @@ class Moderator:
     def _reflect_on_principles(self, discussion: List[Dict]):
         suggestions = self.reflector.reflect_on_principles(discussion)
         self.principles.apply_reflector_suggestions(suggestions)
+
+    def _evolve_expert_pool(self, discussion: List[Dict]):
+        self.pool_evolution.evolve_pool(discussion)
