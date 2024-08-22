@@ -3,14 +3,14 @@ from typing import Dict
 from typing import Dict
 import logging
 
+from typing import Dict
+from src.heuristics.version_control import PrincipleVersionControl
+from src.utils.exceptions import PrincipleError
+
 class Principles:
-    def __init__(self):
-        self.principles = {
-            "intellectual_honesty": "Strive for truthfulness and objectivity in all discussions.",
-            "critical_thinking": "Analyze arguments and evidence carefully before drawing conclusions.",
-            "creativity": "Encourage novel and innovative ideas.",
-            "diversity_of_thought": "Value and consider different perspectives and viewpoints."
-        }
+    def __init__(self, version_control_file: str):
+        self.version_control = PrincipleVersionControl(version_control_file)
+        self.principles = self.version_control.get_version()["principles"]
 
     def evaluate_response(self, response: str) -> Dict[str, float]:
         # Implementation remains the same
