@@ -19,7 +19,7 @@ class Reflector:
             Dict[str, str]: A dictionary of suggested improvements to the principles.
 
         Raises:
-            ValueError: If the reflection response cannot be parsed.
+            ReflectionError: If there's an error during the reflection process.
         """
         try:
             reflection_prompt = self._generate_reflection_prompt(discussion_history)
@@ -29,7 +29,7 @@ class Reflector:
             return suggestions
         except Exception as e:
             logging.error(f"Error in reflect_on_principles: {str(e)}")
-            raise
+            raise ReflectionError(f"Error in reflect_on_principles: {str(e)}")
 
     def _generate_reflection_prompt(self, discussion_history: List[Dict]) -> str:
         """
