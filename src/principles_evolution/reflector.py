@@ -50,26 +50,28 @@ class Reflector:
         prompt += "\nSuggest improvements, additions, or removals to these principles based on the discussion."
         return prompt
 
-    def _parse_reflection_response(self, response: str) -> Dict[str, str]:
+    def _parse_reflection_response(self, response: List[Dict[str, str]]) -> Dict[str, str]:
         """
         Parse the reflection response into a dictionary of suggestions.
-
+    
         Args:
-            response (str): The raw reflection response from the LLM.
-
+            response (List[Dict[str, str]]): The raw reflection response from the LLM.
+    
         Returns:
             Dict[str, str]: A dictionary of parsed suggestions.
-
+    
         Raises:
-            ValueError: If the response cannot be parsed into suggestions.
+            ReflectionError: If the response cannot be parsed into suggestions.
         """
         suggestions = {}
-        for line in response.split('\n'):
-            if ':' in line:
-                key, value = line.split(':', 1)
-                suggestions[key.strip()] = value.strip()
-        
+        for item in response:
+            content = item.get('response', '')
+            for line in content.split('\n'):
+                if ':' in line:
+                    key, value = line.split(':', 1)
+                    suggestions[key.strip()] = value.strip()
+    
         if not suggestions:
-            raise ValueError("Unable to parse reflection response into suggestions")
+            raise ReflectionError("Unable to parse reflection response into suggestions")
         
         return suggestions
