@@ -30,10 +30,7 @@ class Moderator:
                             break
                     except Exception as e:
                         logging.error(f"Error generating response for {expert}: {str(e)}")
-                        if not discussion:  # If no responses were generated, raise the error
-                            raise ModerationError(f"Error generating response for {expert}: {str(e)}")
-                        else:  # If some responses were generated, return the partial discussion
-                            return discussion
+                        raise ModerationError(f"Error generating response for {expert}: {str(e)}")
                 if self.current_turn >= self.max_turns:
                     break
                 try:
