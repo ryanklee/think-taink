@@ -30,10 +30,10 @@ class InputProcessor:
             
             if not processed_text:
                 return ""
-            
+        
             if len(processed_text) < 5:
                 raise InputProcessingError("Input text is too short. Minimum length is 5 characters.")
-            
+        
             return processed_text
         except InputProcessingError as e:
             raise e

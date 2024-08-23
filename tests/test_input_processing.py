@@ -67,7 +67,7 @@ class TestInputProcessor(unittest.TestCase):
         self.assertEqual(processed, expected)
 
     def test_short_input(self):
-        input_text = "Short"
+        input_text = "Shrt"
         with self.assertRaises(InputProcessingError):
             self.processor.process(input_text)
 
