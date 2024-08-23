@@ -44,7 +44,7 @@ class LLMPool:
                 return
         raise LLMPoolError(f"Expert '{name}' not found in the pool")
 
-    def generate_response(self, input_text: str) -> List[Dict]:
+    def generate_response(self, input_text: str) -> List[Dict[str, str]]:
         """
         Generate responses from all experts in the LLM pool.
         
@@ -52,7 +52,7 @@ class LLMPool:
             input_text (str): The processed input text.
         
         Returns:
-            List[Dict]: A list of responses from each expert.
+            List[Dict[str, str]]: A list of responses from each expert.
         
         Raises:
             LLMPoolError: If there's an error generating responses.
@@ -60,16 +60,14 @@ class LLMPool:
         if not input_text:
             raise LLMPoolError("Input text cannot be empty")
 
-        responses = []
+        responses: List[Dict[str, str]] = []
         for expert in self.experts:
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
             try:
-                if self.api.model == 'gpt-4o':
-                    # For gpt-4o, we can use the full context window and max output tokens
-                    response = self.api.generate_response(prompt, max_tokens=4096)
-                else:  # gpt-4o-mini or other models
-                    response = self.api.generate_response(prompt, max_tokens=self.max_tokens)
-                
+                response = self.api.generate_response(
+                    prompt, 
+                    max_tokens=4096 if self.api.model == 'gpt-4o' else self.max_tokens
+                )
                 responses.append({
                     "expert": expert["name"],
                     "response": response

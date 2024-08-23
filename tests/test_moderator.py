@@ -101,5 +101,27 @@ class TestModerator(unittest.TestCase):
         with self.assertRaises(ModerationError):
             self.moderator.start_discussion(input_text)
 
+    def test_summarize_discussion(self):
+        discussion = [
+            {"expert": "Analyst", "response": "This is an analysis."},
+            {"expert": "Ethicist", "response": "These are ethical considerations."}
+        ]
+        self.llm_pool.generate_response.return_value = [{"response": "Summary of the discussion"}]
+
+        summary = self.moderator.summarize_discussion(discussion)
+        self.assertEqual(summary, "Summary of the discussion")
+        self.llm_pool.generate_response.assert_called_once()
+
+    def test_intervene(self):
+        discussion = [
+            {"expert": "Analyst", "response": "Off-topic response"},
+            {"expert": "Ethicist", "response": "Another off-topic response"}
+        ]
+        self.llm_pool.generate_response.return_value = [{"response": "Let's refocus on the main topic"}]
+
+        intervention = self.moderator.intervene(discussion)
+        self.assertEqual(intervention, [{"response": "Let's refocus on the main topic"}])
+        self.llm_pool.generate_response.assert_called_once()
+
 if __name__ == '__main__':
     unittest.main()

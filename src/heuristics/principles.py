@@ -8,7 +8,25 @@ from src.utils.version_control import VersionControl
 from src.utils.exceptions import PrincipleError, VersionControlError
 
 class Principles:
+    """
+    Manages the principles used in the think tank simulation.
+
+    This class handles the storage, retrieval, and modification of principles,
+    as well as version control for these principles.
+
+    Attributes:
+        version_control (VersionControl): An instance of VersionControl for managing principle versions.
+        principles (Dict[str, str]): A dictionary of current principles, where keys are principle names
+                                     and values are their descriptions.
+    """
+
     def __init__(self, version_control_file: str):
+        """
+        Initialize the Principles class.
+
+        Args:
+            version_control_file (str): Path to the file used for version control of principles.
+        """
         self.version_control = VersionControl(version_control_file)
         version = self.version_control.get_version()
         self.principles = version.get("data", {})
