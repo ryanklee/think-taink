@@ -34,6 +34,14 @@ class Moderator:
         
         return discussion
 
+    def summarize_discussion(self, discussion: List[Dict]) -> str:
+        summary_prompt = "Summarize the following discussion points into a coherent response:\n\n"
+        for entry in discussion:
+            summary_prompt += f"{entry['expert']}: {entry['response']}\n\n"
+        summary_prompt += "Final summary:"
+        summary = self.llm_pool.generate_response(summary_prompt)[0]['response']
+        return summary
+
     def _summarize_current_discussion(self, discussion: List[Dict]) -> str:
         summary_prompt = "Summarize the following discussion points concisely:"
         for entry in discussion[-len(self.llm_pool.get_expert_names()):]:
