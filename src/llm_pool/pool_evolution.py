@@ -1,5 +1,7 @@
 from typing import List, Dict
+import logging
 from src.llm_pool.llm_pool import LLMPool
+from src.utils.exceptions import PoolEvolutionError
 
 class PoolEvolution:
     def __init__(self, llm_pool: LLMPool):
@@ -10,10 +12,14 @@ class PoolEvolution:
         Evolve the expert pool based on the discussion history.
         This method should analyze the discussion and suggest changes to the expert pool.
         """
-        evolution_prompt = self._generate_evolution_prompt(discussion_history)
-        evolution_response = self.llm_pool.generate_response(evolution_prompt)
-        suggestions = self._parse_evolution_response(evolution_response)
-        self._apply_pool_changes(suggestions)
+        try:
+            evolution_prompt = self._generate_evolution_prompt(discussion_history)
+            evolution_response = self.llm_pool.generate_response(evolution_prompt)
+            suggestions = self._parse_evolution_response(evolution_response)
+            self._apply_pool_changes(suggestions)
+        except Exception as e:
+            logging.error(f"Error during pool evolution: {str(e)}")
+            raise PoolEvolutionError(f"Failed to evolve expert pool: {str(e)}")
 
     def _generate_evolution_prompt(self, discussion_history: List[Dict]) -> str:
         prompt = "Analyze the following discussion and suggest improvements to our expert pool:\n\n"
