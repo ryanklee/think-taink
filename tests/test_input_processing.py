@@ -29,8 +29,9 @@ def test_process_preserves_basic_punctuation(input_processor):
 
 def test_process_empty_input(input_processor):
     input_text = ""
-    expected_output = ""
-    assert input_processor.process(input_text) == expected_output
+    with pytest.raises(InputProcessingError) as excinfo:
+        input_processor.process(input_text)
+    assert str(excinfo.value) == "Input text is too short. Minimum length is 5 characters."
 
 def test_short_input_after_processing(input_processor):
     input_text = "a b c"
@@ -73,8 +74,9 @@ class TestInputProcessor(unittest.TestCase):
 
     def test_empty_input(self):
         input_text = ""
-        processed = self.processor.process(input_text)
-        self.assertEqual(processed, "")
+        with self.assertRaises(InputProcessingError) as context:
+            self.processor.process(input_text)
+        self.assertEqual(str(context.exception), "Input text is too short. Minimum length is 5 characters.")
 
     def test_short_input_after_processing(self):
         input_text = "a b c"
