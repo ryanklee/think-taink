@@ -28,9 +28,9 @@ def llm_pool():
     }
     return LLMPool(config)
 
-@patch('openai.Completion.create')
-def test_generate_response(mock_create, llm_pool):
-    mock_create.return_value = MagicMock(choices=[MagicMock(text="Mocked response")])
+@patch('src.llm_pool.openai_api.OpenAIAPI.generate_response')
+def test_generate_response(mock_generate_response, llm_pool):
+    mock_generate_response.return_value = "Mocked response"
     
     input_text = "Test question"
     responses = llm_pool.generate_response(input_text)
@@ -41,12 +41,12 @@ def test_generate_response(mock_create, llm_pool):
         assert "response" in response
         assert response["response"] == "Mocked response"
 
-    assert mock_create.call_count == 5  # Updated to match the new number of experts
+    assert mock_generate_response.call_count == 5  # Updated to match the new number of experts
 
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
 def test_generate_response_for_each_expert(expert, llm_pool):
-    with patch('openai.Completion.create') as mock_create:
-        mock_create.return_value = MagicMock(choices=[MagicMock(text=f"{expert} response")])
+    with patch('src.llm_pool.openai_api.OpenAIAPI.generate_response') as mock_generate_response:
+        mock_generate_response.return_value = f"{expert} response"
         
         input_text = "Test question"
         responses = llm_pool.generate_response(input_text)
@@ -69,9 +69,9 @@ def test_llm_pool_configuration():
     assert llm_pool.temperature == 0.5
     assert llm_pool.max_tokens == 200
 
-@patch('openai.Completion.create')
-def test_generate_response_error_handling(mock_create, llm_pool):
-    mock_create.side_effect = Exception("API Error")
+@patch('src.llm_pool.openai_api.OpenAIAPI.generate_response')
+def test_generate_response_error_handling(mock_generate_response, llm_pool):
+    mock_generate_response.side_effect = Exception("API Error")
     
     input_text = "Test question"
     responses = llm_pool.generate_response(input_text)
@@ -82,7 +82,7 @@ def test_generate_response_error_handling(mock_create, llm_pool):
         assert "response" in response
         assert "Error generating response: API Error" in response["response"]
 
-    assert mock_create.call_count == 5  # Updated to match the new number of experts
+    assert mock_generate_response.call_count == 5  # Updated to match the new number of experts
 
 def test_get_expert_names(llm_pool):
     expert_names = llm_pool.get_expert_names()
