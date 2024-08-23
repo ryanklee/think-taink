@@ -13,9 +13,9 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 - Web-based interface for easy interaction
 - Robust error handling and logging system
 - Version control for principles and heuristics
-- Experimental control panel for fine-tuning and observing system behavior
-- Real-time monitoring and visualization of discussions and system performance
-- Comparative analysis tools for different experimental configurations
+- Experimental control panel for fine-tuning and observing system behavior (in progress)
+- Real-time monitoring and visualization of discussions and system performance (in progress)
+- Comparative analysis tools for different experimental configurations (in progress)
 
 ## Recent Updates
 
@@ -25,6 +25,9 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 - Added version control for principles and heuristics
 - Expanded unit test coverage, especially for the Moderator class
 - Improved inline documentation for complex methods
+- Implemented basic web interface for user interaction
+- Added user question input form and discussion result display
+- Started work on improvement dashboard for researchers
 
 ## Project Structure
 

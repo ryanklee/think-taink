@@ -38,7 +38,9 @@ src/
 │   └── templates/
 │       ├── base.html
 │       ├── index.html
-│       └── result.html
+│       ├── ask_question.html
+│       ├── result.html
+│       └── improvement_dashboard.html
 ├── data_models/
 │   ├── __init__.py
 │   ├── experiment.py
