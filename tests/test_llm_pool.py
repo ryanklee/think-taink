@@ -43,7 +43,7 @@ def test_generate_response(mock_generate_response, llm_pool):
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
-    assert "data usage note" in responses[-1]["response"].lower()
+    assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
 
     assert mock_generate_response.call_count == 5  # The number of expert calls remains the same
 
@@ -88,7 +88,7 @@ def test_generate_response_error_handling(mock_generate_response, llm_pool):
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
-    assert "data usage note" in responses[-1]["response"].lower()
+    assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
 
     assert mock_generate_response.call_count == 5  # The number of expert calls remains the same
 
@@ -153,7 +153,7 @@ class TestLLMPool(unittest.TestCase):
         responses = self.llm_pool.generate_response("Test input")
         self.assertEqual(len(responses), len(self.llm_pool.experts) + 1)  # +1 for the data usage note
         self.assertEqual(responses[-1]["expert"], "System")
-        self.assertIn("data usage note", responses[-1]["response"].lower())
+        self.assertIn("data sent to the openai api will not be used to train or improve openai models", responses[-1]["response"].lower())
         for response in responses:
             self.assertIn("expert", response)
             self.assertIn("response", response)
