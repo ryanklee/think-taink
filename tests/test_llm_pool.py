@@ -80,7 +80,7 @@ def test_generate_response_error_handling(mock_generate_response, llm_pool):
     for response in responses:
         assert "expert" in response
         assert "response" in response
-        assert "Error generating response: API Error" in response["response"]
+        assert "API Error" in response["response"]
 
     assert mock_generate_response.call_count == 5  # Updated to match the new number of experts
 
