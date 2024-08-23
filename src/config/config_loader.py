@@ -16,7 +16,10 @@ def load_config():
     with open(config_path, 'r') as config_file:
         config = yaml.safe_load(config_file)
     
-    # Replace ${OPENAI_API_KEY} with the actual environment variable
-    config['openai']['api_key'] = os.getenv('OPENAI_API_KEY')
+    # Replace API keys with environment variables for all LLM providers
+    for provider in config.keys():
+        if 'api_key' in config[provider]:
+            env_var_name = f'{provider.upper()}_API_KEY'
+            config[provider]['api_key'] = os.getenv(env_var_name, config[provider]['api_key'])
     
     return config
