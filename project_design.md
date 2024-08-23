@@ -3,43 +3,39 @@
 ## 1. Design Space
 
 ### a) LLM Pool
-- Number of LLMs: 3-5
-- Using GPT-3.5-turbo model with different prompts/personalities to simulate different experts
-- Consider implementing a dynamic expert selection based on the input question/objective
+- Number of LLMs: 5 (Analyst, Creative, Critic, Synthesizer, Ethicist)
+- Using GPT-4o-mini model with different prompts/personalities to simulate different experts
+- Implemented dynamic expert pool evolution based on discussion performance
 
 ### b) Question/Objective Input
-- Simple text input system for questions or intellectual objectives
-- (Future improvement: Mechanism to break down complex objectives into smaller tasks)
+- Simple text input system for questions or intellectual objectives via web interface
+- Input processing and sanitization implemented
 
 ### c) Processing Mechanism
 - Turn-based system for LLM contributions
-- Separate moderator/coordinator module to manage discussion flow
-- Implement a system for LLMs to ask clarifying questions to each other or the moderator
-- Consider adding a mechanism for the moderator to intervene and guide the discussion if it goes off-track
+- Moderator/coordinator module manages discussion flow
+- Implemented system for moderator to intervene and guide the discussion if it goes off-track
 
 ### d) Heuristics and Principles
-- Initial set of guiding principles: intellectual honesty, critical thinking, creativity, diversity of thought
+- Initial set of guiding principles implemented
 - Scoring system for ideas based on relevance, originality, and potential impact
-- Implement a system to detect and manage cognitive biases in LLM responses
-- Mechanism for fact-checking or source citation
 - System for LLMs to reflect on and improve principles and heuristics
-- Version control for tracking evolution of principles and heuristics
-- Human oversight mechanism for approving changes to principles and heuristics
+- Version control for tracking evolution of principles and heuristics implemented
+- (Future improvement: Implement human oversight mechanism for approving changes to principles and heuristics)
 
 ### e) Criteria for Completion
-- Time limit: maximum number of turns
-- Idea saturation: no new significant ideas in the last N turns
+- Time limit: maximum number of turns implemented
+- (Future improvement: Implement idea saturation detection)
 
 ### f) Output Generation
-- Summary generation system combining most relevant and highly-scored ideas
-- Include a section for dissenting opinions or alternative viewpoints
-- Generate a list of potential next steps or areas for further research
-- Consider implementing a system to generate visualizations of key concepts or relationships
+- Summary generation system combining most relevant ideas implemented
+- (Future improvement: Include section for dissenting opinions or alternative viewpoints)
+- (Future improvement: Generate list of potential next steps or areas for further research)
 
 ## 2. Documentation and Code Transparency
 
-- Project overview and goals
-- System architecture (including diagrams)
+- Project overview and goals (in README.md)
+- System architecture (including diagrams) (partially implemented)
 - LLM pool configuration
 - Input processing
 - Discussion flow and moderation
@@ -50,77 +46,33 @@
 - Completion criteria
 - Output generation
 - Tech stack and dependencies
-- API documentation
-- User guide
-- Contribution guidelines (including code style and documentation standards)
-- Ethical considerations and guidelines
-- Detailed README files for each major component
-- Inline documentation and comments
+- User guide (in README.md)
+- Contribution guidelines (in CONTRIBUTING.md)
+- Inline documentation and comments (improved)
 - Type hints for all functions and classes
-- Jupyter Notebooks for exploratory coding and documentation
-- Architecture and sequence diagrams (using Mermaid or similar tools)
-- Documentation on the reflection and improvement process for principles and heuristics
+- (Future improvement: Create API documentation)
+- (Future improvement: Address ethical considerations and guidelines)
+- (Future improvement: Create architecture and sequence diagrams using Mermaid or similar tools)
 
 ## 3. Implementation Plan
 
-a) Set up development environment:
-   - Install Python 3.9+
-   - Set up virtual environment
-   - Install required libraries (OpenAI, FastAPI, etc.)
-   - Initialize Git repository
-   - Set up pre-commit hooks for code formatting and linting
+Completed:
+a) Set up development environment
+b) Implement input processing system
+c) Develop LLM pool and integration
+d) Create moderator/coordinator
+e) Implement discussion flow mechanism
+f) Develop heuristics and principles
+g) Implement basic completion criteria
+h) Create output generation system
+i) Develop web-based interface
+j) Implement logging and monitoring (partial)
+k) Develop documentation (partial)
 
-b) Implement input processing system:
-   - Create function to accept text input
-   - Implement basic input validation and sanitization
-
-c) Develop LLM pool and integration:
-   - Set up OpenAI API integration
-   - Create LLM class with methods for generating responses
-   - Implement 3 different expert personas
-
-d) Create moderator/coordinator:
-   - Develop Moderator class to manage discussion flow
-   - Implement turn management system
-
-e) Implement discussion flow mechanism:
-   - Create main discussion loop
-   - Implement message passing between LLMs and moderator
-
-f) Develop heuristics and principles:
-   - Implement scoring system for ideas
-   - Create functions to enforce intellectual honesty and critical thinking
-
-g) Implement completion criteria:
-   - Add turn limit functionality
-   - Implement idea saturation detection
-
-h) Create output generation system:
-   - Develop summary generation function
-   - Implement ranking of ideas based on scores
-
-i) Develop basic command-line interface:
-   - Create CLI for input and output display
-
-j) Test and refine the system:
-   - Write unit tests for each component
-   - Perform integration testing
-   - Implement continuous integration (CI) pipeline
-   - Conduct user acceptance testing
-   - Refine based on test results and user feedback
-
-k) Implement logging and monitoring:
-   - Set up logging system for tracking system behavior and errors
-   - Implement monitoring for API usage and system performance
-
-l) Develop documentation:
-   - Create API documentation
-   - Write user guide
-   - Develop contribution guidelines
-
-m) Address ethical considerations:
-   - Implement mechanisms to ensure fairness and reduce bias
-   - Develop guidelines for responsible AI use
+Remaining:
+l) Complete testing and refinement
+m) Address ethical considerations
+n) Implement advanced features (idea saturation detection, dissenting opinions, etc.)
 
 ## 4. Tech Stack
 
@@ -128,83 +80,58 @@ m) Address ethical considerations:
 - Python 3.9+
 
 ### b) LLM Integration
-- OpenAI API (for GPT-3.5-turbo model)
+- OpenAI API (for GPT-4o-mini model)
 
 ### c) Backend Framework
-- FastAPI
+- Flask
 
 ### d) Frontend
-- Command-line interface (CLI) for initial implementation
-- (Future improvement: Consider web-based interface using React or Vue.js)
+- Web-based interface using Flask templates
 
 ### e) Database
-- SQLite for storing principles, heuristics, and their version history
-- (Future improvement: Consider PostgreSQL for storing discussion history and results)
+- JSON-based file storage for principles, heuristics, and their version history
+- (Future improvement: Consider SQLite or PostgreSQL for storing discussion history and results)
 
-### f) Message Queue
-- Not required for initial implementation
-- (Future improvement: Consider RabbitMQ for managing discussion flow in a more complex system)
-
-### g) Containerization
-- Docker (for future deployment and scaling)
-
-### h) Version Control
+### f) Version Control
 - Git
-- Custom version control system for principles and heuristics
+- Custom version control system for principles and heuristics (implemented)
 
-### i) Testing
+### g) Testing
 - pytest for unit and integration testing
 
-### j) Dependency Management
+### h) Dependency Management
 - pip and requirements.txt
-- Consider using poetry for more robust dependency management
 
-### k) Code Quality
-- Implement pre-commit hooks for code formatting (black) and linting (flake8)
-- Use mypy for static type checking
+### i) Code Quality
+- (Future improvement: Implement pre-commit hooks for code formatting (black) and linting (flake8))
+- (Future improvement: Use mypy for static type checking)
 
-### l) Continuous Integration/Continuous Deployment (CI/CD)
-- Set up GitHub Actions or GitLab CI for automated testing and deployment
+### j) Continuous Integration/Continuous Deployment (CI/CD)
+- (Future improvement: Set up GitHub Actions or GitLab CI for automated testing and deployment)
 
-### m) Monitoring and Logging
-- Implement logging using Python's built-in logging module
-- Consider using Prometheus and Grafana for monitoring in production
+### k) Monitoring and Logging
+- Implemented logging using Python's built-in logging module
+- (Future improvement: Consider using Prometheus and Grafana for monitoring in production)
 
-### n) Principles and Heuristics Management
-- Custom module for managing, evolving, and versioning principles and heuristics
+### l) Principles and Heuristics Management
+- Custom module for managing, evolving, and versioning principles and heuristics (implemented)
 
 ## 5. Implementation Steps
 
-a) Set up development environment:
-   - Install Python, libraries, and frameworks
-   - Set up version control (Git)
+Completed:
+a) Set up development environment
+b) Implement input processing
+c) Develop LLM pool
+d) Create moderator/coordinator
+e) Implement discussion flow
+f) Develop heuristics and principles
+g) Implement basic completion criteria
+h) Create output generation
+i) Develop web-based user interface
 
-b) Implement input processing:
-   - Functions to accept and preprocess questions/objectives
-
-c) Develop LLM pool:
-   - Classes for each LLM, including API calls and response handling
-
-d) Create moderator/coordinator:
-   - Class to manage discussion flow and LLM interactions
-
-e) Implement discussion flow:
-   - Turn-based system for LLM contributions
-   - Message passing between LLMs and moderator
-
-f) Develop heuristics and principles:
-   - Functions to evaluate and guide LLM responses
-   - System to enforce guiding principles
-
-g) Implement completion criteria:
-   - Functions to check for consensus, time limits, or idea saturation
-
-h) Create output generation:
-   - System to synthesize final output from LLM contributions
-
-i) Develop user interface (if required):
-   - Web-based interface for input and output display
-
-j) Test and refine:
-   - Develop unit tests and integration tests
-   - Refine system based on test results and performance
+Remaining:
+j) Complete testing and refinement
+k) Implement advanced features
+l) Address ethical considerations
+m) Set up CI/CD pipeline
+n) Enhance monitoring and logging
