@@ -15,22 +15,25 @@ class Moderator:
 
     def start_discussion(self, input_text: str) -> List[Dict]:
         discussion = []
-        while self.current_turn < self.max_turns:
-            for expert in self.llm_pool.get_expert_names():
-                expert_prompt = self.llm_pool.get_expert_prompt(expert)
-                response = self.llm_pool.generate_response(f"{expert_prompt}\n\nQuestion: {input_text}")
-                evaluated_response = self.principles.evaluate_response(response)
-                discussion.append({"expert": expert, "response": evaluated_response})
-                self.current_turn += 1
-                if self.current_turn >= self.max_turns:
-                    break
-            input_text = self._summarize_current_discussion(discussion)
-        
-        # Reflect on principles after the discussion
-        self._reflect_on_principles(discussion)
-        
-        # Evolve the expert pool after the discussion
-        self._evolve_expert_pool(discussion)
+        try:
+            while self.current_turn < self.max_turns:
+                for expert in self.llm_pool.get_expert_names():
+                    expert_prompt = self.llm_pool.get_expert_prompt(expert)
+                    response = self.llm_pool.generate_response(f"{expert_prompt}\n\nQuestion: {input_text}")
+                    evaluated_response = self.principles.evaluate_response(response[0]['response'])
+                    discussion.append({"expert": expert, "response": evaluated_response})
+                    self.current_turn += 1
+                    if self.current_turn >= self.max_turns:
+                        break
+                input_text = self._summarize_current_discussion(discussion)
+            
+            # Reflect on principles after the discussion
+            self._reflect_on_principles(discussion)
+            
+            # Evolve the expert pool after the discussion
+            self._evolve_expert_pool(discussion)
+        except Exception as e:
+            raise ModerationError(f"Error in start_discussion: {str(e)}")
         
         return discussion
 

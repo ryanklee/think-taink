@@ -89,7 +89,7 @@ class TestReflector(unittest.TestCase):
             self.reflector.reflect_on_principles(discussion_history)
 
     def test_parse_reflection_response_error_handling(self):
-        invalid_response = "Invalid response format"
+        invalid_response = [{"response": "Invalid response format"}]
         with self.assertRaises(ReflectionError):
             self.reflector._parse_reflection_response(invalid_response)
 
