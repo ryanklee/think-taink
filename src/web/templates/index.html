@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.question.label }}<br>
-        {{ form.question(size=32) }}
-    </p>
-    <p>{{ form.submit() }}</p>
-</form>
+<h2>Welcome to the Multi-LLM Think Tank Simulation</h2>
+<div class="user-actions">
+    <h3>Ask a Question</h3>
+    <p>Engage with our AI think tank to explore complex topics.</p>
+    <a href="{{ url_for('main.ask_question') }}" class="button">Ask a Question</a>
+</div>
+<div class="admin-actions">
+    <h3>Improvement Dashboard</h3>
+    <p>For researchers and administrators: Perform improvement runs and analyze system performance.</p>
+    <a href="{{ url_for('main.improvement_dashboard') }}" class="button">Access Dashboard</a>
+</div>
 {% endblock %}

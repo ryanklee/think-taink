@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Improvement Dashboard</h2>
+<div class="dashboard-actions">
+    <h3>Run Improvement Cycle</h3>
+    <form method="POST" action="{{ url_for('main.run_improvement') }}">
+        {{ form.hidden_tag() }}
+        <p>{{ form.submit() }}</p>
+    </form>
+</div>
+<div class="performance-metrics">
+    <h3>Performance Metrics</h3>
+    <!-- Add performance metrics display here -->
+</div>
+<div class="configuration">
+    <h3>System Configuration</h3>
+    <!-- Add configuration options here -->
+</div>
+{% endblock %}
