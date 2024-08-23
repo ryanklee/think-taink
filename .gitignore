@@ -17,3 +17,40 @@ __pycache__/
 # OS-specific files
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+
+# Database files
+*.db
+*.sqlite3
+
+# Environment variables
+.env
+
+# Compiled Python files
+*.pyc
+
+# Package directories
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Pytest cache
+.pytest_cache/
+
+# mypy cache
+.mypy_cache/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
