@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime
 from typing import Dict, List
 from src.utils.exceptions import VersionControlError
@@ -23,6 +24,7 @@ class VersionControl:
 
     def save_versions(self):
         try:
+            os.makedirs(os.path.dirname(self.file_path), exist_ok=True)
             with open(self.file_path, 'w') as f:
                 json.dump(self.versions, f, indent=2)
         except IOError as e:
