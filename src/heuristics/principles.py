@@ -4,14 +4,14 @@ from typing import Dict
 import logging
 
 from typing import Dict
-from src.heuristics.version_control import PrincipleVersionControl
+from src.utils.version_control import VersionControl
 from src.utils.exceptions import PrincipleError, VersionControlError
 
 class Principles:
     def __init__(self, version_control_file: str):
-        self.version_control = PrincipleVersionControl(version_control_file)
+        self.version_control = VersionControl(version_control_file)
         version = self.version_control.get_version()
-        self.principles = version.get("principles", {})
+        self.principles = version.get("data", {})
 
     def evaluate_response(self, response: str) -> Dict[str, float]:
         # Implementation remains the same
