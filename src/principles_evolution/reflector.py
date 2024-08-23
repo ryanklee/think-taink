@@ -2,6 +2,7 @@ from typing import List, Dict
 import logging
 from src.heuristics.principles import Principles
 from src.llm_pool.llm_pool import LLMPool
+from src.utils.exceptions import ReflectionError
 
 class Reflector:
     def __init__(self, principles: Principles, llm_pool: LLMPool):
