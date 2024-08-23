@@ -6,6 +6,7 @@
 - Number of LLMs: 5 (Analyst, Creative, Critic, Synthesizer, Ethicist)
 - Using GPT-4o-mini model with different prompts/personalities to simulate different experts
 - Implemented dynamic expert pool evolution based on discussion performance
+- Versioning system for LLM pool configurations
 
 ### b) Question/Objective Input
 - Simple text input system for questions or intellectual objectives via web interface
@@ -31,6 +32,17 @@
 - Summary generation system combining most relevant ideas implemented
 - (Future improvement: Include section for dissenting opinions or alternative viewpoints)
 - (Future improvement: Generate list of potential next steps or areas for further research)
+
+### g) Data Modeling and Storage
+- Comprehensive data model capturing experiments, LLM pools, experts, discussions, principles, and performance metrics
+- Relational database for structured data (PostgreSQL)
+- Document store for flexible, schema-less data (MongoDB)
+- Version control system for tracking changes in principles, heuristics, and expert prompts (Git)
+
+### h) Performance Analysis and Modulation
+- System for analyzing performance of different LLM pool configurations
+- Mechanism for LLMs to generate suggestions for improvements based on performance data
+- A/B testing system for comparing different configurations
 
 ## 2. Documentation and Code Transparency
 
@@ -99,9 +111,9 @@ s) Enhance UI/UX for experiment configuration and results analysis
 - (Future improvement: Consider React or Vue.js for more dynamic UI)
 
 ### e) Database
-- JSON-based file storage for principles, heuristics, and their version history
-- SQLite for storing experiment configurations and results
-- (Future improvement: Consider PostgreSQL for scaling)
+- PostgreSQL for structured data (experiments, LLM pools, experts, discussions, performance metrics)
+- MongoDB for flexible, schema-less data (detailed experiment configurations, complex discussion outputs)
+- Git for version control of principles, heuristics, and expert prompts
 
 ### f) Version Control
 - Git
@@ -132,6 +144,12 @@ s) Enhance UI/UX for experiment configuration and results analysis
 
 ### n) Experiment Management
 - Custom module for managing experiment configurations and results
+
+### o) Performance Analysis
+- Custom module for analyzing and comparing performance across experiments
+
+### p) A/B Testing
+- Framework for conducting A/B tests with different LLM pool configurations
 
 ## 5. Implementation Steps
 

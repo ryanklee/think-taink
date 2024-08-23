@@ -39,6 +39,24 @@ src/
 │       ├── base.html
 │       ├── index.html
 │       └── result.html
+├── data_models/
+│   ├── __init__.py
+│   ├── experiment.py
+│   ├── llm_pool.py
+│   ├── expert.py
+│   ├── discussion.py
+│   ├── principle.py
+│   └── performance_metric.py
+├── database/
+│   ├── __init__.py
+│   ├── relational_db.py
+│   └── document_store.py
+├── performance_analysis/
+│   ├── __init__.py
+│   └── analyzer.py
+├── ab_testing/
+│   ├── __init__.py
+│   └── test_runner.py
 └── main.py
 tests/
 ├── __init__.py
@@ -46,13 +64,17 @@ tests/
 ├── test_llm_pool.py
 ├── test_moderator.py
 ├── test_principles_evolution.py
-└── test_reflector.py
+├── test_reflector.py
+├── test_data_models.py
+├── test_performance_analysis.py
+└── test_ab_testing.py
 config/
 └── config.yaml
 docs/
 ├── api/
 ├── user_guide/
-└── ethical_considerations/
+├── ethical_considerations/
+└── data_model/
 CONTRIBUTING.md
 README.md
 requirements.txt
