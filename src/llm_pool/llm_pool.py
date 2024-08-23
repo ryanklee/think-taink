@@ -1,12 +1,12 @@
-import openai
 from typing import Dict, List
 from src.utils.exceptions import LLMPoolError
+from src.llm_pool.openai_api import OpenAIAPI
 
 class LLMPool:
     def __init__(self, config: Dict):
-        self.model = config['model']
-        self.temperature = config['temperature']
-        self.max_tokens = config['max_tokens']
+        self.api = OpenAIAPI(config['openai']['api_key'], model=config['llm']['model'])
+        self.temperature = config['llm']['temperature']
+        self.max_tokens = config['llm']['max_tokens']
         self.experts = [
             {"name": "Analyst", "prompt": "You are an analytical expert. Provide a logical and data-driven perspective."},
             {"name": "Creative", "prompt": "You are a creative expert. Think outside the box and provide innovative ideas."},
@@ -56,22 +56,15 @@ class LLMPool:
         for expert in self.experts:
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
             try:
-                response = openai.Completion.create(
-                    engine=self.model,
-                    prompt=prompt,
-                    max_tokens=self.max_tokens,
-                    temperature=self.temperature,
-                    n=1,
-                    stop=None
-                )
+                response = self.api.generate_response(prompt, max_tokens=self.max_tokens)
                 responses.append({
                     "expert": expert["name"],
-                    "response": response.choices[0].text.strip()
+                    "response": response
                 })
-            except Exception as e:
+            except LLMPoolError as e:
                 responses.append({
                     "expert": expert["name"],
-                    "response": f"Error generating response: {str(e)}"
+                    "response": str(e)
                 })
         return responses
 

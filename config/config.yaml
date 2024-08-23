@@ -9,6 +9,10 @@ api:
   base_url: "https://api.openai.com/v1"
   timeout: 30
 
+# OpenAI Configuration
+openai:
+  api_key: ${OPENAI_API_KEY}
+
 # Logging Configuration
 logging:
   level: "INFO"
