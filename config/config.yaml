@@ -18,3 +18,7 @@ logging:
 discussion:
   max_turns: 10
   idea_saturation_threshold: 3
+
+# Principles Configuration
+principles:
+  version_control_file: "data/principles_version_control.json"
