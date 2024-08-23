@@ -32,6 +32,16 @@ def test_process_empty_input(input_processor):
     expected_output = ""
     assert input_processor.process(input_text) == expected_output
 
+def test_short_input_after_processing(input_processor):
+    input_text = "a b c"
+    with pytest.raises(InputProcessingError):
+        input_processor.process(input_text)
+
+def test_valid_short_input(input_processor):
+    input_text = "abcde"
+    processed = input_processor.process(input_text)
+    assert processed == "abcde"
+
 def test_process_long_input(input_processor):
     input_text = " ".join(["word"] * 1000)
     expected_output = " ".join(["word"] * 1000)
@@ -53,6 +63,21 @@ class TestInputProcessor(unittest.TestCase):
         input_text = "This is a valid input."
         processed = self.processor.process(input_text)
         self.assertEqual(processed, input_text)
+
+    def test_empty_input(self):
+        input_text = ""
+        processed = self.processor.process(input_text)
+        self.assertEqual(processed, "")
+
+    def test_short_input_after_processing(self):
+        input_text = "a b c"
+        with self.assertRaises(InputProcessingError):
+            self.processor.process(input_text)
+
+    def test_valid_short_input(self):
+        input_text = "abcde"
+        processed = self.processor.process(input_text)
+        self.assertEqual(processed, "abcde")
 
     def test_input_with_extra_whitespace(self):
         input_text = "  This   has   extra   spaces.  "
