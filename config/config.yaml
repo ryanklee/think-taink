@@ -1,8 +1,9 @@
 # LLM Configuration
 llm:
-  model: "gpt-3.5-turbo"
+  model: "gpt-4o-mini"
   temperature: 0.7
-  max_tokens: 150
+  max_tokens: 4096
+  context_window: 128000
 
 # API Configuration
 api:
@@ -26,3 +27,7 @@ discussion:
 # Principles Configuration
 principles:
   version_control_file: "data/principles_version_control.json"
+
+# Data Usage Note
+data_usage:
+  note: "Data sent to the OpenAI API will not be used to train or improve OpenAI models. API data may be retained for up to 30 days for abuse monitoring purposes, after which it will be deleted (unless otherwise required by law)."
