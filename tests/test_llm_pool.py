@@ -88,3 +88,70 @@ def test_get_expert_prompt(llm_pool):
 
     with pytest.raises(ValueError):
         llm_pool.get_expert_prompt("NonexistentExpert")
+import unittest
+from unittest.mock import patch, MagicMock
+from src.llm_pool.llm_pool import LLMPool
+from src.utils.exceptions import LLMPoolError
+
+class TestLLMPool(unittest.TestCase):
+    def setUp(self):
+        self.config = {
+            'model': 'gpt-3.5-turbo',
+            'temperature': 0.7,
+            'max_tokens': 100
+        }
+        self.llm_pool = LLMPool(self.config)
+
+    def test_add_expert(self):
+        self.llm_pool.add_expert("TestExpert", "This is a test expert.")
+        self.assertIn("TestExpert", [expert["name"] for expert in self.llm_pool.experts])
+
+    def test_add_duplicate_expert(self):
+        self.llm_pool.add_expert("TestExpert", "This is a test expert.")
+        with self.assertRaises(LLMPoolError):
+            self.llm_pool.add_expert("TestExpert", "This is a duplicate expert.")
+
+    def test_remove_expert(self):
+        self.llm_pool.add_expert("TestExpert", "This is a test expert.")
+        self.llm_pool.remove_expert("TestExpert")
+        self.assertNotIn("TestExpert", [expert["name"] for expert in self.llm_pool.experts])
+
+    def test_remove_nonexistent_expert(self):
+        with self.assertRaises(LLMPoolError):
+            self.llm_pool.remove_expert("NonexistentExpert")
+
+    def test_update_expert(self):
+        self.llm_pool.add_expert("TestExpert", "This is a test expert.")
+        self.llm_pool.update_expert("TestExpert", "This is an updated test expert.")
+        updated_expert = next(expert for expert in self.llm_pool.experts if expert["name"] == "TestExpert")
+        self.assertEqual(updated_expert["prompt"], "This is an updated test expert.")
+
+    def test_update_nonexistent_expert(self):
+        with self.assertRaises(LLMPoolError):
+            self.llm_pool.update_expert("NonexistentExpert", "This expert doesn't exist.")
+
+    @patch('openai.Completion.create')
+    def test_generate_response(self, mock_create):
+        mock_create.return_value = MagicMock(choices=[MagicMock(text="Test response")])
+        responses = self.llm_pool.generate_response("Test input")
+        self.assertEqual(len(responses), len(self.llm_pool.experts))
+        for response in responses:
+            self.assertIn("expert", response)
+            self.assertIn("response", response)
+
+    def test_get_expert_names(self):
+        expert_names = self.llm_pool.get_expert_names()
+        self.assertIsInstance(expert_names, list)
+        self.assertEqual(len(expert_names), len(self.llm_pool.experts))
+
+    def test_get_expert_prompt(self):
+        expert_name = self.llm_pool.experts[0]["name"]
+        prompt = self.llm_pool.get_expert_prompt(expert_name)
+        self.assertIsInstance(prompt, str)
+
+    def test_get_nonexistent_expert_prompt(self):
+        with self.assertRaises(ValueError):
+            self.llm_pool.get_expert_prompt("NonexistentExpert")
+
+if __name__ == '__main__':
+    unittest.main()
