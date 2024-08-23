@@ -10,7 +10,8 @@ from src.utils.exceptions import PrincipleError, VersionControlError
 class Principles:
     def __init__(self, version_control_file: str):
         self.version_control = PrincipleVersionControl(version_control_file)
-        self.principles = self.version_control.get_version()["principles"]
+        version = self.version_control.get_version()
+        self.principles = version.get("principles", {})
 
     def evaluate_response(self, response: str) -> Dict[str, float]:
         # Implementation remains the same

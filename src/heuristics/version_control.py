@@ -17,6 +17,9 @@ class PrincipleVersionControl:
             self.versions = []
         except json.JSONDecodeError as e:
             raise VersionControlError(f"Error decoding version file: {str(e)}")
+        
+        if not self.versions:
+            self.add_version({"default": "Initial principle"}, "Initial version")
 
     def save_versions(self):
         try:
