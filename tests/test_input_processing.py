@@ -115,8 +115,9 @@ class TestInputProcessor(unittest.TestCase):
 
     def test_empty_input(self):
         input_text = ""
-        processed = self.processor.process(input_text)
-        self.assertEqual(processed, "")
+        with self.assertRaises(InputProcessingError) as context:
+            self.processor.process(input_text)
+        self.assertEqual(str(context.exception), "Input text is too short. Minimum length is 5 characters.")
 
     def test_non_string_input(self):
         input_text = 12345
