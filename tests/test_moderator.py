@@ -38,6 +38,14 @@ class TestModerator(unittest.TestCase):
         with self.assertRaises(ModerationError):
             self.moderator.start_discussion(input_text)
 
+    def test_start_discussion_error_handling(self):
+        input_text = "What are the ethical implications of AI?"
+        self.llm_pool.get_expert_names.return_value = ["Analyst", "Ethicist"]
+        self.llm_pool.generate_response.side_effect = Exception("API Error")
+
+        with self.assertRaises(ModerationError):
+            self.moderator.start_discussion(input_text)
+
     def test_summarize_discussion(self):
         discussion = [
             {"expert": "Analyst", "response": "We should consider the economic impact."},
