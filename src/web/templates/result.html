@@ -3,6 +3,43 @@
 <h2>Question:</h2>
 <p>{{ question }}</p>
 <h2>Response:</h2>
-<p>{{ response }}</p>
+<div id="response"></div>
+<div>
+    <label for="speed">Discourse Speed:</label>
+    <input type="range" id="speed" name="speed" min="1" max="10" value="5">
+</div>
 <a href="{{ url_for('main.index') }}">Ask another question</a>
+
+<script>
+    const responseDiv = document.getElementById('response');
+    const speedControl = document.getElementById('speed');
+    let currentExpert = '';
+    let expertResponse = '';
+
+    const eventSource = new EventSource("{{ url_for('main.stream_response') }}");
+    
+    eventSource.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        if (data.expert !== currentExpert) {
+            if (currentExpert) {
+                responseDiv.innerHTML += `<p><strong>${currentExpert}:</strong> ${expertResponse}</p>`;
+            }
+            currentExpert = data.expert;
+            expertResponse = '';
+        }
+        expertResponse += data.response;
+        responseDiv.lastChild.textContent = `${currentExpert}: ${expertResponse}`;
+    };
+
+    eventSource.onerror = function(event) {
+        console.error("EventSource failed:", event);
+        eventSource.close();
+    };
+
+    speedControl.addEventListener('input', function() {
+        const speed = 11 - this.value;  // Invert the scale so that higher values mean faster
+        eventSource.close();
+        eventSource = new EventSource(`{{ url_for('main.stream_response') }}?speed=${speed}`);
+    });
+</script>
 {% endblock %}

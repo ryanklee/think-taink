@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, current_app
+from flask import Blueprint, render_template, flash, redirect, url_for, current_app, Response, stream_with_context
 from src.web.forms import QuestionForm, ImprovementForm
+import json
 
 bp = Blueprint('main', __name__)
 
@@ -12,15 +13,20 @@ def ask_question():
     form = QuestionForm()
     if form.validate_on_submit():
         question = form.question.data
-        try:
-            processed_input = current_app.input_processor.process(question)
-            discussion = current_app.moderator.start_discussion(processed_input)
-            final_output = current_app.moderator.summarize_discussion(discussion)
-            return render_template('result.html', question=question, response=final_output)
-        except Exception as e:
-            flash(f"An error occurred: {str(e)}", 'error')
-            return redirect(url_for('main.ask_question'))
+        return render_template('result.html', question=question)
     return render_template('ask_question.html', form=form)
+
+@bp.route('/stream', methods=['POST'])
+def stream_response():
+    question = request.form.get('question')
+    try:
+        processed_input = current_app.input_processor.process(question)
+        def generate():
+            for chunk in current_app.moderator.start_discussion_stream(processed_input):
+                yield f"data: {json.dumps(chunk)}\n\n"
+        return Response(stream_with_context(generate()), mimetype='text/event-stream')
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @bp.route('/dashboard')
 def improvement_dashboard():

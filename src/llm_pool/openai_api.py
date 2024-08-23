@@ -1,6 +1,7 @@
 import openai
 import time
 from functools import lru_cache
+from typing import Generator
 from src.utils.exceptions import LLMPoolError
 
 class OpenAIAPI:
@@ -27,6 +28,25 @@ class OpenAIAPI:
                 max_tokens=max_tokens
             )
             return response.choices[0].message['content'].strip()
+        except openai.error.RateLimitError:
+            raise LLMPoolError("Rate limit exceeded. Please try again later.")
+        except openai.error.APIError as e:
+            raise LLMPoolError(f"OpenAI API error: {str(e)}")
+        except Exception as e:
+            raise LLMPoolError(f"Unexpected error: {str(e)}")
+
+    def generate_response_stream(self, prompt, max_tokens=4096) -> Generator[str, None, None]:
+        self._rate_limit()
+        try:
+            response = openai.ChatCompletion.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=max_tokens,
+                stream=True
+            )
+            for chunk in response:
+                if chunk.choices[0].delta.get("content"):
+                    yield chunk.choices[0].delta.content
         except openai.error.RateLimitError:
             raise LLMPoolError("Rate limit exceeded. Please try again later.")
         except openai.error.APIError as e:

@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Generator
 from src.utils.exceptions import LLMPoolError
 from src.llm_pool.openai_api import OpenAIAPI
 
@@ -44,15 +44,15 @@ class LLMPool:
                 return
         raise LLMPoolError(f"Expert '{name}' not found in the pool")
 
-    def generate_response(self, input_text: str) -> List[Dict[str, str]]:
+    def generate_response_stream(self, input_text: str) -> Generator[Dict[str, str], None, None]:
         """
-        Generate responses from all experts in the LLM pool.
+        Generate streaming responses from all experts in the LLM pool.
         
         Args:
             input_text (str): The processed input text.
         
-        Returns:
-            List[Dict[str, str]]: A list of responses from each expert.
+        Yields:
+            Dict[str, str]: A dictionary containing the expert name and a chunk of their response.
         
         Raises:
             LLMPoolError: If there's an error generating responses.
@@ -60,31 +60,28 @@ class LLMPool:
         if not input_text:
             raise LLMPoolError("Input text cannot be empty")
 
-        responses: List[Dict[str, str]] = []
         for expert in self.experts:
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
             try:
-                response = self.api.generate_response(
+                for response_chunk in self.api.generate_response_stream(
                     prompt, 
                     max_tokens=4096 if self.api.model == 'gpt-4o' else self.max_tokens
-                )
-                responses.append({
-                    "expert": expert["name"],
-                    "response": response
-                })
+                ):
+                    yield {
+                        "expert": expert["name"],
+                        "response": response_chunk
+                    }
             except Exception as e:
-                responses.append({
+                yield {
                     "expert": expert["name"],
                     "response": f"Error generating response: {str(e)}"
-                })
+                }
         
-        # Append the data usage note to the responses
-        responses.append({
+        # Yield the data usage note
+        yield {
             "expert": "System",
             "response": self.data_usage_note
-        })
-        
-        return responses
+        }
 
     def get_expert_names(self) -> List[str]:
         return [expert["name"] for expert in self.experts]

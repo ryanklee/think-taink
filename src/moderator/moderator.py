@@ -15,54 +15,57 @@ class Moderator:
         self.max_turns = 10
         self.current_turn = 0
 
-    def start_discussion(self, input_text: str) -> List[Dict]:
-        discussion = []
+    def start_discussion_stream(self, input_text: str) -> Generator[Dict[str, str], None, None]:
         try:
             while self.current_turn < self.max_turns:
                 for expert in self.llm_pool.get_expert_names():
                     expert_prompt = self.llm_pool.get_expert_prompt(expert)
                     try:
-                        response = self.llm_pool.generate_response(f"{expert_prompt}\n\nQuestion: {input_text}")
-                        evaluated_response = self.principles.evaluate_response(response[0]['response'])
-                        discussion.append({"expert": expert, "response": evaluated_response})
+                        for response_chunk in self.llm_pool.generate_response_stream(f"{expert_prompt}\n\nQuestion: {input_text}"):
+                            evaluated_chunk = self.principles.evaluate_response(response_chunk['response'])
+                            yield {"expert": expert, "response": evaluated_chunk}
                         self.current_turn += 1
                         if self.current_turn >= self.max_turns:
                             break
                     except Exception as e:
                         logging.error(f"Error generating response for {expert}: {str(e)}")
-                        raise ModerationError(f"Error generating response for {expert}: {str(e)}")
+                        yield {"expert": expert, "response": f"Error: {str(e)}"}
                 if self.current_turn >= self.max_turns:
                     break
                 try:
-                    input_text = self._summarize_current_discussion(discussion)
+                    input_text = self._summarize_current_discussion(yield from self._get_last_turn())
                 except Exception as e:
                     logging.error(f"Error summarizing discussion: {str(e)}")
-                    raise ModerationError(f"Error summarizing discussion: {str(e)}")
-                if self.current_turn >= self.max_turns:
-                    break
-                try:
-                    input_text = self._summarize_current_discussion(discussion)
-                except Exception as e:
-                    logging.error(f"Error summarizing discussion: {str(e)}")
-                    return discussion  # Return the discussion without summary if an error occurs
+                    yield {"expert": "System", "response": f"Error summarizing discussion: {str(e)}"}
             
             # Reflect on principles after the discussion
             try:
-                self._reflect_on_principles(discussion)
+                yield from self._reflect_on_principles_stream()
             except Exception as e:
                 logging.error(f"Error reflecting on principles: {str(e)}")
+                yield {"expert": "System", "response": f"Error reflecting on principles: {str(e)}"}
             
             # Evolve the expert pool after the discussion
             try:
-                self._evolve_expert_pool(discussion)
+                yield from self._evolve_expert_pool_stream()
             except Exception as e:
                 logging.error(f"Error evolving expert pool: {str(e)}")
+                yield {"expert": "System", "response": f"Error evolving expert pool: {str(e)}"}
         except Exception as e:
-            logging.error(f"Unexpected error in start_discussion: {str(e)}")
-            if not discussion:
-                raise ModerationError(f"Unexpected error in start_discussion: {str(e)}")
-        
-        return discussion
+            logging.error(f"Unexpected error in start_discussion_stream: {str(e)}")
+            yield {"expert": "System", "response": f"Unexpected error: {str(e)}"}
+
+    def _get_last_turn(self) -> Generator[Dict[str, str], None, None]:
+        for expert in self.llm_pool.get_expert_names():
+            yield {"expert": expert, "response": "Last response for this expert"}
+
+    def _reflect_on_principles_stream(self) -> Generator[Dict[str, str], None, None]:
+        yield {"expert": "System", "response": "Reflecting on principles..."}
+        # Implement the streaming version of reflection here
+
+    def _evolve_expert_pool_stream(self) -> Generator[Dict[str, str], None, None]:
+        yield {"expert": "System", "response": "Evolving expert pool..."}
+        # Implement the streaming version of expert pool evolution here
 
     def summarize_discussion(self, discussion: List[Dict]) -> str:
         summary_prompt = "Summarize the following discussion points into a coherent response:\n\n"
