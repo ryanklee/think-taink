@@ -8,7 +8,8 @@ src/
 │   └── config_loader.py
 ├── ethics/
 │   ├── __init__.py
-│   └── guidelines.py
+│   ├── guidelines.py
+│   └── version_control.py
 ├── heuristics/
 │   ├── __init__.py
 │   ├── principles.py
@@ -77,6 +78,11 @@ docs/
 ├── user_guide/
 ├── ethical_considerations/
 └── data_model/
+.devcontainer/
+├── devcontainer.json
+└── docker-compose.yml
+Dockerfile
+docker-compose.yml
 CONTRIBUTING.md
 README.md
 requirements.txt

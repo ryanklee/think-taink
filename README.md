@@ -28,6 +28,10 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 - Implemented basic web interface for user interaction
 - Added user question input form and discussion result display
 - Started work on improvement dashboard for researchers
+- Containerized the application using Docker and devcontainers
+- Updated project structure to include new components and modules
+- Enhanced the LLM pool to use the latest GPT-4o-mini model
+- Implemented a more robust version control system for principles and heuristics
 
 ## Project Structure
 
@@ -42,10 +46,15 @@ src/
 ├── output_generation/
 ├── principles_evolution/
 ├── utils/
-└── web/
+├── web/
+├── data_models/
+├── database/
+├── performance_analysis/
+└── ab_testing/
 tests/
 config/
 docs/
+.devcontainer/
 ```
 
 ## Setup
@@ -56,30 +65,24 @@ docs/
    cd multi-llm-think-tank
    ```
 
-2. Create a virtual environment:
+2. Install Docker and Docker Compose on your system.
+
+3. Build and run the Docker container:
    ```
-   python -m venv venv
+   docker-compose up --build
    ```
 
-3. Activate the virtual environment:
-   - On Windows: `venv\Scripts\activate`
-   - On macOS and Linux: `source venv/bin/activate`
-
-4. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-5. Set up environment variables:
+4. Set up environment variables:
    Create a `.env` file in the project root and add your API keys:
    ```
    OPENAI_API_KEY=your_openai_api_key_here
    ```
 
-6. Run the application:
-   ```
-   python src/main.py
-   ```
+5. If you're using VS Code with the Remote - Containers extension:
+   - Open the project folder in VS Code
+   - When prompted, choose "Reopen in Container" or use the command palette to select "Remote-Containers: Reopen in Container"
+
+6. The application should now be running and accessible at `http://localhost:5000`
 
 ## Usage
 
