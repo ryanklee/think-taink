@@ -21,16 +21,16 @@ class TestModerator(unittest.TestCase):
             [{"response": "Sample response"}],  # For Analyst (2nd turn)
             [{"response": "Sample response"}],  # For Ethicist (2nd turn)
             [{"response": "Final summary"}],  # For _summarize_current_discussion
-            [{"response": "principle1: Updated description 1\nprinciple2: New description 2"}]  # For reflect_on_principles
+            [{"response": "principle1: Updated description 1\nprinciple2: New description 2"}],  # For reflect_on_principles
+            [{"response": "Pool evolution response"}]  # For _evolve_expert_pool
         ]
         self.principles.evaluate_response.return_value = {"relevance": 0.8, "originality": 0.7}
 
-        try:
-            discussion = self.moderator.start_discussion(input_text)
-            self.assertEqual(len(discussion), 4)  # 2 experts * 2 turns
-            self.assertEqual(self.moderator.current_turn, 4)
-        except ModerationError as e:
-            self.fail(f"ModerationError raised: {str(e)}")
+        discussion = self.moderator.start_discussion(input_text)
+        self.assertEqual(len(discussion), 4)  # 2 experts * 2 turns
+        self.assertEqual(self.moderator.current_turn, 4)
+        self.llm_pool.generate_response.assert_called()
+        self.principles.evaluate_response.assert_called()
 
         self.assertEqual(len(discussion), 2)  # Two experts
         self.assertEqual(self.moderator.current_turn, 2)

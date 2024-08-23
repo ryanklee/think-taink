@@ -28,18 +28,29 @@ class Moderator:
                         if self.current_turn >= self.max_turns:
                             break
                     except Exception as e:
-                        raise ModerationError(f"Error generating response for {expert}: {str(e)}")
+                        logging.error(f"Error generating response for {expert}: {str(e)}")
+                        break
                 if self.current_turn >= self.max_turns:
                     break
-                input_text = self._summarize_current_discussion(discussion)
+                try:
+                    input_text = self._summarize_current_discussion(discussion)
+                except Exception as e:
+                    logging.error(f"Error summarizing discussion: {str(e)}")
+                    break
             
             # Reflect on principles after the discussion
-            self._reflect_on_principles(discussion)
+            try:
+                self._reflect_on_principles(discussion)
+            except Exception as e:
+                logging.error(f"Error reflecting on principles: {str(e)}")
             
             # Evolve the expert pool after the discussion
-            self._evolve_expert_pool(discussion)
+            try:
+                self._evolve_expert_pool(discussion)
+            except Exception as e:
+                logging.error(f"Error evolving expert pool: {str(e)}")
         except Exception as e:
-            raise ModerationError(f"Error in start_discussion: {str(e)}")
+            logging.error(f"Error in start_discussion: {str(e)}")
         
         return discussion
 
