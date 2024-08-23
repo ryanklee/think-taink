@@ -27,8 +27,8 @@ class InputProcessor:
         # Remove special characters except for basic punctuation
         processed_text = re.sub(r'[^a-zA-Z0-9\s.,!?]', '', processed_text)
         
-        # Check if the processed text is too short
-        if len(processed_text) < 5:
+        # Check if the processed text is too short or empty
+        if not processed_text or len(processed_text.strip()) < 5:
             raise InputProcessingError("Input text is too short. Minimum length is 5 characters.")
         
-        return processed_text
+        return processed_text.strip()

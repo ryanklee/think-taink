@@ -51,8 +51,9 @@ def test_process_long_input(input_processor):
 
 def test_process_only_special_characters(input_processor):
     input_text = "@#$%^&*()_+"
-    expected_output = ""
-    assert input_processor.process(input_text) == expected_output
+    with pytest.raises(InputProcessingError) as excinfo:
+        input_processor.process(input_text)
+    assert str(excinfo.value) == "Input text is too short. Minimum length is 5 characters."
 
 def test_process_short_input_with_spaces(input_processor):
     input_text = "   a   "
@@ -80,6 +81,12 @@ class TestInputProcessor(unittest.TestCase):
 
     def test_short_input_after_processing(self):
         input_text = "a b c"
+        with self.assertRaises(InputProcessingError) as context:
+            self.processor.process(input_text)
+        self.assertEqual(str(context.exception), "Input text is too short. Minimum length is 5 characters.")
+
+    def test_input_with_only_spaces(self):
+        input_text = "     "
         with self.assertRaises(InputProcessingError) as context:
             self.processor.process(input_text)
         self.assertEqual(str(context.exception), "Input text is too short. Minimum length is 5 characters.")
@@ -118,8 +125,9 @@ class TestInputProcessor(unittest.TestCase):
 
     def test_only_special_characters(self):
         input_text = "@#$%^&*()_+"
-        processed = self.processor.process(input_text)
-        self.assertEqual(processed, "")
+        with self.assertRaises(InputProcessingError) as context:
+            self.processor.process(input_text)
+        self.assertEqual(str(context.exception), "Input text is too short. Minimum length is 5 characters.")
 
     def test_short_input_with_spaces(self):
         input_text = "   a   "
