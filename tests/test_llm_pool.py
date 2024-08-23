@@ -21,7 +21,10 @@ def llm_pool():
     config = {
         "model": "gpt-3.5-turbo",
         "temperature": 0.7,
-        "max_tokens": 150
+        "max_tokens": 150,
+        "openai": {
+            "api_key": "test_api_key"
+        }
     }
     return LLMPool(config)
 
@@ -55,11 +58,14 @@ def test_llm_pool_configuration():
     config = {
         "model": "gpt-4",
         "temperature": 0.5,
-        "max_tokens": 200
+        "max_tokens": 200,
+        "openai": {
+            "api_key": "test_api_key"
+        }
     }
     llm_pool = LLMPool(config)
     
-    assert llm_pool.model == "gpt-4"
+    assert llm_pool.api.model == "gpt-4"
     assert llm_pool.temperature == 0.5
     assert llm_pool.max_tokens == 200
 
@@ -98,7 +104,10 @@ class TestLLMPool(unittest.TestCase):
         self.config = {
             'model': 'gpt-3.5-turbo',
             'temperature': 0.7,
-            'max_tokens': 100
+            'max_tokens': 100,
+            'openai': {
+                'api_key': 'test_api_key'
+            }
         }
         self.llm_pool = LLMPool(self.config)
 

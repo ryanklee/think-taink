@@ -4,9 +4,9 @@ from src.llm_pool.openai_api import OpenAIAPI
 
 class LLMPool:
     def __init__(self, config: Dict):
-        self.api = OpenAIAPI(config['openai']['api_key'], model=config['llm']['model'])
-        self.temperature = config['llm']['temperature']
-        self.max_tokens = config['llm']['max_tokens']
+        self.api = OpenAIAPI(config.get('openai', {}).get('api_key', ''), model=config.get('model', 'gpt-3.5-turbo'))
+        self.temperature = config.get('temperature', 0.7)
+        self.max_tokens = config.get('max_tokens', 150)
         self.experts = [
             {"name": "Analyst", "prompt": "You are an analytical expert. Provide a logical and data-driven perspective."},
             {"name": "Creative", "prompt": "You are a creative expert. Think outside the box and provide innovative ideas."},
