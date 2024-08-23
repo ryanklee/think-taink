@@ -52,6 +52,12 @@ def test_process_only_special_characters(input_processor):
     input_text = "@#$%^&*()_+"
     expected_output = ""
     assert input_processor.process(input_text) == expected_output
+
+def test_process_short_input_with_spaces(input_processor):
+    input_text = "   a   "
+    with pytest.raises(InputProcessingError) as excinfo:
+        input_processor.process(input_text)
+    assert str(excinfo.value) == "Input text is too short. Minimum length is 5 characters."
 import unittest
 from src.input_processing.processor import InputProcessor
 from src.utils.exceptions import InputProcessingError
@@ -107,6 +113,17 @@ class TestInputProcessor(unittest.TestCase):
         input_text = 12345
         with self.assertRaises(InputProcessingError):
             self.processor.process(input_text)
+
+    def test_only_special_characters(self):
+        input_text = "@#$%^&*()_+"
+        processed = self.processor.process(input_text)
+        self.assertEqual(processed, "")
+
+    def test_short_input_with_spaces(self):
+        input_text = "   a   "
+        with self.assertRaises(InputProcessingError) as context:
+            self.processor.process(input_text)
+        self.assertEqual(str(context.exception), "Input text is too short. Minimum length is 5 characters.")
 
 if __name__ == '__main__':
     unittest.main()

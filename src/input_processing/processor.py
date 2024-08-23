@@ -28,7 +28,7 @@ class InputProcessor:
         processed_text = re.sub(r'[^a-zA-Z0-9\s.,!?]', '', processed_text)
         
         # Check if the processed text is too short
-        if len(processed_text) < 5:
+        if len(processed_text) > 0 and len(processed_text) < 5:
             raise InputProcessingError("Input text is too short. Minimum length is 5 characters.")
         
         return processed_text
