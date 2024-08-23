@@ -10,10 +10,18 @@
 </div>
 <div class="performance-metrics">
     <h3>Performance Metrics</h3>
-    <!-- Add performance metrics display here -->
+    <ul>
+        {% for metric, value in metrics.items() %}
+            <li>{{ metric }}: {{ value }}</li>
+        {% endfor %}
+    </ul>
 </div>
 <div class="configuration">
     <h3>System Configuration</h3>
-    <!-- Add configuration options here -->
+    <ul>
+        {% for key, value in config.items() %}
+            <li>{{ key }}: {{ value }}</li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

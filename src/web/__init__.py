@@ -6,7 +6,8 @@ from src.heuristics.principles import Principles
 
 def create_app(config):
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'your-secret-key'  # Replace with a real secret key
+    app.config.from_mapping(config)
+    app.config['SECRET_KEY'] = config.get('secret_key', 'your-secret-key')  # Replace with a real secret key
 
     # Initialize components
     app.input_processor = InputProcessor()

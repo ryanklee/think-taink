@@ -25,7 +25,18 @@ def ask_question():
 @bp.route('/dashboard')
 def improvement_dashboard():
     form = ImprovementForm()
-    return render_template('improvement_dashboard.html', form=form)
+    
+    # Mock data for performance metrics (replace with actual data in the future)
+    metrics = {
+        'Average Response Time': '2.5 seconds',
+        'Discussion Quality Score': '8.7/10',
+        'Principle Evolution Rate': '0.05 per discussion'
+    }
+    
+    # Get the current configuration
+    config = current_app.config
+    
+    return render_template('improvement_dashboard.html', form=form, metrics=metrics, config=config)
 
 @bp.route('/run_improvement', methods=['POST'])
 def run_improvement():
