@@ -11,6 +11,17 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 - Dynamic expert pool evolution based on discussion performance
 - Summarized output generation for concise results
 - Web-based interface for easy interaction
+- Robust error handling and logging system
+- Version control for principles and heuristics
+
+## Recent Updates
+
+- Improved error handling across all components
+- Implemented custom exceptions for better error management
+- Enhanced logging system with rotation
+- Added version control for principles and heuristics
+- Expanded unit test coverage, especially for the Moderator class
+- Improved inline documentation for complex methods
 
 ## Project Structure
 
@@ -53,11 +64,11 @@ docs/
    pip install -r requirements.txt
    ```
 
-5. Copy `config/config.yaml.example` to `config/config.yaml` and update with your settings:
+5. Set up environment variables:
+   Create a `.env` file in the project root and add your API keys:
    ```
-   cp config/config.yaml.example config/config.yaml
+   OPENAI_API_KEY=your_openai_api_key_here
    ```
-   Edit `config/config.yaml` with your preferred text editor and update the necessary settings.
 
 6. Run the application:
    ```
@@ -86,6 +97,14 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 ## Documentation
 
 For more detailed information about the project's components and architecture, please refer to the `docs/` directory.
+
+## Error Handling and Logging
+
+The project now includes a robust error handling system with custom exceptions. Logs are automatically rotated to prevent excessive file sizes. Check the `logs/` directory for detailed application logs.
+
+## Version Control for Principles and Heuristics
+
+The system now includes version control for principles and heuristics, allowing for tracking of changes over time. This feature enhances the system's ability to learn and adapt.
 
 ## License
 
