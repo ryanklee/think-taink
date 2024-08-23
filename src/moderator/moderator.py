@@ -30,14 +30,14 @@ class Moderator:
                             break
                     except Exception as e:
                         logging.error(f"Error generating response for {expert}: {str(e)}")
-                        break
+                        raise ModerationError(f"Error generating response for {expert}: {str(e)}")
                 if self.current_turn >= self.max_turns:
                     break
                 try:
                     input_text = self._summarize_current_discussion(discussion)
                 except Exception as e:
                     logging.error(f"Error summarizing discussion: {str(e)}")
-                    break
+                    raise ModerationError(f"Error summarizing discussion: {str(e)}")
             
             # Reflect on principles after the discussion
             try:
@@ -50,8 +50,12 @@ class Moderator:
                 self._evolve_expert_pool(discussion)
             except Exception as e:
                 logging.error(f"Error evolving expert pool: {str(e)}")
+        except ModerationError as e:
+            logging.error(f"Moderation error in start_discussion: {str(e)}")
+            raise
         except Exception as e:
-            logging.error(f"Error in start_discussion: {str(e)}")
+            logging.error(f"Unexpected error in start_discussion: {str(e)}")
+            raise ModerationError(f"Unexpected error in start_discussion: {str(e)}")
         
         return discussion
 
