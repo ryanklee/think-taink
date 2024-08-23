@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 from src.principles_evolution.reflector import Reflector
 from src.heuristics.principles import Principles
 from src.llm_pool.llm_pool import LLMPool
+from src.utils.exceptions import ReflectionError
 
 import tempfile
 import os
@@ -27,7 +28,7 @@ class TestReflector(unittest.TestCase):
         ]
 
         # Mock LLM response
-        self.llm_pool.generate_response.return_value = "data_driven_decisions: Incorporate data analysis in decision-making processes.\nintuition: Value intuition alongside analytical thinking."
+        self.llm_pool.generate_response.return_value = [{"response": "data_driven_decisions: Incorporate data analysis in decision-making processes.\nintuition: Value intuition alongside analytical thinking."}]
 
         suggestions = self.reflector.reflect_on_principles(discussion_history)
 
@@ -63,7 +64,7 @@ class TestReflector(unittest.TestCase):
         ]
 
         # Mock LLM response
-        self.llm_pool.generate_response.return_value = "long_term_thinking: Consider long-term consequences in decision-making.\nethical_consideration: Prioritize ethical implications in all discussions."
+        self.llm_pool.generate_response.return_value = [{"response": "long_term_thinking: Consider long-term consequences in decision-making.\nethical_consideration: Prioritize ethical implications in all discussions."}]
 
         suggestions = self.reflector.reflect_on_principles(discussion_history)
 
@@ -74,6 +75,23 @@ class TestReflector(unittest.TestCase):
 
         # Check if apply_reflector_suggestions was called with the correct arguments
         mock_apply_suggestions.assert_called_once_with(suggestions)
+
+    def test_reflect_on_principles_error_handling(self):
+        # Mock discussion history
+        discussion_history = [
+            {"expert": "Analyst", "response": "We should focus more on data-driven decisions."},
+        ]
+
+        # Mock LLM response to raise an exception
+        self.llm_pool.generate_response.side_effect = Exception("API Error")
+
+        with self.assertRaises(ReflectionError):
+            self.reflector.reflect_on_principles(discussion_history)
+
+    def test_parse_reflection_response_error_handling(self):
+        invalid_response = "Invalid response format"
+        with self.assertRaises(ReflectionError):
+            self.reflector._parse_reflection_response(invalid_response)
 
 if __name__ == '__main__':
     unittest.main()
