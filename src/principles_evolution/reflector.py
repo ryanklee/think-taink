@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Union
 import logging
 from src.heuristics.principles import Principles
 from src.llm_pool.llm_pool import LLMPool
@@ -51,12 +51,12 @@ class Reflector:
         prompt += "\nSuggest improvements, additions, or removals to these principles based on the discussion."
         return prompt
 
-    def _parse_reflection_response(self, response: str) -> Dict[str, str]:
+    def _parse_reflection_response(self, response: Union[str, List[Dict[str, str]]]) -> Dict[str, str]:
         """
         Parse the reflection response into a dictionary of suggestions.
     
         Args:
-            response (str): The raw reflection response from the LLM.
+            response (Union[str, List[Dict[str, str]]]): The raw reflection response from the LLM.
     
         Returns:
             Dict[str, str]: A dictionary of parsed suggestions.
@@ -65,6 +65,9 @@ class Reflector:
             ReflectionError: If the response cannot be parsed into suggestions.
         """
         suggestions = {}
+        if isinstance(response, list):
+            response = response[0].get('response', '')
+        
         for line in response.split('\n'):
             if ':' in line:
                 key, value = line.split(':', 1)
