@@ -20,12 +20,17 @@ class Moderator:
             while self.current_turn < self.max_turns:
                 for expert in self.llm_pool.get_expert_names():
                     expert_prompt = self.llm_pool.get_expert_prompt(expert)
-                    response = self.llm_pool.generate_response(f"{expert_prompt}\n\nQuestion: {input_text}")
-                    evaluated_response = self.principles.evaluate_response(response[0]['response'])
-                    discussion.append({"expert": expert, "response": evaluated_response})
-                    self.current_turn += 1
-                    if self.current_turn >= self.max_turns:
-                        break
+                    try:
+                        response = self.llm_pool.generate_response(f"{expert_prompt}\n\nQuestion: {input_text}")
+                        evaluated_response = self.principles.evaluate_response(response[0]['response'])
+                        discussion.append({"expert": expert, "response": evaluated_response})
+                        self.current_turn += 1
+                        if self.current_turn >= self.max_turns:
+                            break
+                    except Exception as e:
+                        raise ModerationError(f"Error generating response for {expert}: {str(e)}")
+                if self.current_turn >= self.max_turns:
+                    break
                 input_text = self._summarize_current_discussion(discussion)
             
             # Reflect on principles after the discussion

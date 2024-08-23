@@ -15,14 +15,22 @@ class TestModerator(unittest.TestCase):
         input_text = "What are the ethical implications of AI?"
         self.llm_pool.get_expert_names.return_value = ["Analyst", "Ethicist"]
         self.llm_pool.generate_response.side_effect = [
-            [{"response": "Sample response"}],  # For expert responses
-            [{"response": "Sample response"}],
+            [{"response": "Sample response"}],  # For Analyst
+            [{"response": "Sample response"}],  # For Ethicist
             [{"response": "Summary of discussion"}],  # For _summarize_current_discussion
+            [{"response": "Sample response"}],  # For Analyst (2nd turn)
+            [{"response": "Sample response"}],  # For Ethicist (2nd turn)
+            [{"response": "Final summary"}],  # For _summarize_current_discussion
             [{"response": "principle1: Updated description 1\nprinciple2: New description 2"}]  # For reflect_on_principles
         ]
         self.principles.evaluate_response.return_value = {"relevance": 0.8, "originality": 0.7}
 
-        discussion = self.moderator.start_discussion(input_text)
+        try:
+            discussion = self.moderator.start_discussion(input_text)
+            self.assertEqual(len(discussion), 4)  # 2 experts * 2 turns
+            self.assertEqual(self.moderator.current_turn, 4)
+        except ModerationError as e:
+            self.fail(f"ModerationError raised: {str(e)}")
 
         self.assertEqual(len(discussion), 2)  # Two experts
         self.assertEqual(self.moderator.current_turn, 2)
