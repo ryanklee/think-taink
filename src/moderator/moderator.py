@@ -3,6 +3,7 @@ from src.llm_pool.llm_pool import LLMPool
 from src.heuristics.principles import Principles
 from src.principles_evolution.reflector import Reflector
 from src.llm_pool.pool_evolution import PoolEvolution
+from src.utils.exceptions import ModerationError
 
 class Moderator:
     def __init__(self, llm_pool: LLMPool, principles: Principles):
