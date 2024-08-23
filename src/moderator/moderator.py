@@ -37,6 +37,13 @@ class Moderator:
                     input_text = self._summarize_current_discussion(discussion)
                 except Exception as e:
                     logging.error(f"Error summarizing discussion: {str(e)}")
+                    raise ModerationError(f"Error summarizing discussion: {str(e)}")
+                if self.current_turn >= self.max_turns:
+                    break
+                try:
+                    input_text = self._summarize_current_discussion(discussion)
+                except Exception as e:
+                    logging.error(f"Error summarizing discussion: {str(e)}")
                     return discussion  # Return the discussion without summary if an error occurs
             
             # Reflect on principles after the discussion
