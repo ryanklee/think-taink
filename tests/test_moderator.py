@@ -14,7 +14,12 @@ class TestModerator(unittest.TestCase):
     def test_start_discussion(self):
         input_text = "What are the ethical implications of AI?"
         self.llm_pool.get_expert_names.return_value = ["Analyst", "Ethicist"]
-        self.llm_pool.generate_response.return_value = [{"response": "Sample response"}]
+        self.llm_pool.generate_response.side_effect = [
+            [{"response": "Sample response"}],  # For expert responses
+            [{"response": "Sample response"}],
+            [{"response": "Summary of discussion"}],  # For _summarize_current_discussion
+            [{"response": "principle1: Updated description 1\nprinciple2: New description 2"}]  # For reflect_on_principles
+        ]
         self.principles.evaluate_response.return_value = {"relevance": 0.8, "originality": 0.7}
 
         discussion = self.moderator.start_discussion(input_text)

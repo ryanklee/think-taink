@@ -67,6 +67,8 @@ class Reflector:
         suggestions = {}
         if isinstance(response, list):
             response = response[0].get('response', '')
+        elif isinstance(response, dict):
+            response = response.get('response', '')
         
         for line in response.split('\n'):
             if ':' in line:
