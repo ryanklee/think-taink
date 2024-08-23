@@ -35,13 +35,17 @@ def test_generate_response(mock_generate_response, llm_pool):
     input_text = "Test question"
     responses = llm_pool.generate_response(input_text)
     
-    assert len(responses) == 5  # Updated to match the new number of experts
-    for response in responses:
+    assert len(responses) == 6  # Updated to include the data usage note
+    for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
         assert response["response"] == "Mocked response"
 
-    assert mock_generate_response.call_count == 5  # Updated to match the new number of experts
+    # Check the data usage note
+    assert responses[-1]["expert"] == "System"
+    assert "data usage note" in responses[-1]["response"].lower()
+
+    assert mock_generate_response.call_count == 5  # The number of expert calls remains the same
 
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
 def test_generate_response_for_each_expert(expert, llm_pool):
@@ -76,13 +80,17 @@ def test_generate_response_error_handling(mock_generate_response, llm_pool):
     input_text = "Test question"
     responses = llm_pool.generate_response(input_text)
     
-    assert len(responses) == 5  # Updated to match the new number of experts
-    for response in responses:
+    assert len(responses) == 6  # Updated to include the data usage note
+    for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
         assert "API Error" in response["response"]
 
-    assert mock_generate_response.call_count == 5  # Updated to match the new number of experts
+    # Check the data usage note
+    assert responses[-1]["expert"] == "System"
+    assert "data usage note" in responses[-1]["response"].lower()
+
+    assert mock_generate_response.call_count == 5  # The number of expert calls remains the same
 
 def test_get_expert_names(llm_pool):
     expert_names = llm_pool.get_expert_names()
@@ -143,7 +151,9 @@ class TestLLMPool(unittest.TestCase):
     def test_generate_response(self, mock_create):
         mock_create.return_value = MagicMock(choices=[MagicMock(text="Test response")])
         responses = self.llm_pool.generate_response("Test input")
-        self.assertEqual(len(responses), len(self.llm_pool.experts))
+        self.assertEqual(len(responses), len(self.llm_pool.experts) + 1)  # +1 for the data usage note
+        self.assertEqual(responses[-1]["expert"], "System")
+        self.assertIn("data usage note", responses[-1]["response"].lower())
         for response in responses:
             self.assertIn("expert", response)
             self.assertIn("response", response)
