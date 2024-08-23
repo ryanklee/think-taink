@@ -37,7 +37,7 @@ def test_short_input_after_processing(input_processor):
     input_text = "a b c"
     with pytest.raises(InputProcessingError) as excinfo:
         input_processor.process(input_text)
-    assert str(excinfo.value) == "Input text is too short. Minimum length is 5 characters."
+    assert str(excinfo.value) == "Input text is too short. Minimum length is 5 non-whitespace characters."
 
 def test_valid_short_input(input_processor):
     input_text = "abcde"
@@ -83,7 +83,7 @@ class TestInputProcessor(unittest.TestCase):
         input_text = "a b c"
         with self.assertRaises(InputProcessingError) as context:
             self.processor.process(input_text)
-        self.assertEqual(str(context.exception), "Input text is too short. Minimum length is 5 characters.")
+        self.assertEqual(str(context.exception), "Input text is too short. Minimum length is 5 non-whitespace characters.")
 
     def test_input_with_only_spaces(self):
         input_text = "     "
