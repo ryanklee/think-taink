@@ -27,7 +27,7 @@ class TestModerator(unittest.TestCase):
         discussion = list(self.moderator.start_discussion_stream(input_text))
         self.assertEqual(len(discussion), 4)  # 2 experts * 2 turns
         self.assertEqual(self.moderator.current_turn, 4)
-        self.llm_pool.generate_response.assert_called()
+        self.llm_pool.generate_response_stream.assert_called()
         self.principles.evaluate_response.assert_called()
 
     def test_start_discussion_error_handling(self):
@@ -36,15 +36,7 @@ class TestModerator(unittest.TestCase):
         self.llm_pool.generate_response_stream.side_effect = Exception("API Error")
 
         with self.assertRaises(ModerationError):
-            self.moderator.start_discussion(input_text)
-
-    def test_start_discussion_error_handling(self):
-        input_text = "What are the ethical implications of AI?"
-        self.llm_pool.get_expert_names.return_value = ["Analyst", "Ethicist"]
-        self.llm_pool.generate_response_stream.side_effect = Exception("API Error")
-
-        with self.assertRaises(ModerationError):
-            self.moderator.start_discussion(input_text)
+            list(self.moderator.start_discussion_stream(input_text))
 
     def test_summarize_discussion(self):
         discussion = [
@@ -68,7 +60,7 @@ class TestModerator(unittest.TestCase):
         intervention = self.moderator.intervene(discussion)
 
         self.assertEqual(intervention, "Let's refocus on the main topic")
-        self.llm_pool.generate_response.assert_called_once()
+        self.llm_pool.generate_response_stream.assert_called_once()
 
     @patch('src.principles_evolution.reflector.Reflector.reflect_on_principles')
     def test_reflect_on_principles(self, mock_reflect):
@@ -93,35 +85,6 @@ class TestModerator(unittest.TestCase):
         self.moderator._evolve_expert_pool(discussion)
 
         mock_evolve.assert_called_once_with(discussion)
-
-    def test_start_discussion_error_handling(self):
-        input_text = "What are the ethical implications of AI?"
-        self.llm_pool.generate_response_stream.side_effect = Exception("API Error")
-
-        with self.assertRaises(ModerationError):
-            self.moderator.start_discussion(input_text)
-
-    def test_summarize_discussion(self):
-        discussion = [
-            {"expert": "Analyst", "response": "This is an analysis."},
-            {"expert": "Ethicist", "response": "These are ethical considerations."}
-        ]
-        self.llm_pool.generate_response_stream.return_value = iter([{"expert": "System", "response": "Summary of the discussion"}])
-
-        summary = self.moderator.summarize_discussion(discussion)
-        self.assertEqual(summary, "Summary of the discussion")
-        self.llm_pool.generate_response.assert_called_once()
-
-    def test_intervene(self):
-        discussion = [
-            {"expert": "Analyst", "response": "Off-topic response"},
-            {"expert": "Ethicist", "response": "Another off-topic response"}
-        ]
-        self.llm_pool.generate_response_stream.return_value = iter([{"expert": "System", "response": "Let's refocus on the main topic"}])
-
-        intervention = self.moderator.intervene(discussion)
-        self.assertEqual(intervention, [{"response": "Let's refocus on the main topic"}])
-        self.llm_pool.generate_response.assert_called_once()
 
 if __name__ == '__main__':
     unittest.main()
