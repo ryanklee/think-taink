@@ -30,20 +30,20 @@
             expertResponse = '';
         }
         
-        try {
-            // Try to parse the response as JSON
-            const jsonResponse = JSON.parse(responseText);
-            expertResponse += JSON.stringify(jsonResponse, null, 2);
-        } catch (e) {
-            // If it's not valid JSON, treat it as a string
-            expertResponse += responseText;
-        }
+        // Always treat the response as a string
+        expertResponse += responseText;
         
         if (responseDiv.lastChild) {
             responseDiv.lastChild.innerHTML = `<strong>${currentExpert}:</strong> <pre>${expertResponse}</pre>`;
         } else {
             responseDiv.innerHTML = `<p><strong>${currentExpert}:</strong> <pre>${expertResponse}</pre></p>`;
         }
+    };
+
+    eventSource.onerror = function(event) {
+        console.error("EventSource failed:", event);
+        eventSource.close();
+        responseDiv.innerHTML += `<p><strong>Error:</strong> Connection to server lost. Please refresh the page and try again.</p>`;
     };
 
     eventSource.onerror = function(event) {
