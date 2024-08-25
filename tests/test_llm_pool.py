@@ -90,7 +90,7 @@ def test_generate_response_stream_error_handling(mock_generate_response_stream, 
     assert responses[-1]["expert"] == "System"
     assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
 
-    assert mock_generate_response.call_count == 5  # The number of expert calls remains the same
+    assert mock_generate_response_stream.call_count == 5  # The number of expert calls remains the same
 
 def test_get_expert_names(llm_pool):
     expert_names = llm_pool.get_expert_names()
