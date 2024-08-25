@@ -16,6 +16,8 @@ class LLMPool:
         
         self.api = OpenAIAPI(api_key, model=config.get('model', 'gpt-4o-mini'))
         self.temperature = config.get('temperature', 0.7)
+        self.max_tokens = config.get('max_tokens', 4096)
+        self.temperature = config.get('temperature', 0.7)
         self.max_tokens = config.get('max_tokens', 4096)  # Updated to match gpt-4o-mini's max output tokens
         self.context_window = 128000  # Context window for gpt-4o-mini
         logger.debug(f"LLMPool initialized with model: {self.api.model}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")

@@ -29,9 +29,7 @@ def llm_pool():
         "model": "gpt-3.5-turbo",
         "temperature": 0.7,
         "max_tokens": 150,
-        "openai": {
-            "api_key": "test_api_key"
-        }
+        "api_key": "test_api_key"
     }
     return LLMPool(config)
 
@@ -126,9 +124,7 @@ def test_llm_pool_configuration(mock_openai_api):
         "model": "gpt-4",
         "temperature": 0.5,
         "max_tokens": 200,
-        "openai": {
-            "api_key": "test_api_key"
-        }
+        "api_key": "test_api_key"
     }
     llm_pool = LLMPool(config)
     
