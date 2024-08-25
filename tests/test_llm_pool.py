@@ -54,7 +54,7 @@ def test_generate_response_stream(mock_openai_api, llm_pool):
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert "Test response" in response["response"]
+        assert response["response"] == "Test response"
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
@@ -68,8 +68,9 @@ def test_generate_response_stream(mock_openai_api, llm_pool):
 @patch('src.llm_pool.llm_pool.OpenAIAPI')
 def test_generate_response_stream_for_each_expert(mock_openai_api, expert, llm_pool):
     mock_generate_response_stream = MagicMock()
-    mock_generate_response_stream.return_value = iter([{"response": f"{expert} response"}])
+    mock_generate_response_stream.return_value = iter(["Test response"])
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+    mock_openai_api.return_value.is_test_environment = True
 
     # Replace the OpenAIAPI instance in llm_pool with our mock
     llm_pool.api = mock_openai_api.return_value
@@ -78,13 +79,14 @@ def test_generate_response_stream_for_each_expert(mock_openai_api, expert, llm_p
     responses = list(llm_pool.generate_response_stream(input_text))
     
     expert_response = next(r for r in responses if r["expert"] == expert)
-    assert f"{expert} response" in expert_response["response"]
+    assert expert_response["response"] == "Test response"
 
 @patch('src.llm_pool.llm_pool.OpenAIAPI')
 def test_generate_response_stream_error_handling(mock_openai_api, llm_pool):
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.side_effect = Exception("API Error")
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+    mock_openai_api.return_value.is_test_environment = False
     
     # Replace the OpenAIAPI instance in llm_pool with our mock
     llm_pool.api = mock_openai_api.return_value
@@ -96,11 +98,13 @@ def test_generate_response_stream_error_handling(mock_openai_api, llm_pool):
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert "Error generating response" in response["response"]
+        assert "Error generating response: API Error" in response["response"]
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
     assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
+
+    assert mock_generate_response_stream.call_count == 5  # The number of expert calls remains the same
 
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
 @patch('src.llm_pool.openai_api.OpenAIAPI')
