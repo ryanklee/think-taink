@@ -12,5 +12,8 @@
         "ms-python.python",
         "ms-python.vscode-pylance"
     ],
-    "forwardPorts": [5000]
+    "forwardPorts": [5000],
+    "remoteEnv": {
+        "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}"
+    }
 }

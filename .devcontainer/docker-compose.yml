@@ -8,3 +8,5 @@ services:
     volumes:
       - ..:/app:cached
     command: /bin/sh -c "while sleep 1000; do :; done"
+    environment:
+      - OPENAI_API_KEY
