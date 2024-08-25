@@ -43,8 +43,8 @@ class TestModerator(unittest.TestCase):
             if time.time() - start_time > 10:  # 10 second timeout
                 self.fail("Test timed out")
 
-        self.assertEqual(len(discussion), 4)  # 2 experts * 2 turns
-        self.assertEqual(self.moderator.current_turn, 4)
+        self.assertEqual(len(discussion), 6)  # 2 experts * 2 turns + 2 summaries
+        self.assertEqual(self.moderator.current_turn, 2)
         self.llm_pool.generate_response_stream.assert_called()
         self.principles.evaluate_response.assert_called()
         
@@ -55,14 +55,13 @@ class TestModerator(unittest.TestCase):
         self.llm_pool.get_expert_names.return_value = ["Analyst", "Ethicist"]
         self.llm_pool.generate_response_stream.side_effect = Exception("API Error")
 
-        with self.assertRaises(ModerationError):
-            with unittest.mock.patch('src.moderator.moderator.logger') as mock_logger:
-                try:
-                    list(self.moderator.start_discussion_stream(input_text))
-                except ModerationError as e:
-                    # Log the error and re-raise it
-                    mock_logger.error.assert_called_with("Unexpected error in start_discussion_stream: API Error")
-                    raise e
+        discussion = list(self.moderator.start_discussion_stream(input_text))
+        
+        self.assertEqual(len(discussion), 3)  # 2 error responses + 1 data usage note
+        for response in discussion[:-1]:
+            self.assertIn("Error generating response", response["response"])
+        self.assertEqual(discussion[-1]["expert"], "System")
+        self.assertIn("data sent to the openai api will not be used", discussion[-1]["response"].lower())
 
     def test_summarize_discussion(self):
         discussion = [
