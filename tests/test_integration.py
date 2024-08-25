@@ -35,6 +35,7 @@ def test_generate_response_stream_integration(llm_pool, mock_openai_api):
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
     mock_openai_api.return_value.is_test_environment = True
     llm_pool.api = mock_openai_api.return_value
+    llm_pool.api.is_test_environment = True
 
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))

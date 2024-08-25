@@ -45,6 +45,7 @@ class TestLLMPool:
         mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
         mock_openai_api.return_value.is_test_environment = True
         llm_pool.api = mock_openai_api.return_value
+        llm_pool.api.is_test_environment = True
         mock_openai_api.return_value.is_test_environment = True
         
         llm_pool.api = mock_openai_api.return_value
