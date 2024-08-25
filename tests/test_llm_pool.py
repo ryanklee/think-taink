@@ -136,20 +136,24 @@ def test_llm_pool_configuration(mock_openai_api):
     assert llm_pool.temperature == 0.5
     assert llm_pool.max_tokens == 200
 
-@patch('src.llm_pool.openai_api.OpenAIAPI')
+@patch('src.llm_pool.llm_pool.OpenAIAPI')
 def test_generate_response_stream_error_handling(mock_openai_api, llm_pool):
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.side_effect = Exception("API Error")
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
-    
+    mock_openai_api.return_value.is_test_environment = False
+
+    # Replace the OpenAIAPI instance in llm_pool with our mock
+    llm_pool.api = mock_openai_api.return_value
+
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
-    
-    assert len(responses) == 6  # Updated to include the data usage note
+
+    assert len(responses) == 6  # 5 experts + 1 data usage note
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert "API Error" in response["response"]
+        assert "Error generating response: API Error" in response["response"]
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
