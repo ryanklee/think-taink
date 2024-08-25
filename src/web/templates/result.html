@@ -29,7 +29,7 @@
         }
         expertResponse += data.response;
         if (responseDiv.lastChild) {
-            responseDiv.lastChild.textContent = `${currentExpert}: ${expertResponse}`;
+            responseDiv.lastChild.innerHTML = `<strong>${currentExpert}:</strong> ${expertResponse}`;
         } else {
             responseDiv.innerHTML = `<p><strong>${currentExpert}:</strong> ${expertResponse}</p>`;
         }

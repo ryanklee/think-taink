@@ -28,7 +28,11 @@ def stream_response():
         processed_input = current_app.input_processor.process(question)
         def generate():
             for chunk in current_app.moderator.start_discussion_stream(processed_input):
-                yield f"data: {json.dumps(chunk)}\n\n"
+                if isinstance(chunk['response'], dict):
+                    response_text = chunk['response'].get('response', str(chunk['response']))
+                else:
+                    response_text = chunk['response']
+                yield f"data: {json.dumps({'expert': chunk['expert'], 'response': response_text})}\n\n"
         return Response(stream_with_context(generate()), mimetype='text/event-stream')
     except Exception as e:
         return jsonify({"error": str(e)}), 500
