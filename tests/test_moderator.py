@@ -33,6 +33,8 @@ class TestModerator(unittest.TestCase):
             iter([{"expert": "Analyst", "response": "Sample response"}]),
             iter([{"expert": "Ethicist", "response": "Sample response"}]),
             iter([{"expert": "System", "response": "Final summary"}]),
+            iter([{"expert": "System", "response": "Reflection on principles"}]),
+            iter([{"expert": "System", "response": "Expert pool evolution"}]),
         ]
         self.principles.evaluate_response.return_value = {"relevance": 0.8, "originality": 0.7}
 
@@ -43,7 +45,7 @@ class TestModerator(unittest.TestCase):
             if time.time() - start_time > 10:  # 10 second timeout
                 self.fail("Test timed out")
 
-        self.assertEqual(len(discussion), 6)  # 2 experts * 2 turns + 2 summaries
+        self.assertEqual(len(discussion), 8)  # 2 experts * 2 turns + 2 summaries + reflection + evolution
         self.assertEqual(self.moderator.current_turn, 2)
         self.llm_pool.generate_response_stream.assert_called()
         self.principles.evaluate_response.assert_called()
@@ -57,11 +59,13 @@ class TestModerator(unittest.TestCase):
 
         discussion = list(self.moderator.start_discussion_stream(input_text))
         
-        self.assertEqual(len(discussion), 3)  # 2 error responses + 1 data usage note
-        for response in discussion[:-1]:
-            self.assertIn("Error generating response", response["response"])
-        self.assertEqual(discussion[-1]["expert"], "System")
-        self.assertIn("data sent to the openai api will not be used", discussion[-1]["response"].lower())
+        self.assertEqual(len(discussion), 5)  # 2 error responses + 1 summary error + reflection + evolution
+        for response in discussion[:3]:
+            self.assertIn("Error", response["response"])
+        self.assertEqual(discussion[3]["expert"], "System")
+        self.assertIn("Reflecting on principles", discussion[3]["response"])
+        self.assertEqual(discussion[4]["expert"], "System")
+        self.assertIn("Evolving expert pool", discussion[4]["response"])
 
     def test_summarize_discussion(self):
         discussion = [

@@ -35,13 +35,16 @@ def llm_pool():
     }
     return LLMPool(config)
 
-@patch('src.llm_pool.openai_api.OpenAIAPI')
+@patch('src.llm_pool.llm_pool.OpenAIAPI')
 def test_generate_response_stream(mock_openai_api, llm_pool):
     log_stream = setup_logger()
     
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = iter([{"response": "Mocked response"}])
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+    
+    # Replace the OpenAIAPI instance in llm_pool with our mock
+    llm_pool.api = mock_openai_api.return_value
     
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
@@ -61,11 +64,14 @@ def test_generate_response_stream(mock_openai_api, llm_pool):
     print(log_stream.getvalue())  # Print the captured logs
 
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
-@patch('src.llm_pool.openai_api.OpenAIAPI')
+@patch('src.llm_pool.llm_pool.OpenAIAPI')
 def test_generate_response_stream_for_each_expert(mock_openai_api, expert, llm_pool):
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = iter([{"response": f"{expert} response"}])
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+
+    # Replace the OpenAIAPI instance in llm_pool with our mock
+    llm_pool.api = mock_openai_api.return_value
 
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
@@ -73,11 +79,14 @@ def test_generate_response_stream_for_each_expert(mock_openai_api, expert, llm_p
     expert_response = next(r for r in responses if r["expert"] == expert)
     assert expert_response["response"] == f"{expert} response"
 
-@patch('src.llm_pool.openai_api.OpenAIAPI')
+@patch('src.llm_pool.llm_pool.OpenAIAPI')
 def test_generate_response_stream_error_handling(mock_openai_api, llm_pool):
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.side_effect = Exception("API Error")
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+    
+    # Replace the OpenAIAPI instance in llm_pool with our mock
+    llm_pool.api = mock_openai_api.return_value
     
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
