@@ -16,7 +16,7 @@
     let currentExpert = '';
     let expertResponse = '';
 
-    const eventSource = new EventSource("{{ url_for('main.stream_response') }}");
+    const eventSource = new EventSource("{{ url_for('main.stream_response') }}?question={{ question|urlencode }}");
     
     eventSource.onmessage = function(event) {
         const data = JSON.parse(event.data);
@@ -28,7 +28,11 @@
             expertResponse = '';
         }
         expertResponse += data.response;
-        responseDiv.lastChild.textContent = `${currentExpert}: ${expertResponse}`;
+        if (responseDiv.lastChild) {
+            responseDiv.lastChild.textContent = `${currentExpert}: ${expertResponse}`;
+        } else {
+            responseDiv.innerHTML = `<p><strong>${currentExpert}:</strong> ${expertResponse}</p>`;
+        }
     };
 
     eventSource.onerror = function(event) {
@@ -39,7 +43,7 @@
     speedControl.addEventListener('input', function() {
         const speed = 11 - this.value;  // Invert the scale so that higher values mean faster
         eventSource.close();
-        eventSource = new EventSource(`{{ url_for('main.stream_response') }}?speed=${speed}`);
+        eventSource = new EventSource(`{{ url_for('main.stream_response') }}?question={{ question|urlencode }}&speed=${speed}`);
     });
 </script>
 {% endblock %}

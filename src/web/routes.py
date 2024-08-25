@@ -13,8 +13,13 @@ def ask_question():
     form = QuestionForm()
     if form.validate_on_submit():
         question = form.question.data
-        return render_template('result.html', question=question)
+        return redirect(url_for('main.result', question=question))
     return render_template('ask_question.html', form=form)
+
+@bp.route('/result')
+def result():
+    question = request.args.get('question')
+    return render_template('result.html', question=question)
 
 @bp.route('/stream', methods=['POST'])
 def stream_response():
