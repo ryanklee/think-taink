@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Generator
 import logging
 from src.llm_pool.llm_pool import LLMPool
 from src.heuristics.principles import Principles
