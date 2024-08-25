@@ -14,7 +14,7 @@ class PoolEvolution:
         """
         try:
             evolution_prompt = self._generate_evolution_prompt(discussion_history)
-            evolution_response = self.llm_pool.generate_response(evolution_prompt)
+            evolution_response = next(self.llm_pool.generate_response_stream(evolution_prompt))['response']
             suggestions = self._parse_evolution_response(evolution_response)
             self._apply_pool_changes(suggestions)
         except Exception as e:

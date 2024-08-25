@@ -24,8 +24,8 @@ class Reflector:
         """
         try:
             reflection_prompt = self._generate_reflection_prompt(discussion_history)
-            reflection_response = self.llm_pool.generate_response(reflection_prompt)
-            suggestions = self._parse_reflection_response(reflection_response[0]['response'])
+            reflection_response = next(self.llm_pool.generate_response_stream(reflection_prompt))['response']
+            suggestions = self._parse_reflection_response(reflection_response)
             self.principles.apply_reflector_suggestions(suggestions)
             return suggestions
         except Exception as e:

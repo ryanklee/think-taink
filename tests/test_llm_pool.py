@@ -35,7 +35,7 @@ def test_generate_response_stream(mock_generate_response_stream, llm_pool):
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
     
-    assert len(responses) == 6  # Updated to include the data usage note
+    assert len(responses) == 6  # 5 experts + 1 data usage note
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
@@ -45,7 +45,7 @@ def test_generate_response_stream(mock_generate_response_stream, llm_pool):
     assert responses[-1]["expert"] == "System"
     assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
 
-    assert mock_generate_response.call_count == 5  # The number of expert calls remains the same
+    assert mock_generate_response_stream.call_count == 5  # The number of expert calls remains the same
 
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
 def test_generate_response_stream_for_each_expert(expert, llm_pool):

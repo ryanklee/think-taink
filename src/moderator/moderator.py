@@ -73,20 +73,20 @@ class Moderator:
         for entry in discussion:
             summary_prompt += f"{entry['expert']}: {entry['response']}\n\n"
         summary_prompt += "Final summary:"
-        summary = self.llm_pool.generate_response(summary_prompt)[0]['response']
+        summary = next(self.llm_pool.generate_response_stream(summary_prompt))['response']
         return summary
 
     def _summarize_current_discussion(self, discussion: List[Dict]) -> str:
         summary_prompt = "Summarize the following discussion points concisely:"
         for entry in discussion[-len(self.llm_pool.get_expert_names()):]:
             summary_prompt += f"\n{entry['expert']}: {entry['response']}"
-        return self.llm_pool.generate_response(summary_prompt)[0]['response']
+        return next(self.llm_pool.generate_response_stream(summary_prompt))['response']
 
     def intervene(self, discussion: List[Dict]) -> str:
         intervention_prompt = "As a moderator, provide guidance to keep the discussion on track and productive based on the following discussion points:"
         for entry in discussion[-3:]:  # Consider the last 3 entries
             intervention_prompt += f"\n{entry['expert']}: {entry['response']}"
-        return self.llm_pool.generate_response(intervention_prompt)
+        return next(self.llm_pool.generate_response_stream(intervention_prompt))['response']
 
     def _reflect_on_principles(self, discussion: List[Dict]):
         suggestions = self.reflector.reflect_on_principles(discussion)

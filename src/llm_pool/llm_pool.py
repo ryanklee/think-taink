@@ -63,14 +63,16 @@ class LLMPool:
         for expert in self.experts:
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
             try:
+                response = ""
                 for response_chunk in self.api.generate_response_stream(
                     prompt, 
                     max_tokens=4096 if self.api.model == 'gpt-4o' else self.max_tokens
                 ):
-                    yield {
-                        "expert": expert["name"],
-                        "response": response_chunk
-                    }
+                    response += response_chunk
+                yield {
+                    "expert": expert["name"],
+                    "response": response
+                }
             except Exception as e:
                 yield {
                     "expert": expert["name"],
