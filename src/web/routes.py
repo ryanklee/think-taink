@@ -21,9 +21,9 @@ def result():
     question = request.args.get('question')
     return render_template('result.html', question=question)
 
-@bp.route('/stream', methods=['POST'])
+@bp.route('/stream', methods=['GET', 'POST'])
 def stream_response():
-    question = request.form.get('question')
+    question = request.args.get('question') or request.form.get('question')
     try:
         processed_input = current_app.input_processor.process(question)
         def generate():

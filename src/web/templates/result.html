@@ -16,7 +16,7 @@
     let currentExpert = '';
     let expertResponse = '';
 
-    const eventSource = new EventSource("{{ url_for('main.stream_response') }}?question={{ question|urlencode }}");
+    const eventSource = new EventSource("{{ url_for('main.stream_response', question=question) }}");
     
     eventSource.onmessage = function(event) {
         const data = JSON.parse(event.data);
