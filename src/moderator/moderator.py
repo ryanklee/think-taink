@@ -33,7 +33,8 @@ class Moderator:
                 if self.current_turn >= self.max_turns:
                     break
                 try:
-                    input_text = self._summarize_current_discussion(yield from self._get_last_turn())
+                    last_turn = list(self._get_last_turn())
+                    input_text = self._summarize_current_discussion(last_turn)
                 except Exception as e:
                     logging.error(f"Error summarizing discussion: {str(e)}")
                     yield {"expert": "System", "response": f"Error summarizing discussion: {str(e)}"}
