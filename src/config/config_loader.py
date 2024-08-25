@@ -21,4 +21,10 @@ def load_config():
     if not config['openai']['api_key']:
         raise ValueError("OPENAI_API_KEY environment variable is not set")
     
+    # Log the API key (first few characters) for debugging
+    if config['openai']['api_key']:
+        print(f"API Key loaded (first 5 chars): {config['openai']['api_key'][:5]}...")
+    else:
+        print("API Key not found!")
+    
     return config

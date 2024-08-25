@@ -9,11 +9,17 @@ logger = logging.getLogger(__name__)
 class LLMPool:
     def __init__(self, config: Dict):
         logger.debug("Initializing LLMPool")
-        self.api = OpenAIAPI(config.get('openai', {}).get('api_key', ''), model=config.get('model', 'gpt-4o-mini'))
+        api_key = config.get('openai', {}).get('api_key', '')
+        if not api_key:
+            logger.error("API key is missing in the configuration")
+            raise ValueError("OpenAI API key is missing in the configuration")
+        
+        self.api = OpenAIAPI(api_key, model=config.get('model', 'gpt-4o-mini'))
         self.temperature = config.get('temperature', 0.7)
         self.max_tokens = config.get('max_tokens', 4096)  # Updated to match gpt-4o-mini's max output tokens
         self.context_window = 128000  # Context window for gpt-4o-mini
         logger.debug(f"LLMPool initialized with model: {self.api.model}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")
+        logger.debug(f"API Key (first 5 chars): {api_key[:5]}...")
         self.experts = [
             {"name": "Analyst", "prompt": "You are an analytical expert. Provide a logical and data-driven perspective."},
             {"name": "Creative", "prompt": "You are a creative expert. Think outside the box and provide innovative ideas."},

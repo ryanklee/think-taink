@@ -11,6 +11,15 @@ class OpenAIAPI:
         self.last_request_time = 0
         self.rate_limit_delay = 1  # 1 request per second
         self.is_test_environment = api_key == "test_api_key"
+        
+        # Set the API key for the openai module
+        openai.api_key = self.api_key
+        
+        # Log the API key (first few characters) for debugging
+        if self.api_key:
+            print(f"OpenAIAPI initialized with API Key (first 5 chars): {self.api_key[:5]}...")
+        else:
+            print("OpenAIAPI initialized without API Key!")
 
     def _rate_limit(self):
         current_time = time.time()
