@@ -1,6 +1,8 @@
 import pytest
 from unittest.mock import patch, MagicMock
 import sys
+import io
+import logging
 from pathlib import Path
 from src.llm_pool.llm_pool import LLMPool
 from src.utils.exceptions import LLMPoolError
@@ -11,6 +13,15 @@ sys.path.insert(0, str(project_root))
 
 # Mock the entire openai module
 sys.modules['openai'] = MagicMock()
+
+# Set up logging
+def setup_logger():
+    log_stream = io.StringIO()
+    handler = logging.StreamHandler(log_stream)
+    logger = logging.getLogger()
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+    return log_stream
 
 @pytest.fixture
 def llm_pool():

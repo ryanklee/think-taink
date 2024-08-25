@@ -1,15 +1,26 @@
 import unittest
 from unittest.mock import MagicMock, patch
+import io
+import logging
 from src.moderator.moderator import Moderator
 from src.llm_pool.llm_pool import LLMPool
 from src.heuristics.principles import Principles
 from src.utils.exceptions import ModerationError
+
+def setup_logger():
+    log_stream = io.StringIO()
+    handler = logging.StreamHandler(log_stream)
+    logger = logging.getLogger()
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+    return log_stream
 
 class TestModerator(unittest.TestCase):
     def setUp(self):
         self.llm_pool = MagicMock(spec=LLMPool)
         self.principles = MagicMock(spec=Principles)
         self.moderator = Moderator(self.llm_pool, self.principles)
+        self.log_stream = setup_logger()
 
     def test_start_discussion(self):
         input_text = "What are the ethical implications of AI?"

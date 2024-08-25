@@ -6,55 +6,73 @@ from src.principles_evolution.reflector import Reflector
 from src.llm_pool.pool_evolution import PoolEvolution
 from src.utils.exceptions import ModerationError
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 class Moderator:
     def __init__(self, llm_pool: LLMPool, principles: Principles):
+        logger.debug("Initializing Moderator")
         self.llm_pool = llm_pool
         self.principles = principles
         self.reflector = Reflector(principles, llm_pool)
         self.pool_evolution = PoolEvolution(llm_pool)
         self.max_turns = 10
         self.current_turn = 0
+        logger.debug(f"Moderator initialized with max_turns: {self.max_turns}")
 
     def start_discussion_stream(self, input_text: str) -> Generator[Dict[str, str], None, None]:
+        logger.debug(f"Starting discussion stream for input: {input_text[:50]}...")
         try:
             while self.current_turn < self.max_turns:
+                logger.debug(f"Starting turn {self.current_turn + 1}")
                 for expert in self.llm_pool.get_expert_names():
                     expert_prompt = self.llm_pool.get_expert_prompt(expert)
                     try:
+                        logger.debug(f"Generating response for expert: {expert}")
                         for response_chunk in self.llm_pool.generate_response_stream(f"{expert_prompt}\n\nQuestion: {input_text}"):
+                            logger.debug(f"Received response chunk for {expert}")
                             evaluated_chunk = self.principles.evaluate_response(response_chunk['response'])
+                            logger.debug(f"Evaluated response chunk for {expert}")
                             yield {"expert": expert, "response": evaluated_chunk}
                         self.current_turn += 1
+                        logger.debug(f"Completed turn {self.current_turn}")
                         if self.current_turn >= self.max_turns:
+                            logger.debug("Reached max turns, breaking out of expert loop")
                             break
                     except Exception as e:
-                        logging.error(f"Error generating response for {expert}: {str(e)}")
+                        logger.error(f"Error generating response for {expert}: {str(e)}")
                         yield {"expert": expert, "response": f"Error: {str(e)}"}
                 if self.current_turn >= self.max_turns:
+                    logger.debug("Reached max turns, breaking out of main loop")
                     break
                 try:
+                    logger.debug("Getting last turn")
                     last_turn = list(self._get_last_turn())
+                    logger.debug("Summarizing current discussion")
                     input_text = self._summarize_current_discussion(last_turn)
                 except Exception as e:
-                    logging.error(f"Error summarizing discussion: {str(e)}")
+                    logger.error(f"Error summarizing discussion: {str(e)}")
                     yield {"expert": "System", "response": f"Error summarizing discussion: {str(e)}"}
             
             # Reflect on principles after the discussion
             try:
+                logger.debug("Reflecting on principles")
                 yield from self._reflect_on_principles_stream()
             except Exception as e:
-                logging.error(f"Error reflecting on principles: {str(e)}")
+                logger.error(f"Error reflecting on principles: {str(e)}")
                 yield {"expert": "System", "response": f"Error reflecting on principles: {str(e)}"}
             
             # Evolve the expert pool after the discussion
             try:
+                logger.debug("Evolving expert pool")
                 yield from self._evolve_expert_pool_stream()
             except Exception as e:
-                logging.error(f"Error evolving expert pool: {str(e)}")
+                logger.error(f"Error evolving expert pool: {str(e)}")
                 yield {"expert": "System", "response": f"Error evolving expert pool: {str(e)}"}
         except Exception as e:
-            logging.error(f"Unexpected error in start_discussion_stream: {str(e)}")
+            logger.error(f"Unexpected error in start_discussion_stream: {str(e)}")
             yield {"expert": "System", "response": f"Unexpected error: {str(e)}"}
+        logger.debug("Finished discussion stream")
 
     def _get_last_turn(self) -> Generator[Dict[str, str], None, None]:
         for expert in self.llm_pool.get_expert_names():

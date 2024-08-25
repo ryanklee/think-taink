@@ -1,13 +1,19 @@
+import logging
 from typing import Dict, List, Generator
 from src.utils.exceptions import LLMPoolError
 from src.llm_pool.openai_api import OpenAIAPI
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 class LLMPool:
     def __init__(self, config: Dict):
+        logger.debug("Initializing LLMPool")
         self.api = OpenAIAPI(config.get('openai', {}).get('api_key', ''), model=config.get('model', 'gpt-4o-mini'))
         self.temperature = config.get('temperature', 0.7)
         self.max_tokens = config.get('max_tokens', 4096)  # Updated to match gpt-4o-mini's max output tokens
         self.context_window = 128000  # Context window for gpt-4o-mini
+        logger.debug(f"LLMPool initialized with model: {self.api.model}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")
         self.experts = [
             {"name": "Analyst", "prompt": "You are an analytical expert. Provide a logical and data-driven perspective."},
             {"name": "Creative", "prompt": "You are a creative expert. Think outside the box and provide innovative ideas."},
@@ -57,10 +63,13 @@ class LLMPool:
         Raises:
             LLMPoolError: If there's an error generating responses.
         """
+        logger.debug(f"Starting generate_response_stream for input: {input_text[:50]}...")
         if not input_text:
+            logger.error("Input text is empty")
             raise LLMPoolError("Input text cannot be empty")
 
         for expert in self.experts:
+            logger.debug(f"Generating response for expert: {expert['name']}")
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
             try:
                 response = ""
@@ -68,22 +77,26 @@ class LLMPool:
                     prompt, 
                     max_tokens=4096 if self.api.model == 'gpt-4o' else self.max_tokens
                 ):
+                    logger.debug(f"Received response chunk for {expert['name']}")
                     response += response_chunk
+                logger.debug(f"Yielding complete response for {expert['name']}")
                 yield {
                     "expert": expert["name"],
                     "response": response
                 }
             except Exception as e:
+                logger.error(f"Error generating response for {expert['name']}: {str(e)}")
                 yield {
                     "expert": expert["name"],
                     "response": f"Error generating response: {str(e)}"
                 }
         
-        # Yield the data usage note
+        logger.debug("Generating data usage note")
         yield {
             "expert": "System",
             "response": self.data_usage_note
         }
+        logger.debug("Finished generate_response_stream")
 
     def get_expert_names(self) -> List[str]:
         return [expert["name"] for expert in self.experts]
