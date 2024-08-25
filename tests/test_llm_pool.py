@@ -37,6 +37,8 @@ def llm_pool():
 
 @patch('src.llm_pool.openai_api.OpenAIAPI')
 def test_generate_response_stream(mock_openai_api, llm_pool):
+    log_stream = setup_logger()
+    
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = iter([{"response": "Mocked response"}])
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
@@ -55,6 +57,8 @@ def test_generate_response_stream(mock_openai_api, llm_pool):
     assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
 
     assert mock_generate_response_stream.call_count == 5  # The number of expert calls remains the same
+    
+    print(log_stream.getvalue())  # Print the captured logs
 
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
 @patch('src.llm_pool.openai_api.OpenAIAPI')

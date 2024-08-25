@@ -40,6 +40,8 @@ class TestModerator(unittest.TestCase):
         self.assertEqual(self.moderator.current_turn, 4)
         self.llm_pool.generate_response_stream.assert_called()
         self.principles.evaluate_response.assert_called()
+        
+        print(self.log_stream.getvalue())  # Print the captured logs
 
     def test_start_discussion_error_handling(self):
         input_text = "What are the ethical implications of AI?"
