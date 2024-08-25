@@ -1,5 +1,6 @@
 from typing import List, Dict, Generator
 import logging
+import time
 from src.llm_pool.llm_pool import LLMPool
 from src.heuristics.principles import Principles
 from src.principles_evolution.reflector import Reflector
@@ -22,8 +23,15 @@ class Moderator:
 
     def start_discussion_stream(self, input_text: str) -> Generator[Dict[str, str], None, None]:
         logger.debug(f"Starting discussion stream for input: {input_text[:50]}...")
+        start_time = time.time()
+        timeout = 30  # Set a 30-second timeout
+
         try:
             while self.current_turn < self.max_turns:
+                if time.time() - start_time > timeout:
+                    logger.error("Discussion stream timed out")
+                    raise ModerationError("Discussion stream timed out")
+
                 logger.debug(f"Starting turn {self.current_turn + 1}")
                 for expert in self.llm_pool.get_expert_names():
                     expert_prompt = self.llm_pool.get_expert_prompt(expert)
@@ -74,8 +82,9 @@ class Moderator:
                 yield {"expert": "System", "response": f"Error evolving expert pool: {str(e)}"}
         except Exception as e:
             logger.error(f"Unexpected error in start_discussion_stream: {str(e)}")
-            yield {"expert": "System", "response": f"Unexpected error: {str(e)}"}
-        logger.debug("Finished discussion stream")
+            raise ModerationError(f"Unexpected error: {str(e)}")
+        finally:
+            logger.debug("Finished discussion stream")
 
     def _get_last_turn(self) -> Generator[Dict[str, str], None, None]:
         for expert in self.llm_pool.get_expert_names():

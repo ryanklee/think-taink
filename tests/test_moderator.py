@@ -56,7 +56,13 @@ class TestModerator(unittest.TestCase):
         self.llm_pool.generate_response_stream.side_effect = Exception("API Error")
 
         with self.assertRaises(ModerationError):
-            list(self.moderator.start_discussion_stream(input_text))
+            with unittest.mock.patch('src.moderator.moderator.logger') as mock_logger:
+                try:
+                    list(self.moderator.start_discussion_stream(input_text))
+                except ModerationError as e:
+                    # Log the error and re-raise it
+                    mock_logger.error.assert_called_with("Unexpected error in start_discussion_stream: API Error")
+                    raise e
 
     def test_summarize_discussion(self):
         discussion = [
