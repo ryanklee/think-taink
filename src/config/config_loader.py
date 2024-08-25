@@ -26,5 +26,12 @@ def load_config():
         print(f"API Key loaded (first 5 chars): {config['openai']['api_key'][:5]}...")
     else:
         print("API Key not found!")
+
+    # Ensure the 'llm' key exists in the config
+    if 'llm' not in config:
+        config['llm'] = {}
+    
+    # Add the API key to the 'llm' configuration
+    config['llm']['api_key'] = config['openai']['api_key']
     
     return config

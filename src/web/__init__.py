@@ -11,7 +11,7 @@ def create_app(config):
 
     # Initialize components
     app.input_processor = InputProcessor()
-    app.llm_pool = LLMPool(config['llm'])
+    app.llm_pool = LLMPool(config)
     app.principles = Principles(config['principles']['version_control_file'])
     app.moderator = Moderator(app.llm_pool, app.principles)
 

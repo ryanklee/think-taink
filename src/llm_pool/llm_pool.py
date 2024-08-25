@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 class LLMPool:
     def __init__(self, config: Dict):
         logger.debug("Initializing LLMPool")
-        api_key = config.get('openai', {}).get('api_key', '')
+        api_key = config.get('api_key')
         if not api_key:
             logger.error("API key is missing in the configuration")
             raise ValueError("OpenAI API key is missing in the configuration")
