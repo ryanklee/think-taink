@@ -79,7 +79,7 @@ class LLMPool:
                     max_tokens=4096 if self.api.model == 'gpt-4o' else self.max_tokens
                 ):
                     logger.debug(f"Received response chunk for {expert['name']}")
-                    response += response_chunk['response']
+                    response += response_chunk
                 logger.debug(f"Yielding complete response for {expert['name']}")
                 yield {
                     "expert": expert["name"],

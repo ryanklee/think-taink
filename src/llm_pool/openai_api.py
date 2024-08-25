@@ -40,24 +40,25 @@ class OpenAIAPI:
         self._rate_limit()
         if self.is_test_environment:
             yield "Test response"
-        else:
-            try:
-                openai.api_key = self.api_key
-                response = openai.ChatCompletion.create(
-                    model=self.model,
-                    messages=[{"role": "user", "content": prompt}],
-                    max_tokens=max_tokens,
-                    stream=True
-                )
-                for chunk in response:
-                    if chunk.choices[0].delta.get("content"):
-                        yield chunk.choices[0].delta.content
-            except openai.error.RateLimitError:
-                raise LLMPoolError("Rate limit exceeded. Please try again later.")
-            except openai.error.APIError as e:
-                raise LLMPoolError(f"OpenAI API error: {str(e)}")
-            except Exception as e:
-                raise LLMPoolError(f"Unexpected error: {str(e)}")
+            return
+
+        try:
+            openai.api_key = self.api_key
+            response = openai.ChatCompletion.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=max_tokens,
+                stream=True
+            )
+            for chunk in response:
+                if chunk.choices[0].delta.get("content"):
+                    yield chunk.choices[0].delta.content
+        except openai.error.RateLimitError:
+            raise LLMPoolError("Rate limit exceeded. Please try again later.")
+        except openai.error.APIError as e:
+            raise LLMPoolError(f"OpenAI API error: {str(e)}")
+        except Exception as e:
+            raise LLMPoolError(f"Unexpected error: {str(e)}")
 
     def set_model(self, model):
         """
