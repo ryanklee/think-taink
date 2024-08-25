@@ -41,7 +41,7 @@ class TestModerator(unittest.TestCase):
     def test_start_discussion_error_handling(self):
         input_text = "What are the ethical implications of AI?"
         self.llm_pool.get_expert_names.return_value = ["Analyst", "Ethicist"]
-        self.llm_pool.generate_response.side_effect = Exception("API Error")
+        self.llm_pool.generate_response_stream.side_effect = Exception("API Error")
 
         with self.assertRaises(ModerationError):
             self.moderator.start_discussion(input_text)
@@ -106,7 +106,7 @@ class TestModerator(unittest.TestCase):
             {"expert": "Analyst", "response": "This is an analysis."},
             {"expert": "Ethicist", "response": "These are ethical considerations."}
         ]
-        self.llm_pool.generate_response.return_value = [{"response": "Summary of the discussion"}]
+        self.llm_pool.generate_response_stream.return_value = iter([{"expert": "System", "response": "Summary of the discussion"}])
 
         summary = self.moderator.summarize_discussion(discussion)
         self.assertEqual(summary, "Summary of the discussion")
@@ -117,7 +117,7 @@ class TestModerator(unittest.TestCase):
             {"expert": "Analyst", "response": "Off-topic response"},
             {"expert": "Ethicist", "response": "Another off-topic response"}
         ]
-        self.llm_pool.generate_response.return_value = [{"response": "Let's refocus on the main topic"}]
+        self.llm_pool.generate_response_stream.return_value = iter([{"expert": "System", "response": "Let's refocus on the main topic"}])
 
         intervention = self.moderator.intervene(discussion)
         self.assertEqual(intervention, [{"response": "Let's refocus on the main topic"}])
