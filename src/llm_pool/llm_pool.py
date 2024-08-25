@@ -72,13 +72,14 @@ class LLMPool:
             logger.debug(f"Generating response for expert: {expert['name']}")
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
             try:
+                logger.debug(f"Generating response for expert: {expert['name']}")
                 response = ""
                 for response_chunk in self.api.generate_response_stream(
                     prompt, 
                     max_tokens=4096 if self.api.model == 'gpt-4o' else self.max_tokens
                 ):
                     logger.debug(f"Received response chunk for {expert['name']}")
-                    response += response_chunk
+                    response += response_chunk['response']
                 logger.debug(f"Yielding complete response for {expert['name']}")
                 yield {
                     "expert": expert["name"],
