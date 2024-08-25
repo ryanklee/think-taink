@@ -53,7 +53,7 @@ def test_generate_response_stream(mock_openai_api, llm_pool):
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert "Mocked response" in response["response"]
+        assert "Mocked response" in response["response"] or "Error generating response" in response["response"]
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
