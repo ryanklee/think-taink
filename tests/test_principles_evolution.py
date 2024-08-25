@@ -28,7 +28,7 @@ class TestReflector(unittest.TestCase):
         ]
 
         # Mock LLM response
-        self.llm_pool.generate_response.return_value = [{"response": "data_driven_decisions: Incorporate data analysis in decision-making processes.\nintuition: Value intuition alongside analytical thinking."}]
+        self.llm_pool.generate_response_stream.return_value = iter([{"expert": "System", "response": "data_driven_decisions: Incorporate data analysis in decision-making processes.\nintuition: Value intuition alongside analytical thinking."}])
 
         suggestions = self.reflector.reflect_on_principles(discussion_history)
 
@@ -64,7 +64,7 @@ class TestReflector(unittest.TestCase):
         ]
 
         # Mock LLM response
-        self.llm_pool.generate_response.return_value = [{"response": "long_term_thinking: Consider long-term consequences in decision-making.\nethical_consideration: Prioritize ethical implications in all discussions."}]
+        self.llm_pool.generate_response_stream.return_value = iter([{"expert": "System", "response": "long_term_thinking: Consider long-term consequences in decision-making.\nethical_consideration: Prioritize ethical implications in all discussions."}])
 
         suggestions = self.reflector.reflect_on_principles(discussion_history)
 
@@ -83,7 +83,7 @@ class TestReflector(unittest.TestCase):
         ]
 
         # Mock LLM response to raise an exception
-        self.llm_pool.generate_response.side_effect = Exception("API Error")
+        self.llm_pool.generate_response_stream.side_effect = Exception("API Error")
 
         with self.assertRaises(ReflectionError):
             self.reflector.reflect_on_principles(discussion_history)

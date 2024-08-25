@@ -16,7 +16,7 @@ class TestPoolEvolution(unittest.TestCase):
         ]
 
         # Mock LLM response
-        self.llm_pool.generate_response.return_value = "Add: Tech Futurist: An expert on emerging technologies and their potential impacts."
+        self.llm_pool.generate_response_stream.return_value = iter([{"expert": "System", "response": "Add: Tech Futurist: An expert on emerging technologies and their potential impacts."}])
 
         self.pool_evolution.evolve_pool(discussion_history)
 

@@ -28,12 +28,12 @@ def llm_pool():
     }
     return LLMPool(config)
 
-@patch('src.llm_pool.openai_api.OpenAIAPI.generate_response')
-def test_generate_response(mock_generate_response, llm_pool):
-    mock_generate_response.return_value = "Mocked response"
+@patch('src.llm_pool.openai_api.OpenAIAPI.generate_response_stream')
+def test_generate_response_stream(mock_generate_response_stream, llm_pool):
+    mock_generate_response_stream.return_value = iter(["Mocked response"])
     
     input_text = "Test question"
-    responses = llm_pool.generate_response(input_text)
+    responses = list(llm_pool.generate_response_stream(input_text))
     
     assert len(responses) == 6  # Updated to include the data usage note
     for response in responses[:-1]:  # Exclude the last response (data usage note)
@@ -48,12 +48,12 @@ def test_generate_response(mock_generate_response, llm_pool):
     assert mock_generate_response.call_count == 5  # The number of expert calls remains the same
 
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
-def test_generate_response_for_each_expert(expert, llm_pool):
-    with patch('src.llm_pool.openai_api.OpenAIAPI.generate_response') as mock_generate_response:
-        mock_generate_response.return_value = f"{expert} response"
-        
+def test_generate_response_stream_for_each_expert(expert, llm_pool):
+    with patch('src.llm_pool.openai_api.OpenAIAPI.generate_response_stream') as mock_generate_response_stream:
+        mock_generate_response_stream.return_value = iter([f"{expert} response"])
+    
         input_text = "Test question"
-        responses = llm_pool.generate_response(input_text)
+        responses = list(llm_pool.generate_response_stream(input_text))
         
         expert_response = next(r for r in responses if r["expert"] == expert)
         assert expert_response["response"] == f"{expert} response"
@@ -73,12 +73,12 @@ def test_llm_pool_configuration():
     assert llm_pool.temperature == 0.5
     assert llm_pool.max_tokens == 200
 
-@patch('src.llm_pool.openai_api.OpenAIAPI.generate_response')
-def test_generate_response_error_handling(mock_generate_response, llm_pool):
-    mock_generate_response.side_effect = Exception("API Error")
+@patch('src.llm_pool.openai_api.OpenAIAPI.generate_response_stream')
+def test_generate_response_stream_error_handling(mock_generate_response_stream, llm_pool):
+    mock_generate_response_stream.side_effect = Exception("API Error")
     
     input_text = "Test question"
-    responses = llm_pool.generate_response(input_text)
+    responses = list(llm_pool.generate_response_stream(input_text))
     
     assert len(responses) == 6  # Updated to include the data usage note
     for response in responses[:-1]:  # Exclude the last response (data usage note)
@@ -147,10 +147,10 @@ class TestLLMPool(unittest.TestCase):
         with self.assertRaises(LLMPoolError):
             self.llm_pool.update_expert("NonexistentExpert", "This expert doesn't exist.")
 
-    @patch('openai.Completion.create')
-    def test_generate_response(self, mock_create):
-        mock_create.return_value = MagicMock(choices=[MagicMock(text="Test response")])
-        responses = self.llm_pool.generate_response("Test input")
+    @patch('openai.ChatCompletion.create')
+    def test_generate_response_stream(self, mock_create):
+        mock_create.return_value = iter([MagicMock(choices=[MagicMock(delta=MagicMock(content="Test response"))])])
+        responses = list(self.llm_pool.generate_response_stream("Test input"))
         self.assertEqual(len(responses), len(self.llm_pool.experts) + 1)  # +1 for the data usage note
         self.assertEqual(responses[-1]["expert"], "System")
         self.assertIn("data sent to the openai api will not be used to train or improve openai models", responses[-1]["response"].lower())
