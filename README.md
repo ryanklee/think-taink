@@ -32,6 +32,7 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 - Updated project structure to include new components and modules
 - Enhanced the LLM pool to use the latest GPT-4o-mini model
 - Implemented a more robust version control system for principles and heuristics
+- Updated LLMPool class to use `generate_response_stream` method for improved performance and real-time responses
 
 ## Project Structure
 
