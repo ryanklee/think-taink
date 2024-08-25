@@ -30,7 +30,7 @@ def llm_pool():
 
 @patch('src.llm_pool.openai_api.OpenAIAPI.generate_response_stream')
 def test_generate_response_stream(mock_generate_response_stream, llm_pool):
-    mock_generate_response_stream.return_value = iter(["Mocked response"])
+    mock_generate_response_stream.return_value = iter([{"response": "Mocked response"}])
     
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
@@ -50,7 +50,7 @@ def test_generate_response_stream(mock_generate_response_stream, llm_pool):
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
 def test_generate_response_stream_for_each_expert(expert, llm_pool):
     with patch('src.llm_pool.openai_api.OpenAIAPI.generate_response_stream') as mock_generate_response_stream:
-        mock_generate_response_stream.return_value = iter([f"{expert} response"])
+        mock_generate_response_stream.return_value = iter([{"response": f"{expert} response"}])
     
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))
