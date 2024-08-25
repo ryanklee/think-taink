@@ -9,12 +9,8 @@ from src.utils.exceptions import LLMPoolError
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-# Mock openai module if it's not installed
-try:
-    import openai
-except ImportError:
-    openai = MagicMock()
-    sys.modules['openai'] = openai
+# Mock the entire openai module
+sys.modules['openai'] = MagicMock()
 
 @pytest.fixture
 def llm_pool():
@@ -28,9 +24,11 @@ def llm_pool():
     }
     return LLMPool(config)
 
-@patch('src.llm_pool.openai_api.OpenAIAPI.generate_response_stream')
-def test_generate_response_stream(mock_generate_response_stream, llm_pool):
+@patch('src.llm_pool.openai_api.OpenAIAPI')
+def test_generate_response_stream(mock_openai_api, llm_pool):
+    mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = iter([{"response": "Mocked response"}])
+    mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
     
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
@@ -48,17 +46,20 @@ def test_generate_response_stream(mock_generate_response_stream, llm_pool):
     assert mock_generate_response_stream.call_count == 5  # The number of expert calls remains the same
 
 @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
-def test_generate_response_stream_for_each_expert(expert, llm_pool):
-    with patch('src.llm_pool.openai_api.OpenAIAPI.generate_response_stream') as mock_generate_response_stream:
-        mock_generate_response_stream.return_value = iter([{"response": f"{expert} response"}])
-    
-        input_text = "Test question"
-        responses = list(llm_pool.generate_response_stream(input_text))
-        
-        expert_response = next(r for r in responses if r["expert"] == expert)
-        assert expert_response["response"] == f"{expert} response"
+@patch('src.llm_pool.openai_api.OpenAIAPI')
+def test_generate_response_stream_for_each_expert(mock_openai_api, expert, llm_pool):
+    mock_generate_response_stream = MagicMock()
+    mock_generate_response_stream.return_value = iter([{"response": f"{expert} response"}])
+    mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
 
-def test_llm_pool_configuration():
+    input_text = "Test question"
+    responses = list(llm_pool.generate_response_stream(input_text))
+    
+    expert_response = next(r for r in responses if r["expert"] == expert)
+    assert expert_response["response"] == f"{expert} response"
+
+@patch('src.llm_pool.openai_api.OpenAIAPI')
+def test_llm_pool_configuration(mock_openai_api):
     config = {
         "model": "gpt-4",
         "temperature": 0.5,
@@ -73,9 +74,11 @@ def test_llm_pool_configuration():
     assert llm_pool.temperature == 0.5
     assert llm_pool.max_tokens == 200
 
-@patch('src.llm_pool.openai_api.OpenAIAPI.generate_response_stream')
-def test_generate_response_stream_error_handling(mock_generate_response_stream, llm_pool):
+@patch('src.llm_pool.openai_api.OpenAIAPI')
+def test_generate_response_stream_error_handling(mock_openai_api, llm_pool):
+    mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.side_effect = Exception("API Error")
+    mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
     
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
