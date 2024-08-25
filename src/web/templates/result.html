@@ -20,12 +20,8 @@
     
     eventSource.onmessage = function(event) {
         const data = JSON.parse(event.data);
-        let responseText;
-        try {
-            responseText = JSON.parse(data.response);
-        } catch (e) {
-            responseText = data.response;
-        }
+        let responseText = data.response;
+        
         if (data.expert !== currentExpert) {
             if (currentExpert) {
                 responseDiv.innerHTML += `<p><strong>${currentExpert}:</strong> <pre>${expertResponse}</pre></p>`;
@@ -33,11 +29,16 @@
             currentExpert = data.expert;
             expertResponse = '';
         }
-        if (typeof responseText === 'object' && responseText !== null) {
-            expertResponse += JSON.stringify(responseText, null, 2);
-        } else {
+        
+        try {
+            // Try to parse the response as JSON
+            const jsonResponse = JSON.parse(responseText);
+            expertResponse += JSON.stringify(jsonResponse, null, 2);
+        } catch (e) {
+            // If it's not valid JSON, treat it as a string
             expertResponse += responseText;
         }
+        
         if (responseDiv.lastChild) {
             responseDiv.lastChild.innerHTML = `<strong>${currentExpert}:</strong> <pre>${expertResponse}</pre>`;
         } else {
