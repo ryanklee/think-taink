@@ -26,10 +26,12 @@ def setup_logger():
 @pytest.fixture
 def llm_pool():
     config = {
-        "model": "gpt-3.5-turbo",
-        "temperature": 0.7,
-        "max_tokens": 150,
-        "api_key": "test_api_key"
+        "llm": {
+            "model": "gpt-3.5-turbo",
+            "temperature": 0.7,
+            "max_tokens": 150,
+            "api_key": "test_api_key"
+        }
     }
     return LLMPool(config)
 
@@ -102,10 +104,12 @@ class TestLLMPool:
 
     def test_llm_pool_configuration(self):
         config = {
-            "model": "gpt-4",
-            "temperature": 0.5,
-            "max_tokens": 200,
-            "api_key": "test_api_key"
+            "llm": {
+                "model": "gpt-4",
+                "temperature": 0.5,
+                "max_tokens": 200,
+                "api_key": "test_api_key"
+            }
         }
         llm_pool = LLMPool(config)
         
