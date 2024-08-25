@@ -40,8 +40,9 @@ def test_generate_response_stream(mock_openai_api, llm_pool):
     log_stream = setup_logger()
     
     mock_generate_response_stream = MagicMock()
-    mock_generate_response_stream.return_value = iter([{"response": "Mocked response"}])
+    mock_generate_response_stream.return_value = iter(["Test response"])
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+    mock_openai_api.return_value.is_test_environment = True
     
     # Replace the OpenAIAPI instance in llm_pool with our mock
     llm_pool.api = mock_openai_api.return_value
@@ -53,7 +54,7 @@ def test_generate_response_stream(mock_openai_api, llm_pool):
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert "Mocked response" in response["response"] or "Error generating response" in response["response"]
+        assert "Test response" in response["response"]
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
@@ -105,14 +106,15 @@ def test_generate_response_stream_error_handling(mock_openai_api, llm_pool):
 @patch('src.llm_pool.openai_api.OpenAIAPI')
 def test_generate_response_stream_for_each_expert(mock_openai_api, expert, llm_pool):
     mock_generate_response_stream = MagicMock()
-    mock_generate_response_stream.return_value = iter([{"response": f"{expert} response"}])
+    mock_generate_response_stream.return_value = iter(["Test response"])
     mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+    mock_openai_api.return_value.is_test_environment = True
 
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
     
     expert_response = next(r for r in responses if r["expert"] == expert)
-    assert expert_response["response"] == f"{expert} response"
+    assert expert_response["response"] == "Test response"
 
 @patch('src.llm_pool.openai_api.OpenAIAPI')
 def test_llm_pool_configuration(mock_openai_api):

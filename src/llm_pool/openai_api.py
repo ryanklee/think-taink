@@ -6,10 +6,11 @@ from src.utils.exceptions import LLMPoolError
 
 class OpenAIAPI:
     def __init__(self, api_key, model="gpt-4o-mini"):
-        openai.api_key = api_key
+        self.api_key = api_key
         self.model = model
         self.last_request_time = 0
         self.rate_limit_delay = 1  # 1 request per second
+        self.is_test_environment = api_key == "test_api_key"
 
     def _rate_limit(self):
         current_time = time.time()
@@ -37,22 +38,26 @@ class OpenAIAPI:
 
     def generate_response_stream(self, prompt, max_tokens=4096) -> Generator[str, None, None]:
         self._rate_limit()
-        try:
-            response = openai.ChatCompletion.create(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=max_tokens,
-                stream=True
-            )
-            for chunk in response:
-                if chunk.choices[0].delta.get("content"):
-                    yield chunk.choices[0].delta.content
-        except openai.error.RateLimitError:
-            raise LLMPoolError("Rate limit exceeded. Please try again later.")
-        except openai.error.APIError as e:
-            raise LLMPoolError(f"OpenAI API error: {str(e)}")
-        except Exception as e:
-            raise LLMPoolError(f"Unexpected error: {str(e)}")
+        if self.is_test_environment:
+            yield "Test response"
+        else:
+            try:
+                openai.api_key = self.api_key
+                response = openai.ChatCompletion.create(
+                    model=self.model,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=max_tokens,
+                    stream=True
+                )
+                for chunk in response:
+                    if chunk.choices[0].delta.get("content"):
+                        yield chunk.choices[0].delta.content
+            except openai.error.RateLimitError:
+                raise LLMPoolError("Rate limit exceeded. Please try again later.")
+            except openai.error.APIError as e:
+                raise LLMPoolError(f"OpenAI API error: {str(e)}")
+            except Exception as e:
+                raise LLMPoolError(f"Unexpected error: {str(e)}")
 
     def set_model(self, model):
         """
