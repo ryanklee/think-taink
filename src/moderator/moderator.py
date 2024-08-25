@@ -25,45 +25,55 @@ class Moderator:
         logger.debug(f"Starting discussion stream for input: {input_text[:50]}...")
         start_time = time.time()
         timeout = 30  # Set a 30-second timeout
+        error_count = 0
+        max_errors = 3  # Maximum number of consecutive errors before breaking the loop
 
         try:
             while self.current_turn < self.max_turns:
                 if time.time() - start_time > timeout:
                     logger.error("Discussion stream timed out")
-                    raise ModerationError("Discussion stream timed out")
+                    yield {"expert": "System", "response": "Discussion stream timed out"}
+                    break
 
                 logger.debug(f"Starting turn {self.current_turn + 1}")
+                turn_responses = []
                 for expert in self.llm_pool.get_expert_names():
                     expert_prompt = self.llm_pool.get_expert_prompt(expert)
                     try:
                         logger.debug(f"Generating response for expert: {expert}")
                         response_stream = self.llm_pool.generate_response_stream(f"{expert_prompt}\n\nQuestion: {input_text}")
+                        expert_response = ""
                         for response_chunk in response_stream:
                             logger.debug(f"Received response chunk for {expert}: {response_chunk}")
-                            evaluated_chunk = self.principles.evaluate_response(response_chunk['response'])
-                            logger.debug(f"Evaluated response chunk for {expert}: {evaluated_chunk}")
-                            yield {"expert": expert, "response": evaluated_chunk}
-                        self.current_turn += 1
-                        logger.debug(f"Completed turn {self.current_turn}")
-                        if self.current_turn >= self.max_turns:
-                            logger.debug("Reached max turns, breaking out of expert loop")
-                            break
+                            expert_response += response_chunk['response']
+                        evaluated_response = self.principles.evaluate_response(expert_response)
+                        logger.debug(f"Evaluated response for {expert}: {evaluated_response}")
+                        turn_responses.append({"expert": expert, "response": evaluated_response})
+                        yield {"expert": expert, "response": evaluated_response}
+                        error_count = 0  # Reset error count on successful response
                     except Exception as e:
                         logger.error(f"Error generating response for {expert}: {str(e)}")
                         yield {"expert": expert, "response": f"Error: {str(e)}"}
-                if self.current_turn >= self.max_turns:
-                    logger.debug("Reached max turns, breaking out of main loop")
+                        error_count += 1
+                        if error_count >= max_errors:
+                            logger.error(f"Reached maximum consecutive errors ({max_errors}). Breaking the loop.")
+                            break
+
+                self.current_turn += 1
+                logger.debug(f"Completed turn {self.current_turn}")
+
+                if error_count >= max_errors or self.current_turn >= self.max_turns:
+                    logger.debug("Reached max errors or max turns, breaking out of main loop")
                     break
+
                 try:
-                    logger.debug("Getting last turn")
-                    last_turn = list(self._get_last_turn())
-                    logger.debug(f"Last turn: {last_turn}")
                     logger.debug("Summarizing current discussion")
-                    input_text = self._summarize_current_discussion(last_turn)
+                    input_text = self._summarize_current_discussion(turn_responses)
                     logger.debug(f"Summarized discussion: {input_text}")
                 except Exception as e:
                     logger.error(f"Error summarizing discussion: {str(e)}")
                     yield {"expert": "System", "response": f"Error summarizing discussion: {str(e)}"}
+                    error_count += 1
             
             # Reflect on principles after the discussion
             try:
@@ -106,11 +116,16 @@ class Moderator:
         summary = next(self.llm_pool.generate_response_stream(summary_prompt))['response']
         return summary
 
-    def _summarize_current_discussion(self, discussion: List[Dict]) -> str:
+    def _summarize_current_discussion(self, turn_responses: List[Dict]) -> str:
         summary_prompt = "Summarize the following discussion points concisely:"
-        for entry in discussion[-len(self.llm_pool.get_expert_names()):]:
+        for entry in turn_responses:
             summary_prompt += f"\n{entry['expert']}: {entry['response']}"
-        return next(self.llm_pool.generate_response_stream(summary_prompt))['response']
+        try:
+            summary_response = next(self.llm_pool.generate_response_stream(summary_prompt))
+            return summary_response['response']
+        except Exception as e:
+            logger.error(f"Error generating summary: {str(e)}")
+            return f"Error generating summary: {str(e)}"
 
     def intervene(self, discussion: List[Dict]) -> str:
         intervention_prompt = "As a moderator, provide guidance to keep the discussion on track and productive based on the following discussion points:"
