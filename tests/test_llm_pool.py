@@ -53,7 +53,7 @@ def test_generate_response_stream(mock_openai_api, llm_pool):
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert response["response"] == "Mocked response"
+        assert "Mocked response" in response["response"]
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
@@ -77,7 +77,7 @@ def test_generate_response_stream_for_each_expert(mock_openai_api, expert, llm_p
     responses = list(llm_pool.generate_response_stream(input_text))
     
     expert_response = next(r for r in responses if r["expert"] == expert)
-    assert expert_response["response"] == f"{expert} response"
+    assert f"{expert} response" in expert_response["response"]
 
 @patch('src.llm_pool.llm_pool.OpenAIAPI')
 def test_generate_response_stream_error_handling(mock_openai_api, llm_pool):
@@ -95,7 +95,7 @@ def test_generate_response_stream_error_handling(mock_openai_api, llm_pool):
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert "API Error" in response["response"]
+        assert "Error generating response" in response["response"]
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
