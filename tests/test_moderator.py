@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 import io
 import logging
+import time
 from src.moderator.moderator import Moderator
 from src.llm_pool.llm_pool import LLMPool
 from src.heuristics.principles import Principles
@@ -35,7 +36,13 @@ class TestModerator(unittest.TestCase):
         ]
         self.principles.evaluate_response.return_value = {"relevance": 0.8, "originality": 0.7}
 
-        discussion = list(self.moderator.start_discussion_stream(input_text))
+        start_time = time.time()
+        discussion = []
+        for response in self.moderator.start_discussion_stream(input_text):
+            discussion.append(response)
+            if time.time() - start_time > 10:  # 10 second timeout
+                self.fail("Test timed out")
+
         self.assertEqual(len(discussion), 4)  # 2 experts * 2 turns
         self.assertEqual(self.moderator.current_turn, 4)
         self.llm_pool.generate_response_stream.assert_called()

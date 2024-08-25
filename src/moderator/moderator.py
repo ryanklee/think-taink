@@ -29,10 +29,11 @@ class Moderator:
                     expert_prompt = self.llm_pool.get_expert_prompt(expert)
                     try:
                         logger.debug(f"Generating response for expert: {expert}")
-                        for response_chunk in self.llm_pool.generate_response_stream(f"{expert_prompt}\n\nQuestion: {input_text}"):
-                            logger.debug(f"Received response chunk for {expert}")
+                        response_stream = self.llm_pool.generate_response_stream(f"{expert_prompt}\n\nQuestion: {input_text}")
+                        for response_chunk in response_stream:
+                            logger.debug(f"Received response chunk for {expert}: {response_chunk}")
                             evaluated_chunk = self.principles.evaluate_response(response_chunk['response'])
-                            logger.debug(f"Evaluated response chunk for {expert}")
+                            logger.debug(f"Evaluated response chunk for {expert}: {evaluated_chunk}")
                             yield {"expert": expert, "response": evaluated_chunk}
                         self.current_turn += 1
                         logger.debug(f"Completed turn {self.current_turn}")
@@ -48,8 +49,10 @@ class Moderator:
                 try:
                     logger.debug("Getting last turn")
                     last_turn = list(self._get_last_turn())
+                    logger.debug(f"Last turn: {last_turn}")
                     logger.debug("Summarizing current discussion")
                     input_text = self._summarize_current_discussion(last_turn)
+                    logger.debug(f"Summarized discussion: {input_text}")
                 except Exception as e:
                     logger.error(f"Error summarizing discussion: {str(e)}")
                     yield {"expert": "System", "response": f"Error summarizing discussion: {str(e)}"}
