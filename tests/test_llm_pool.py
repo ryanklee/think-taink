@@ -37,14 +37,14 @@ def llm_pool():
 
 class TestLLMPool:
     @patch('src.llm_pool.llm_pool.AnthropicAPI')
-    def test_generate_response_stream_success(self, mock_openai_api, llm_pool):
+    def test_generate_response_stream_success(self, mock_anthropic_api, llm_pool):
         log_stream = setup_logger()
         
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.return_value = iter(["Test response"])
-        mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
-        mock_openai_api.return_value.is_test_environment = True
-        llm_pool.api = mock_openai_api.return_value
+        mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
+        mock_anthropic_api.return_value.is_test_environment = True
+        llm_pool.api = mock_anthropic_api.return_value
         llm_pool.api.is_test_environment = True
         mock_openai_api.return_value.is_test_environment = True
         
@@ -86,10 +86,10 @@ class TestLLMPool:
     def test_generate_response_stream_error_handling(self, mock_anthropic_api, llm_pool):
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.side_effect = Exception("API Error")
-        mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
-        mock_openai_api.return_value.is_test_environment = False
+        mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
+        mock_anthropic_api.return_value.is_test_environment = False
         
-        llm_pool.api = mock_openai_api.return_value
+        llm_pool.api = mock_anthropic_api.return_value
         
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))

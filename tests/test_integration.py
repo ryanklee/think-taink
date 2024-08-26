@@ -32,9 +32,9 @@ def test_generate_response_stream_integration(llm_pool, mock_anthropic_api):
     # Mock the OpenAIAPI's generate_response_stream method
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = iter(["Test response chunk 1", "Test response chunk 2"])
-    mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
-    mock_openai_api.return_value.is_test_environment = True
-    llm_pool.api = mock_openai_api.return_value
+    mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
+    mock_anthropic_api.return_value.is_test_environment = True
+    llm_pool.api = mock_anthropic_api.return_value
     llm_pool.api.is_test_environment = True
 
     input_text = "Test question"
@@ -66,7 +66,7 @@ def test_generate_response_stream_integration_error_handling(llm_pool, mock_anth
     # Mock the OpenAIAPI's generate_response_stream method to raise an exception
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.side_effect = Exception("API Error")
-    mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+    mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
 
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
