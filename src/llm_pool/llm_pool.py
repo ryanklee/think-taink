@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List, Generator
 from src.utils.exceptions import LLMPoolError
-from src.llm_pool.openai_api import OpenAIAPI
+from src.llm_pool.anthropic_api import AnthropicAPI
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -14,7 +14,7 @@ class LLMPool:
             logger.error("API key is missing in the configuration")
             raise ValueError("OpenAI API key is missing in the configuration")
         
-        self.api = OpenAIAPI(api_key, model=config.get('llm', {}).get('model', 'gpt-4o-mini'))
+        self.api = AnthropicAPI(api_key, model=config.get('llm', {}).get('model', 'claude-3-5-sonnet-20240620'))
         self.temperature = config.get('llm', {}).get('temperature', 0.7)
         self.max_tokens = config.get('llm', {}).get('max_tokens', 4096)
         self.context_window = config.get('llm', {}).get('context_window', 128000)  # Context window for gpt-4o-mini

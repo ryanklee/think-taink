@@ -70,7 +70,7 @@ docs/
 4. Set up environment variables:
    Create a `.env` file in the project root and add your API keys:
    ```
-   OPENAI_API_KEY=your_openai_api_key_here
+   ANTHROPIC_API_KEY=your_anthropic_api_key_here
    ```
 
 5. If you're using VS Code with the Remote - Containers extension:

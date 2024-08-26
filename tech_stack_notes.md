@@ -38,12 +38,18 @@
 1. Developer Console:
    - Workbench for easier, more powerful prompting in browser
    - Prompt generator tool
+   - "Get Code" feature to convert Workbench sessions into integration code
 2. API and SDKs:
    - RESTful API for integration
-   - SDKs available (specific languages not mentioned)
+   - SDKs available for Python (3.7+) and TypeScript (4.5+)
+   - API key required, can be set as an environment variable
 3. Anthropic Cookbook:
    - Interactive Jupyter notebooks
    - Examples for uploading PDFs, working with embeddings, etc.
+4. Prompt Library:
+   - Dozens of example prompts for various use cases
+5. Evaluation Tool:
+   - For testing and strengthening guardrails
 
 ### Implementation Guide
 1. Define success criteria
