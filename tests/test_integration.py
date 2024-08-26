@@ -17,10 +17,10 @@ def mock_anthropic_api():
         yield mock
 
 @pytest.fixture
-def llm_pool(mock_openai_api):
+def llm_pool(mock_anthropic_api):
     config = {
         "llm": {
-            "model": "gpt-3.5-turbo",
+            "model": "claude-3-sonnet-20240229",
             "temperature": 0.7,
             "max_tokens": 150,
             "api_key": "test_api_key"
@@ -28,7 +28,7 @@ def llm_pool(mock_openai_api):
     }
     return LLMPool(config)
 
-def test_generate_response_stream_integration(llm_pool, mock_openai_api):
+def test_generate_response_stream_integration(llm_pool, mock_anthropic_api):
     # Mock the OpenAIAPI's generate_response_stream method
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = iter(["Test response chunk 1", "Test response chunk 2"])
@@ -62,7 +62,7 @@ def test_generate_response_stream_integration(llm_pool, mock_openai_api):
     # Check that the OpenAIAPI's generate_response_stream was called for each expert
     assert mock_generate_response_stream.call_count == 5
 
-def test_generate_response_stream_integration_error_handling(llm_pool, mock_openai_api):
+def test_generate_response_stream_integration_error_handling(llm_pool, mock_anthropic_api):
     # Mock the OpenAIAPI's generate_response_stream method to raise an exception
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.side_effect = Exception("API Error")
@@ -87,7 +87,7 @@ def test_generate_response_stream_integration_error_handling(llm_pool, mock_open
     # Check that the OpenAIAPI's generate_response_stream was called for each expert
     assert mock_generate_response_stream.call_count == 5
 
-def test_generate_response_stream_integration_empty_response(llm_pool, mock_openai_api):
+def test_generate_response_stream_integration_empty_response(llm_pool, mock_anthropic_api):
     # Mock the OpenAIAPI's generate_response_stream method to return an empty iterator
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = iter([])

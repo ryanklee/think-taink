@@ -27,7 +27,7 @@ def setup_logger():
 def llm_pool():
     config = {
         "llm": {
-            "model": "gpt-3.5-turbo",
+            "model": "claude-3-sonnet-20240229",
             "temperature": 0.7,
             "max_tokens": 150,
             "api_key": "test_api_key"
@@ -82,8 +82,8 @@ class TestLLMPool:
         expert_response = next(r for r in responses if r["expert"] == expert)
         assert expert_response["response"] == "Test response"
 
-    @patch('src.llm_pool.llm_pool.OpenAIAPI')
-    def test_generate_response_stream_error_handling(self, mock_openai_api, llm_pool):
+    @patch('src.llm_pool.llm_pool.AnthropicAPI')
+    def test_generate_response_stream_error_handling(self, mock_anthropic_api, llm_pool):
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.side_effect = Exception("API Error")
         mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
