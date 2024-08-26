@@ -106,7 +106,10 @@ v) Enhance UI/UX for experiment configuration and results analysis
 - Python 3.9+
 
 ### b) LLM Integration
-- OpenAI API (for GPT-4o-mini model)
+- OpenAI API with configurable model selection
+- Streaming response support for real-time output
+- Rate limiting implementation to respect API usage limits
+- Robust error handling for various API-related exceptions
 
 ### c) Backend Framework
 - Flask
