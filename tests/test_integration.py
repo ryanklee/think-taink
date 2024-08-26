@@ -91,7 +91,7 @@ def test_generate_response_stream_integration_empty_response(llm_pool, mock_anth
     # Mock the OpenAIAPI's generate_response_stream method to return an empty iterator
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = iter([])
-    mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
+    mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
 
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))

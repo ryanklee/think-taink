@@ -46,9 +46,7 @@ class TestLLMPool:
         mock_anthropic_api.return_value.is_test_environment = True
         llm_pool.api = mock_anthropic_api.return_value
         llm_pool.api.is_test_environment = True
-        mock_openai_api.return_value.is_test_environment = True
-        
-        llm_pool.api = mock_openai_api.return_value
+        # Remove these lines as they are redundant
         
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))
