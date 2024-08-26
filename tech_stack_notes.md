@@ -6,15 +6,17 @@
 - Claude: Family of AI models by Anthropic for enterprise-scale applications
 - Latest model: Claude 3.5 Sonnet - most intelligent model yet
 - Key capabilities: Text/code generation, vision, tool use, reasoning, analysis
-- Large context window (exact size not specified, but previously mentioned 200K tokens)
+- Large context window (200K tokens for all current models)
 - Multimodal input processing (text, code, images)
 
 ### Model Options
-1. Claude 3.5 Sonnet: Latest model, balancing intelligence, speed, and cost
+1. Claude 3.5 Family:
+   - Sonnet: Most intelligent model, balancing performance with improved speed
+   - Opus and Haiku: Coming later this year
 2. Claude 3 Family:
-   - Opus: Complex tasks (math, coding, analysis)
-   - Sonnet: High-throughput tasks and data processing
-   - Haiku: Rapid, human-like interactions
+   - Opus: Excels at writing and complex tasks
+   - Sonnet: Balance of speed and intelligence
+   - Haiku: Fast and cost-effective
 
 ### Key Capabilities
 1. Text and Code Generation:
@@ -26,6 +28,9 @@
 2. Vision:
    - Process and analyze visual input
    - Generate text and code from images
+3. Tool Use:
+   - Interact with external client-side tools and functions
+   - Generate structured outputs through API calls
 
 ### Enterprise Advantages
 - Security: SOC II Type 2 certified, HIPAA compliance options
@@ -33,6 +38,7 @@
 - Reliability: Low hallucination rates, accurate for long documents
 - Global support: Strong multilingual performance
 - Cost-effectiveness: Tiered model options
+- Scalability: Available through Anthropic API, AWS Bedrock, and GCP Vertex AI
 
 ### Development Tools
 1. Developer Console:
@@ -55,6 +61,8 @@
 1. Define success criteria
 2. Develop test cases
 3. Prompt engineering
+   a. Use prompt generator for initial drafts
+   b. Apply techniques: clarity, examples, chain of thought, XML tags, etc.
 4. Implement Claude (API integration)
 5. Test and evaluate
 6. Strengthen guardrails
@@ -71,8 +79,15 @@
 - System status page
 - Claude 3 model card
 - Anthropic Courses (GitHub)
+- Interactive prompt engineering tutorials (GitHub and Google Sheets)
 
 ### Support
 - Developer Discord community
 - Help Center for account and billing questions
 - Service Status page
+
+### Pricing (per million tokens)
+- Claude 3.5 Sonnet: $3.00 input / $15.00 output
+- Claude 3 Opus: $15.00 input / $75.00 output
+- Claude 3 Sonnet: $3.00 input / $15.00 output
+- Claude 3 Haiku: $0.25 input / $1.25 output
