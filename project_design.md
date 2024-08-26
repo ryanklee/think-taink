@@ -4,7 +4,10 @@
 
 ### a) LLM Pool
 - Number of LLMs: 5 (Analyst, Creative, Critic, Synthesizer, Ethicist)
-- Using GPT-4o-mini model with different prompts/personalities to simulate different experts
+- Using OpenAI API with configurable model (default: gpt-4o-mini) with different prompts/personalities to simulate different experts
+- Implemented streaming response generation for real-time output
+- Robust error handling and logging for API interactions
+- Test environment support for reliable testing without API calls
 - Implemented dynamic expert pool evolution based on discussion performance
 - Versioning system for LLM pool configurations
 

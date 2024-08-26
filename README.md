@@ -19,20 +19,14 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 
 ## Recent Updates
 
-- Improved error handling across all components
-- Implemented custom exceptions for better error management
-- Enhanced logging system with rotation
-- Added version control for principles and heuristics
-- Expanded unit test coverage, especially for the Moderator class
-- Improved inline documentation for complex methods
-- Implemented basic web interface for user interaction
-- Added user question input form and discussion result display
-- Started work on improvement dashboard for researchers
-- Containerized the application using Docker and devcontainers
-- Updated project structure to include new components and modules
-- Enhanced the LLM pool to use the latest GPT-4o-mini model
-- Implemented a more robust version control system for principles and heuristics
-- Updated LLMPool class to use `generate_response_stream` method for improved performance and real-time responses
+- Enhanced LLMPool and OpenAIAPI classes to handle test environments correctly
+- Implemented streaming response generation in LLMPool and OpenAIAPI classes
+- Updated integration tests to accommodate streaming responses and test environments
+- Improved error handling and logging in LLMPool and OpenAIAPI classes
+- Refactored generate_response_stream method for better performance and reliability
+- Updated unit tests to reflect changes in LLMPool and OpenAIAPI classes
+- Improved handling of empty responses in test environments
+- Enhanced documentation and inline comments for better code readability
 
 ## Project Structure
 

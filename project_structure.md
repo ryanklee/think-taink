@@ -22,6 +22,11 @@ src/
 │   ├── llm_pool.py
 │   ├── openai_api.py
 │   └── pool_evolution.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_llm_pool.py
+│   ├── test_openai_api.py
+│   └── test_integration.py
 ├── moderator/
 │   ├── __init__.py
 │   └── moderator.py
