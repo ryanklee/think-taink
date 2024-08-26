@@ -2,6 +2,7 @@ import logging
 from typing import Dict, List, Generator
 from src.utils.exceptions import LLMPoolError
 from src.llm_pool.anthropic_api import AnthropicAPI
+from src.utils.exceptions import LLMPoolError
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)

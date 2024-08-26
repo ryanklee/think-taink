@@ -8,7 +8,7 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from src.llm_pool.llm_pool import LLMPool
-from src.llm_pool.openai_api import OpenAIAPI
+from src.llm_pool.anthropic_api import AnthropicAPI
 from src.utils.exceptions import LLMPoolError
 
 @pytest.fixture
