@@ -41,13 +41,19 @@ def test_generate_response_stream_integration(llm_pool, mock_openai_api):
     responses = list(llm_pool.generate_response_stream(input_text))
 
     # Check that we got responses for all experts plus the data usage note
-    assert len(responses) == 6  # 5 experts + 1 data usage note
+    assert len(responses) == 7  # 5 experts (with first expert having 2 chunks) + 1 data usage note
 
     # Check that each expert response is as expected
-    for response in responses[:-1]:  # Exclude the last response (data usage note)
+    expert_responses = responses[:-1]  # Exclude the last response (data usage note)
+    assert expert_responses[0]["expert"] == "Analyst"
+    assert expert_responses[0]["response"] == "Test response chunk 1"
+    assert expert_responses[1]["expert"] == "Analyst"
+    assert expert_responses[1]["response"] == "Test response chunk 2"
+    
+    for response in expert_responses[2:]:
         assert "expert" in response
         assert "response" in response
-        assert response["response"] == "Test response chunk 1Test response chunk 2"
+        assert response["response"] == "Test response"
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
