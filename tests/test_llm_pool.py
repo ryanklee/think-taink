@@ -36,7 +36,7 @@ def llm_pool():
     return LLMPool(config)
 
 class TestLLMPool:
-    @patch('src.llm_pool.llm_pool.OpenAIAPI')
+    @patch('src.llm_pool.llm_pool.AnthropicAPI')
     def test_generate_response_stream_success(self, mock_openai_api, llm_pool):
         log_stream = setup_logger()
         
