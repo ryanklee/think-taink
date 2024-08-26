@@ -62,6 +62,8 @@ class OpenAIAPI:
             for chunk in response:
                 if chunk.choices[0].delta.get("content"):
                     yield chunk.choices[0].delta.content
+        except Exception as e:
+            yield f"Error: {str(e)}"
         except openai.error.RateLimitError:
             raise LLMPoolError("Rate limit exceeded. Please try again later.")
         except openai.error.APIError as e:
