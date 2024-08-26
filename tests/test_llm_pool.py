@@ -67,7 +67,7 @@ class TestLLMPool:
         print(log_stream.getvalue())  # Print the captured logs
 
     @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
-    @patch('src.llm_pool.llm_pool.OpenAIAPI')
+    @patch('src.llm_pool.llm_pool.AnthropicAPI')
     def test_generate_response_stream_for_each_expert(self, mock_openai_api, expert, llm_pool):
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.return_value = iter(["Test response"])

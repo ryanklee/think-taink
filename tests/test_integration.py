@@ -12,8 +12,8 @@ from src.llm_pool.anthropic_api import AnthropicAPI
 from src.utils.exceptions import LLMPoolError
 
 @pytest.fixture
-def mock_openai_api():
-    with patch('src.llm_pool.llm_pool.OpenAIAPI') as mock:
+def mock_anthropic_api():
+    with patch('src.llm_pool.llm_pool.AnthropicAPI') as mock:
         yield mock
 
 @pytest.fixture
