@@ -91,6 +91,11 @@ class LLMPool:
                         "response": response_chunk
                     }
                 logger.debug(f"Complete response for {expert['name']}: {response}")
+                if not response:
+                    yield {
+                        "expert": expert["name"],
+                        "response": "No response generated."
+                    }
             except Exception as e:
                 logger.error(f"Error generating response for {expert['name']}: {str(e)}")
                 yield {
