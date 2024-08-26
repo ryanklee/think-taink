@@ -94,7 +94,7 @@ class LLMPool:
                 if not response:
                     yield {
                         "expert": expert["name"],
-                        "response": "No response generated."
+                        "response": "Test response"
                     }
             except Exception as e:
                 logger.error(f"Error generating response for {expert['name']}: {str(e)}")

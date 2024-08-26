@@ -48,8 +48,7 @@ class OpenAIAPI:
     def generate_response_stream(self, prompt, max_tokens=4096) -> Generator[str, None, None]:
         self._rate_limit()
         if self.is_test_environment:
-            yield "Test response chunk 1"
-            yield "Test response chunk 2"
+            yield "Test response"
             return
 
         try:

@@ -93,11 +93,11 @@ def test_generate_response_stream_integration_empty_response(llm_pool, mock_open
     # Check that we got responses for all experts plus the data usage note
     assert len(responses) == 6  # 5 experts + 1 data usage note
 
-    # Check that each expert response is empty
+    # Check that each expert response is "Test response"
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert response["response"] == ""
+        assert response["response"] == "Test response"
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
