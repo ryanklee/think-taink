@@ -89,7 +89,7 @@ class LLMPool:
                 logger.debug(f"Complete response for {expert['name']}: {response}")
                 yield {
                     "expert": expert["name"],
-                    "response": response if response else "Test response" if self.api.is_test_environment else ""
+                    "response": response if response or not self.api.is_test_environment else "Test response"
                 }
             except Exception as e:
                 logger.error(f"Error generating response for {expert['name']}: {str(e)}")
