@@ -62,12 +62,47 @@
 2. Develop test cases
 3. Prompt engineering
    a. Use prompt generator for initial drafts
-   b. Apply techniques: clarity, examples, chain of thought, XML tags, etc.
+   b. Be clear, direct, and detailed in prompts
+   c. Provide contextual information
+   d. Use specific instructions and sequential steps
+   e. Apply techniques: examples (multishot prompting), chain of thought, XML tags, etc.
 4. Implement Claude (API integration)
 5. Test and evaluate
 6. Strengthen guardrails
 7. Deploy to production
 8. Monitor and improve
+
+### Prompt Engineering Best Practices
+1. Be clear and direct:
+   - Treat Claude as a brilliant but new employee who needs explicit instructions
+   - Provide contextual information (task purpose, audience, workflow, end goal)
+   - Be specific about desired actions and output format
+   - Use numbered lists or bullet points for sequential steps
+2. Use examples (multishot prompting):
+   - Provide clear examples of desired input and output
+   - Use multiple examples for complex tasks
+3. Let Claude think (Chain of Thought):
+   - Encourage step-by-step reasoning for complex problems
+4. Use XML tags:
+   - Structure prompts and desired outputs using XML tags for clarity
+5. Give Claude a role (system prompts):
+   - Assign a specific role or persona to guide Claude's responses
+6. Prefill Claude's response:
+   - Provide a partial response structure for Claude to complete
+7. Chain complex prompts:
+   - Break down complex tasks into a series of smaller, manageable prompts
+
+### Resources
+- Quickstart guide
+- API Reference
+- Prompt Library
+- Workbench for experimentation
+- Anthropic Cookbook (code examples)
+- Evaluation Tool for testing
+- System status page
+- Claude 3 model card
+- Anthropic Courses (GitHub)
+- Interactive prompt engineering tutorials (GitHub and Google Sheets)
 
 ### Resources
 - Quickstart guide
