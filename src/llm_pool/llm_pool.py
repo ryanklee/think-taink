@@ -87,10 +87,16 @@ class LLMPool:
                     logger.debug(f"Received response chunk for {expert['name']}: {response_chunk}")
                     response += response_chunk
                 logger.debug(f"Complete response for {expert['name']}: {response}")
-                yield {
-                    "expert": expert["name"],
-                    "response": response if response or not self.api.is_test_environment else "Test response"
-                }
+                if self.api.is_test_environment:
+                    yield {
+                        "expert": expert["name"],
+                        "response": response
+                    }
+                else:
+                    yield {
+                        "expert": expert["name"],
+                        "response": response if response else ""
+                    }
             except Exception as e:
                 logger.error(f"Error generating response for {expert['name']}: {str(e)}")
                 yield {
