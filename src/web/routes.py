@@ -35,7 +35,16 @@ def stream_response():
     try:
         processed_input = current_app.input_processor.process(question)
         
+        # Check if llm_pools exists in current_app
+        if not hasattr(current_app, 'llm_pools'):
+            logger.error("llm_pools not found in current_app")
+            return jsonify({"error": "LLM pools not configured"}), 500
+        
         # Set the API type for the moderator
+        if api_type not in current_app.llm_pools:
+            logger.error(f"Invalid API type: {api_type}")
+            return jsonify({"error": f"Invalid API type: {api_type}"}), 400
+        
         current_app.moderator.set_llm_pool(current_app.llm_pools[api_type])
         
         def generate():
