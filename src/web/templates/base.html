@@ -4,33 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-LLM Think Tank Simulation</title>
-    <style>
-        nav {
-            background-color: #f8f9fa;
-            padding: 10px;
-        }
-        nav a {
-            margin-right: 15px;
-            text-decoration: none;
-            color: #007bff;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <nav>
-        <a href="{{ url_for('main.index') }}">Home</a>
-        <a href="{{ url_for('main.ask_question') }}">Ask a Question</a>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ url_for('main.index') }}" class="text-xl font-bold">Multi-LLM Think Tank</a>
+            <div>
+                <a href="{{ url_for('main.index') }}" class="mr-4 hover:text-blue-200">Home</a>
+                <a href="{{ url_for('main.ask_question') }}" class="hover:text-blue-200">Ask a Question</a>
+            </div>
+        </div>
     </nav>
-    <h1>Multi-LLM Think Tank Simulation</h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul class="flashes">
-            {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
+    
+    <main class="container mx-auto mt-8 px-4 flex-grow">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-4">
+                {% for category, message in messages %}
+                    <div class="p-4 rounded-md {% if category == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="bg-gray-200 text-center p-4 mt-8">
+        <p>&copy; 2024 Multi-LLM Think Tank Simulation. All rights reserved.</p>
+    </footer>
 </body>
 </html>
