@@ -1,5 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
+from src.llm_pool.openai_api import OpenAIAPI
+from src.llm_pool.anthropic_api import AnthropicAPI
 import sys
 import io
 import logging
@@ -165,10 +167,10 @@ class TestLLMPool:
 
     def test_set_api_type(self, llm_pool_anthropic):
         llm_pool_anthropic.set_api_type('openai')
-        assert isinstance(llm_pool_anthropic.api, MagicMock)  # Since we mocked the OpenAIAPI
+        assert isinstance(llm_pool_anthropic.api, OpenAIAPI)
 
         llm_pool_anthropic.set_api_type('anthropic')
-        assert isinstance(llm_pool_anthropic.api, MagicMock)  # Since we mocked the AnthropicAPI
+        assert isinstance(llm_pool_anthropic.api, AnthropicAPI)
 
         with pytest.raises(ValueError):
             llm_pool_anthropic.set_api_type('invalid_api')
