@@ -19,14 +19,22 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 
 ## Recent Updates
 
-- Enhanced LLMPool and OpenAIAPI classes to handle test environments correctly
-- Implemented streaming response generation in LLMPool and OpenAIAPI classes
-- Updated integration tests to accommodate streaming responses and test environments
-- Improved error handling and logging in LLMPool and OpenAIAPI classes
-- Refactored generate_response_stream method for better performance and reliability
-- Updated unit tests to reflect changes in LLMPool and OpenAIAPI classes
-- Improved handling of empty responses in test environments
+- Initiated migration to support Claude API alongside OpenAI API
+- Created AnthropicAPI class for Claude API integration
+- Enhanced LLMPool to support multiple API providers
+- Updated configuration to include Anthropic API settings
+- Implemented streaming response generation for Claude API
+- Updated integration tests to accommodate Claude API
+- Improved error handling and logging for both APIs
 - Enhanced documentation and inline comments for better code readability
+- Added migration guide for users switching to or adding Claude API support
+
+## Upcoming Changes
+
+- Complete Claude API integration and testing
+- Implement A/B testing between OpenAI and Claude APIs
+- Update performance analysis tools for multi-API support
+- Enhance prompt engineering to leverage Claude's XML tag capabilities
 
 ## Project Structure
 
