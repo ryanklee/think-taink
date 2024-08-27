@@ -23,10 +23,15 @@ def result():
     api_type = request.args.get('api_type')
     return render_template('result.html', question=question, api_type=api_type)
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 @bp.route('/stream', methods=['GET', 'POST'])
 def stream_response():
     question = request.args.get('question') or request.form.get('question')
     api_type = request.args.get('api_type') or request.form.get('api_type')
+    logger.info(f"Received stream request for question: {question}, API type: {api_type}")
     try:
         processed_input = current_app.input_processor.process(question)
         
@@ -34,15 +39,20 @@ def stream_response():
         current_app.moderator.set_llm_pool(current_app.llm_pools[api_type])
         
         def generate():
-            for chunk in current_app.moderator.start_discussion_stream(processed_input):
-                response_text = chunk['response']
-                if isinstance(response_text, dict):
-                    response_text = json.dumps(response_text)
-                else:
-                    response_text = str(response_text)
-                yield f"data: {json.dumps({'expert': chunk['expert'], 'response': response_text})}\n\n"
+            try:
+                for chunk in current_app.moderator.start_discussion_stream(processed_input):
+                    response_text = chunk['response']
+                    if isinstance(response_text, dict):
+                        response_text = json.dumps(response_text)
+                    else:
+                        response_text = str(response_text)
+                    yield f"data: {json.dumps({'expert': chunk['expert'], 'response': response_text})}\n\n"
+            except Exception as e:
+                logger.error(f"Error in stream generation: {str(e)}")
+                yield f"data: {json.dumps({'error': str(e)})}\n\n"
         return Response(stream_with_context(generate()), mimetype='text/event-stream')
     except Exception as e:
+        logger.error(f"Error in stream_response: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 @bp.route('/dashboard')
