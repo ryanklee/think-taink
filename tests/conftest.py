@@ -1,6 +1,8 @@
 import sys
 import os
 import pytest
+import threading
+from werkzeug.serving import make_server
 
 # Add the src directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -8,25 +10,36 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from src.main import create_app
 from src.config.config_loader import load_config
 
+class ServerThread(threading.Thread):
+    def __init__(self, app):
+        threading.Thread.__init__(self)
+        self.srv = make_server('127.0.0.1', 5000, app)
+        self.ctx = app.app_context()
+        self.ctx.push()
+
+    def run(self):
+        self.srv.serve_forever()
+
+    def shutdown(self):
+        self.srv.shutdown()
+
 @pytest.fixture(scope='session')
 def app():
     config = load_config()
     app = create_app(config)
     app.config.update({
         "TESTING": True,
-        "PORT": 5000,  # Add this line
+        "PORT": 5000,
     })
-    with app.app_context():
-        yield app
+    return app
+
+@pytest.fixture(scope='session')
+def live_server(app):
+    server = ServerThread(app)
+    server.start()
+    yield server
+    server.shutdown()
 
 @pytest.fixture(scope='session')
 def client(app):
     return app.test_client()
-
-from types import SimpleNamespace
-
-@pytest.fixture(scope='session')
-def live_server(app):
-    with app.test_client() as client:
-        server = SimpleNamespace(app=app, client=client)
-        yield server
