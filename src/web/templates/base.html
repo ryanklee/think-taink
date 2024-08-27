@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-LLM Think Tank Simulation</title>
+    <style>
+        nav {
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
+    <nav>
+        <a href="{{ url_for('main.index') }}">Home</a>
+        <a href="{{ url_for('main.ask_question') }}">Ask a Question</a>
+    </nav>
     <h1>Multi-LLM Think Tank Simulation</h1>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
