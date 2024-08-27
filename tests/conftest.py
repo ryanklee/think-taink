@@ -16,6 +16,7 @@ class ServerThread(threading.Thread):
         self.srv = make_server('127.0.0.1', 5000, app)
         self.ctx = app.app_context()
         self.ctx.push()
+        self.app = app
 
     def run(self):
         self.srv.serve_forever()
@@ -29,7 +30,7 @@ def app():
     app = create_app(config)
     app.config.update({
         "TESTING": True,
-        "PORT": 5000,
+        "SERVER_NAME": "localhost:5000",
     })
     return app
 
