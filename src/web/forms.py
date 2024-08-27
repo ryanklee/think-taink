@@ -9,3 +9,6 @@ class QuestionForm(FlaskForm):
 
 class ImprovementForm(FlaskForm):
     submit = SubmitField('Run Improvement Cycle')
+
+class ImprovementForm(FlaskForm):
+    submit = SubmitField('Run Improvement Cycle')

@@ -1,20 +1,37 @@
 {% extends "base.html" %}
+
+{% block title %}Ask a Question - Multi-LLM Think Tank{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto">
     <h2 class="text-2xl font-bold mb-6">Ask the AI Think Tank</h2>
-    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" x-data="{ question: '', apiType: 'openai' }">
         {{ form.hidden_tag() }}
         <div class="mb-4">
             {{ form.question.label(class="block text-gray-700 text-sm font-bold mb-2") }}
-            {{ form.question(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", size=32) }}
+            {{ form.question(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", x_model="question") }}
         </div>
         <div class="mb-6">
             {{ form.api_type.label(class="block text-gray-700 text-sm font-bold mb-2") }}
-            {{ form.api_type(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline") }}
+            {{ form.api_type(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", x_model="apiType") }}
         </div>
         <div class="flex items-center justify-between">
-            {{ form.submit(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline") }}
+            {{ form.submit(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline", x_bind:disabled="!question") }}
         </div>
     </form>
+    <div class="mt-8">
+        <h3 class="text-xl font-semibold mb-4">Recent Questions</h3>
+        <ul class="space-y-2">
+            <li class="bg-white p-4 rounded shadow">
+                <a href="#" class="text-blue-600 hover:underline">What are the ethical implications of AI in healthcare?</a>
+            </li>
+            <li class="bg-white p-4 rounded shadow">
+                <a href="#" class="text-blue-600 hover:underline">How can we mitigate climate change through technology?</a>
+            </li>
+            <li class="bg-white p-4 rounded shadow">
+                <a href="#" class="text-blue-600 hover:underline">What are the potential consequences of quantum computing on cryptography?</a>
+            </li>
+        </ul>
+    </div>
 </div>
 {% endblock %}

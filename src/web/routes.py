@@ -14,8 +14,16 @@ def ask_question():
     if form.validate_on_submit():
         question = form.question.data
         api_type = form.api_type.data
+        # Save the question to the database
+        new_question = Question(text=question, api_type=api_type)
+        db.session.add(new_question)
+        db.session.commit()
         return redirect(url_for('main.result', question=question, api_type=api_type))
-    return render_template('ask_question.html', form=form)
+    
+    # Fetch recent questions
+    recent_questions = Question.query.order_by(Question.created_at.desc()).limit(5).all()
+    
+    return render_template('ask_question.html', form=form, recent_questions=recent_questions)
 
 @bp.route('/result')
 def result():
@@ -80,6 +88,29 @@ def improvement_dashboard():
     
     return render_template('improvement_dashboard.html', form=form, metrics=metrics, config=config)
 
+@bp.route('/run_improvement', methods=['POST'])
+def run_improvement():
+    form = ImprovementForm()
+    if form.validate_on_submit():
+        try:
+            # Implement the improvement run logic here
+            flash("Improvement run completed successfully", 'success')
+        except Exception as e:
+            flash(f"An error occurred during the improvement run: {str(e)}", 'error')
+    return redirect(url_for('main.improvement_dashboard'))
+@bp.route('/dashboard')
+def improvement_dashboard():
+    # Mock data for performance metrics (replace with actual data in the future)
+    metrics = {
+        'Average Response Time': '2.5 seconds',
+        'Discussion Quality Score': '8.7/10',
+        'Principle Evolution Rate': '0.05 per discussion'
+    }
+    
+    # Get the current configuration
+    config = current_app.config
+    
+    return render_template('improvement_dashboard.html', metrics=metrics, config=config)
 @bp.route('/run_improvement', methods=['POST'])
 def run_improvement():
     form = ImprovementForm()

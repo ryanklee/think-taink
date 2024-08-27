@@ -1,59 +1,87 @@
 {% extends "base.html" %}
+
+{% block title %}Results - Multi-LLM Think Tank{% endblock %}
+
 {% block content %}
-<div class="max-w-4xl mx-auto">
+<div class="max-w-4xl mx-auto" x-data="{ responses: [], currentExpert: '', expertResponse: '', speed: 5 }">
     <h2 class="text-2xl font-bold mb-6">Results</h2>
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <p class="mb-4"><span class="font-bold">Question:</span> {{ question }}</p>
         <p class="mb-4"><span class="font-bold">API Type:</span> {{ api_type }}</p>
-        <div id="response" class="mt-6 space-y-4"></div>
+        <div id="response" class="mt-6 space-y-4">
+            <template x-for="response in responses" :key="response.expert">
+                <div class="p-4 bg-gray-100 rounded-md">
+                    <strong class="text-blue-600" x-text="response.expert + ':'"></strong>
+                    <pre class="text-gray-700 whitespace-pre-wrap" x-text="response.content"></pre>
+                </div>
+            </template>
+        </div>
         <div class="mt-4">
             <label for="speed" class="block text-sm font-medium text-gray-700">Discourse Speed:</label>
-            <input type="range" id="speed" name="speed" min="1" max="10" value="5" class="mt-1 block w-full">
+            <input type="range" id="speed" name="speed" min="1" max="10" x-model="speed" class="mt-1 block w-full">
         </div>
-        <a href="{{ url_for('main.index') }}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ask another question</a>
+        <a href="{{ url_for('main.ask_question') }}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ask another question</a>
     </div>
 </div>
 
+{% endblock %}
+
+{% block extra_scripts %}
 <script>
-    const responseDiv = document.getElementById('response');
-    const speedControl = document.getElementById('speed');
-    let currentExpert = '';
-    let expertResponse = '';
+document.addEventListener('alpine:init', () => {
+    Alpine.data('resultData', () => ({
+        responses: [],
+        currentExpert: '',
+        expertResponse: '',
+        speed: 5,
+        eventSource: null,
 
-    const eventSource = new EventSource("{{ url_for('main.stream_response', question=question, api_type=api_type) }}");
-    
-    eventSource.onmessage = function(event) {
-        const data = JSON.parse(event.data);
-        let responseText = data.response;
-        
-        if (data.expert !== currentExpert) {
-            if (currentExpert) {
-                responseDiv.innerHTML += `<div class="p-4 bg-gray-100 rounded-md"><strong class="text-blue-600">${currentExpert}:</strong> <pre class="text-gray-700 whitespace-pre-wrap">${expertResponse}</pre></div>`;
+        init() {
+            this.startEventSource();
+        },
+
+        startEventSource() {
+            this.eventSource = new EventSource("{{ url_for('main.stream_response', question=question, api_type=api_type) }}");
+            
+            this.eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                let responseText = data.response;
+                
+                if (data.expert !== this.currentExpert) {
+                    if (this.currentExpert) {
+                        this.responses.push({expert: this.currentExpert, content: this.expertResponse});
+                    }
+                    this.currentExpert = data.expert;
+                    this.expertResponse = '';
+                }
+                
+                this.expertResponse += responseText;
+                
+                if (this.responses.length > 0) {
+                    this.responses[this.responses.length - 1].content = this.expertResponse;
+                } else {
+                    this.responses.push({expert: this.currentExpert, content: this.expertResponse});
+                }
+            };
+
+            this.eventSource.onerror = (event) => {
+                console.error("EventSource failed:", event);
+                this.eventSource.close();
+                this.responses.push({
+                    expert: 'Error',
+                    content: 'Connection to server lost. Please refresh the page and try again.'
+                });
+            };
+        },
+
+        updateSpeed() {
+            const speed = 11 - this.speed;  // Invert the scale so that higher values mean faster
+            if (this.eventSource) {
+                this.eventSource.close();
             }
-            currentExpert = data.expert;
-            expertResponse = '';
+            this.startEventSource();
         }
-        
-        // Always treat the response as a string
-        expertResponse += responseText;
-        
-        if (responseDiv.lastChild) {
-            responseDiv.lastChild.innerHTML = `<strong class="text-blue-600">${currentExpert}:</strong> <pre class="text-gray-700 whitespace-pre-wrap">${expertResponse}</pre>`;
-        } else {
-            responseDiv.innerHTML = `<div class="p-4 bg-gray-100 rounded-md"><strong class="text-blue-600">${currentExpert}:</strong> <pre class="text-gray-700 whitespace-pre-wrap">${expertResponse}</pre></div>`;
-        }
-    };
-
-    eventSource.onerror = function(event) {
-        console.error("EventSource failed:", event);
-        eventSource.close();
-        responseDiv.innerHTML += `<div class="p-4 bg-red-100 rounded-md"><strong class="text-red-600">Error:</strong> <span class="text-red-700">Connection to server lost. Please refresh the page and try again.</span></div>`;
-    };
-
-    speedControl.addEventListener('input', function() {
-        const speed = 11 - this.value;  // Invert the scale so that higher values mean faster
-        eventSource.close();
-        eventSource = new EventSource(`{{ url_for('main.stream_response') }}?question={{ question|urlencode }}&api_type={{ api_type }}&speed=${speed}`);
-    });
+    }));
+});
 </script>
 {% endblock %}

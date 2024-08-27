@@ -3,17 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-LLM Think Tank Simulation</title>
+    <title>{% block title %}Multi-LLM Think Tank Simulation{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-gray-100 min-h-screen flex flex-col" x-data="{ mobileMenuOpen: false }">
     <nav class="bg-blue-600 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <a href="{{ url_for('main.index') }}" class="text-xl font-bold">Multi-LLM Think Tank</a>
-            <div>
-                <a href="{{ url_for('main.index') }}" class="mr-4 hover:text-blue-200">Home</a>
+            <div class="hidden md:flex space-x-4">
+                <a href="{{ url_for('main.index') }}" class="hover:text-blue-200">Home</a>
                 <a href="{{ url_for('main.ask_question') }}" class="hover:text-blue-200">Ask a Question</a>
+                <a href="{{ url_for('main.improvement_dashboard') }}" class="hover:text-blue-200">Improvement Dashboard</a>
             </div>
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+        <div x-show="mobileMenuOpen" class="md:hidden">
+            <a href="{{ url_for('main.index') }}" class="block py-2 px-4 text-sm hover:bg-blue-700">Home</a>
+            <a href="{{ url_for('main.ask_question') }}" class="block py-2 px-4 text-sm hover:bg-blue-700">Ask a Question</a>
+            <a href="{{ url_for('main.improvement_dashboard') }}" class="block py-2 px-4 text-sm hover:bg-blue-700">Improvement Dashboard</a>
         </div>
     </nav>
     
@@ -36,5 +49,6 @@
     <footer class="bg-gray-200 text-center p-4 mt-8">
         <p>&copy; 2024 Multi-LLM Think Tank Simulation. All rights reserved.</p>
     </footer>
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
