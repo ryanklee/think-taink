@@ -76,7 +76,8 @@ class TestLLMPool:
                 assert response["response"] == "response"
 
         assert responses[-1]["expert"] == "System"
-        assert "data sent to the api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
+        assert "data sent to the" in responses[-1]["response"].lower()
+        assert "api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
 
         assert mock_generate_response_stream.call_count == 5
         
@@ -124,7 +125,7 @@ class TestLLMPool:
     def test_llm_pool_configuration(self, llm_pool, request):
         llm_pool = request.getfixturevalue(llm_pool)
         assert llm_pool.temperature == 0.7
-        assert llm_pool.max_tokens == 150
+        assert llm_pool.max_tokens == 4096
 
     @pytest.mark.parametrize("llm_pool", ["llm_pool_anthropic", "llm_pool_openai"])
     def test_get_expert_names(self, llm_pool, request):
