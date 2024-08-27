@@ -1,8 +1,8 @@
 import logging
-from typing import Dict, List, Generator
+from typing import Dict, Generator
 from src.utils.exceptions import LLMPoolError
-from src.llm_pool.anthropic_api import AnthropicAPI
-from src.llm_pool.openai_api import OpenAIAPI
+from src.llm_pool.api_client import APIClient
+from src.llm_pool.expert_pool import ExpertPool
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -10,58 +10,19 @@ logger = logging.getLogger(__name__)
 class LLMPool:
     def __init__(self, config: Dict):
         logger.debug("Initializing LLMPool")
-        self.api_type = config.get('llm', {}).get('api_type', 'anthropic')
-        api_key = config.get('llm', {}).get('api_key')
-        if not api_key:
-            logger.error("API key is missing in the configuration")
-            raise ValueError("API key is missing in the configuration")
-        
-        if self.api_type == 'anthropic':
-            self.api = AnthropicAPI(api_key, model=config.get('llm', {}).get('model', 'claude-3-sonnet-20240229'))
-        elif self.api_type == 'openai':
-            self.api = OpenAIAPI(api_key, model=config.get('llm', {}).get('model', 'gpt-4o-mini'))
-        else:
-            raise ValueError(f"Unsupported API type: {self.api_type}")
+        self.api_client = APIClient(config.get('llm', {}))
+        self.expert_pool = ExpertPool()
         
         self.temperature = config.get('llm', {}).get('temperature', 0.7)
         self.max_tokens = config.get('llm', {}).get('max_tokens', 4096)
         self.context_window = config.get('llm', {}).get('context_window', 128000)
-        logger.debug(f"LLMPool initialized with API: {self.api_type}, model: {self.api.model}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")
-        logger.debug(f"API Key (first 5 chars): {api_key[:5]}...")
-        self.experts = [
-            {"name": "Analyst", "prompt": "You are an analytical expert. Provide a logical and data-driven perspective."},
-            {"name": "Creative", "prompt": "You are a creative expert. Think outside the box and provide innovative ideas."},
-            {"name": "Critic", "prompt": "You are a critical thinker. Identify potential flaws and provide constructive criticism."},
-            {"name": "Synthesizer", "prompt": "You are a synthesizer. Combine different ideas and perspectives into a cohesive whole."},
-            {"name": "Ethicist", "prompt": "You are an ethics expert. Consider the moral and ethical implications of ideas and decisions."}
-        ]
+        logger.debug(f"LLMPool initialized with temperature: {self.temperature}, max_tokens: {self.max_tokens}")
         
         # Note on data usage and retention
         self.data_usage_note = (
             "Note: Data sent to the API will be handled according to the provider's data retention policies. "
             "Please refer to the specific API provider's documentation for details on data usage and retention."
         )
-
-    def add_expert(self, name: str, prompt: str) -> None:
-        """Add a new expert to the pool."""
-        if any(expert["name"] == name for expert in self.experts):
-            raise LLMPoolError(f"Expert '{name}' already exists in the pool")
-        self.experts.append({"name": name, "prompt": prompt})
-
-    def remove_expert(self, name: str) -> None:
-        """Remove an expert from the pool."""
-        initial_length = len(self.experts)
-        self.experts = [expert for expert in self.experts if expert["name"] != name]
-        if len(self.experts) == initial_length:
-            raise LLMPoolError(f"Expert '{name}' not found in the pool")
-
-    def update_expert(self, name: str, new_prompt: str) -> None:
-        """Update an existing expert's prompt."""
-        for expert in self.experts:
-            if expert["name"] == name:
-                expert["prompt"] = new_prompt
-                return
-        raise LLMPoolError(f"Expert '{name}' not found in the pool")
 
     def generate_response_stream(self, input_text: str) -> Generator[Dict[str, str], None, None]:
         """
@@ -81,13 +42,13 @@ class LLMPool:
             logger.error("Input text is empty")
             raise LLMPoolError("Input text cannot be empty")
 
-        for expert in self.experts:
+        for expert in self.expert_pool.get_all_experts():
             logger.debug(f"Generating response for expert: {expert['name']}")
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
             try:
                 logger.debug(f"Calling API for expert: {expert['name']}")
                 response = ""
-                for response_chunk in self.api.generate_response_stream(
+                for response_chunk in self.api_client.generate_response_stream(
                     prompt, 
                     max_tokens=self.max_tokens
                 ):
@@ -117,25 +78,20 @@ class LLMPool:
         }
         logger.debug("Finished generate_response_stream")
 
-    def get_expert_names(self) -> List[str]:
-        return [expert["name"] for expert in self.experts]
+    def get_expert_names(self):
+        return self.expert_pool.get_expert_names()
 
     def get_expert_prompt(self, expert_name: str) -> str:
-        for expert in self.experts:
-            if expert["name"] == expert_name:
-                return expert["prompt"]
-        raise ValueError(f"Expert '{expert_name}' not found")
+        return self.expert_pool.get_expert_prompt(expert_name)
+
+    def add_expert(self, name: str, prompt: str) -> None:
+        self.expert_pool.add_expert(name, prompt)
+
+    def remove_expert(self, name: str) -> None:
+        self.expert_pool.remove_expert(name)
+
+    def update_expert(self, name: str, new_prompt: str) -> None:
+        self.expert_pool.update_expert(name, new_prompt)
 
     def set_api_type(self, api_type: str) -> None:
-        """Set the API type (anthropic or openai)."""
-        if api_type not in ['anthropic', 'openai']:
-            raise ValueError(f"Unsupported API type: {api_type}")
-        self.api_type = api_type
-        # Re-initialize the API object based on the new type
-        api_key = getattr(self.api, 'api_key', None)
-        if api_key is None:
-            raise ValueError("API key not found. Please reinitialize the LLMPool with a valid configuration.")
-        if self.api_type == 'anthropic':
-            self.api = AnthropicAPI(api_key, model=self.api.model)
-        else:
-            self.api = OpenAIAPI(api_key, model=self.api.model)
+        self.api_client.set_api_type(api_type)

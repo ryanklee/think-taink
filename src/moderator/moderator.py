@@ -2,6 +2,8 @@ from typing import List, Dict, Generator
 import logging
 import time
 from src.llm_pool.llm_pool import LLMPool
+from src.llm_pool.api_client import APIClient
+from src.llm_pool.expert_pool import ExpertPool
 from src.heuristics.principles import Principles
 from src.principles_evolution.reflector import Reflector
 from src.llm_pool.pool_evolution import PoolEvolution
