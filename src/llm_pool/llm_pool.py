@@ -2,7 +2,7 @@ import logging
 from typing import Dict, List, Generator
 from src.utils.exceptions import LLMPoolError
 from src.llm_pool.anthropic_api import AnthropicAPI
-from src.utils.exceptions import LLMPoolError
+from src.llm_pool.openai_api import OpenAIAPI
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -10,16 +10,23 @@ logger = logging.getLogger(__name__)
 class LLMPool:
     def __init__(self, config: Dict):
         logger.debug("Initializing LLMPool")
+        self.api_type = config.get('llm', {}).get('api_type', 'anthropic')
         api_key = config.get('llm', {}).get('api_key')
         if not api_key:
             logger.error("API key is missing in the configuration")
-            raise ValueError("OpenAI API key is missing in the configuration")
+            raise ValueError("API key is missing in the configuration")
         
-        self.api = AnthropicAPI(api_key, model=config.get('llm', {}).get('model', 'claude-3-sonnet-20240229'))
+        if self.api_type == 'anthropic':
+            self.api = AnthropicAPI(api_key, model=config.get('llm', {}).get('model', 'claude-3-sonnet-20240229'))
+        elif self.api_type == 'openai':
+            self.api = OpenAIAPI(api_key, model=config.get('llm', {}).get('model', 'gpt-4o-mini'))
+        else:
+            raise ValueError(f"Unsupported API type: {self.api_type}")
+        
         self.temperature = config.get('llm', {}).get('temperature', 0.7)
         self.max_tokens = config.get('llm', {}).get('max_tokens', 4096)
-        self.context_window = config.get('llm', {}).get('context_window', 128000)  # Context window for gpt-4o-mini
-        logger.debug(f"LLMPool initialized with model: {self.api.model}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")
+        self.context_window = config.get('llm', {}).get('context_window', 128000)
+        logger.debug(f"LLMPool initialized with API: {self.api_type}, model: {self.api.model}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")
         logger.debug(f"API Key (first 5 chars): {api_key[:5]}...")
         self.experts = [
             {"name": "Analyst", "prompt": "You are an analytical expert. Provide a logical and data-driven perspective."},
@@ -31,9 +38,8 @@ class LLMPool:
         
         # Note on data usage and retention
         self.data_usage_note = (
-            "Note: As of March 1, 2023, data sent to the OpenAI API will not be used to train or improve OpenAI models. "
-            "API data may be retained for up to 30 days for abuse monitoring purposes, after which it will be deleted "
-            "(unless otherwise required by law)."
+            "Note: Data sent to the API will be handled according to the provider's data retention policies. "
+            "Please refer to the specific API provider's documentation for details on data usage and retention."
         )
 
     def add_expert(self, name: str, prompt: str) -> None:
@@ -83,7 +89,7 @@ class LLMPool:
                 response = ""
                 for response_chunk in self.api.generate_response_stream(
                     prompt, 
-                    max_tokens=4096 if self.api.model == 'gpt-4o' else self.max_tokens
+                    max_tokens=self.max_tokens
                 ):
                     logger.debug(f"Received response chunk for {expert['name']}: {response_chunk}")
                     response += response_chunk
@@ -119,3 +125,14 @@ class LLMPool:
             if expert["name"] == expert_name:
                 return expert["prompt"]
         raise ValueError(f"Expert '{expert_name}' not found")
+
+    def set_api_type(self, api_type: str) -> None:
+        """Set the API type (anthropic or openai)."""
+        if api_type not in ['anthropic', 'openai']:
+            raise ValueError(f"Unsupported API type: {api_type}")
+        self.api_type = api_type
+        # Re-initialize the API object based on the new type
+        if self.api_type == 'anthropic':
+            self.api = AnthropicAPI(self.api.api_key, model=self.api.model)
+        else:
+            self.api = OpenAIAPI(self.api.api_key, model=self.api.model)

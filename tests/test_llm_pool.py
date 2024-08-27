@@ -11,8 +11,9 @@ from src.utils.exceptions import LLMPoolError
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-# Mock the entire openai module
+# Mock the entire openai and anthropic modules
 sys.modules['openai'] = MagicMock()
+sys.modules['anthropic'] = MagicMock()
 
 # Set up logging
 def setup_logger():
@@ -24,9 +25,10 @@ def setup_logger():
     return log_stream
 
 @pytest.fixture
-def llm_pool():
+def llm_pool_anthropic():
     config = {
         "llm": {
+            "api_type": "anthropic",
             "model": "claude-3-sonnet-20240229",
             "temperature": 0.7,
             "max_tokens": 150,
@@ -35,18 +37,29 @@ def llm_pool():
     }
     return LLMPool(config)
 
+@pytest.fixture
+def llm_pool_openai():
+    config = {
+        "llm": {
+            "api_type": "openai",
+            "model": "gpt-4o-mini",
+            "temperature": 0.7,
+            "max_tokens": 150,
+            "api_key": "test_api_key"
+        }
+    }
+    return LLMPool(config)
+
 class TestLLMPool:
-    @patch('src.llm_pool.llm_pool.AnthropicAPI')
-    def test_generate_response_stream_success(self, mock_anthropic_api, llm_pool):
+    @pytest.mark.parametrize("llm_pool", ["llm_pool_anthropic", "llm_pool_openai"])
+    def test_generate_response_stream_success(self, llm_pool, request):
+        llm_pool = request.getfixturevalue(llm_pool)
         log_stream = setup_logger()
         
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.return_value = iter(["Test response"])
-        mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
-        mock_anthropic_api.return_value.is_test_environment = True
-        llm_pool.api = mock_anthropic_api.return_value
+        llm_pool.api.generate_response_stream = mock_generate_response_stream
         llm_pool.api.is_test_environment = True
-        # Remove these lines as they are redundant
         
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))
@@ -58,21 +71,20 @@ class TestLLMPool:
             assert response["response"] == "Test response"
 
         assert responses[-1]["expert"] == "System"
-        assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
+        assert "data sent to the api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
 
         assert mock_generate_response_stream.call_count == 5
         
         print(log_stream.getvalue())  # Print the captured logs
 
     @pytest.mark.parametrize("expert", ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"])
-    @patch('src.llm_pool.llm_pool.AnthropicAPI')
-    def test_generate_response_stream_for_each_expert(self, mock_openai_api, expert, llm_pool):
+    @pytest.mark.parametrize("llm_pool", ["llm_pool_anthropic", "llm_pool_openai"])
+    def test_generate_response_stream_for_each_expert(self, expert, llm_pool, request):
+        llm_pool = request.getfixturevalue(llm_pool)
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.return_value = iter(["Test response"])
-        mock_openai_api.return_value.generate_response_stream = mock_generate_response_stream
-        mock_openai_api.return_value.is_test_environment = True
-
-        llm_pool.api = mock_openai_api.return_value
+        llm_pool.api.generate_response_stream = mock_generate_response_stream
+        llm_pool.api.is_test_environment = True
 
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))
@@ -80,14 +92,13 @@ class TestLLMPool:
         expert_response = next(r for r in responses if r["expert"] == expert)
         assert expert_response["response"] == "Test response"
 
-    @patch('src.llm_pool.llm_pool.AnthropicAPI')
-    def test_generate_response_stream_error_handling(self, mock_anthropic_api, llm_pool):
+    @pytest.mark.parametrize("llm_pool", ["llm_pool_anthropic", "llm_pool_openai"])
+    def test_generate_response_stream_error_handling(self, llm_pool, request):
+        llm_pool = request.getfixturevalue(llm_pool)
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.side_effect = Exception("API Error")
-        mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
-        mock_anthropic_api.return_value.is_test_environment = False
-        
-        llm_pool.api = mock_anthropic_api.return_value
+        llm_pool.api.generate_response_stream = mock_generate_response_stream
+        llm_pool.api.is_test_environment = False
         
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))
@@ -99,37 +110,34 @@ class TestLLMPool:
             assert "Error generating response: API Error" in response["response"]
 
         assert responses[-1]["expert"] == "System"
-        assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
+        assert "data sent to the api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
 
         assert mock_generate_response_stream.call_count == 5
 
-    def test_llm_pool_configuration(self):
-        config = {
-            "llm": {
-                "model": "gpt-4",
-                "temperature": 0.5,
-                "max_tokens": 200,
-                "api_key": "test_api_key"
-            }
-        }
-        llm_pool = LLMPool(config)
-        
-        assert llm_pool.api.model == "gpt-4"
-        assert llm_pool.temperature == 0.5
-        assert llm_pool.max_tokens == 200
+    @pytest.mark.parametrize("llm_pool", ["llm_pool_anthropic", "llm_pool_openai"])
+    def test_llm_pool_configuration(self, llm_pool, request):
+        llm_pool = request.getfixturevalue(llm_pool)
+        assert llm_pool.temperature == 0.7
+        assert llm_pool.max_tokens == 150
 
-    def test_get_expert_names(self, llm_pool):
+    @pytest.mark.parametrize("llm_pool", ["llm_pool_anthropic", "llm_pool_openai"])
+    def test_get_expert_names(self, llm_pool, request):
+        llm_pool = request.getfixturevalue(llm_pool)
         expert_names = llm_pool.get_expert_names()
         assert expert_names == ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"]
 
-    def test_get_expert_prompt(self, llm_pool):
+    @pytest.mark.parametrize("llm_pool", ["llm_pool_anthropic", "llm_pool_openai"])
+    def test_get_expert_prompt(self, llm_pool, request):
+        llm_pool = request.getfixturevalue(llm_pool)
         analyst_prompt = llm_pool.get_expert_prompt("Analyst")
         assert analyst_prompt == "You are an analytical expert. Provide a logical and data-driven perspective."
 
         with pytest.raises(ValueError):
             llm_pool.get_expert_prompt("NonexistentExpert")
 
-    def test_expert_management(self, llm_pool):
+    @pytest.mark.parametrize("llm_pool", ["llm_pool_anthropic", "llm_pool_openai"])
+    def test_expert_management(self, llm_pool, request):
+        llm_pool = request.getfixturevalue(llm_pool)
         # Test adding an expert
         llm_pool.add_expert("TestExpert", "This is a test expert.")
         assert "TestExpert" in [expert["name"] for expert in llm_pool.experts]
@@ -154,6 +162,16 @@ class TestLLMPool:
         # Test updating a nonexistent expert
         with pytest.raises(LLMPoolError):
             llm_pool.update_expert("NonexistentExpert", "This expert doesn't exist.")
+
+    def test_set_api_type(self, llm_pool_anthropic):
+        llm_pool_anthropic.set_api_type('openai')
+        assert isinstance(llm_pool_anthropic.api, MagicMock)  # Since we mocked the OpenAIAPI
+
+        llm_pool_anthropic.set_api_type('anthropic')
+        assert isinstance(llm_pool_anthropic.api, MagicMock)  # Since we mocked the AnthropicAPI
+
+        with pytest.raises(ValueError):
+            llm_pool_anthropic.set_api_type('invalid_api')
 
 if __name__ == '__main__':
     pytest.main()

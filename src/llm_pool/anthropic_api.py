@@ -28,3 +28,19 @@ class AnthropicAPI:
 
     def set_model(self, model):
         self.model = model
+
+    def generate_response(self, prompt, max_tokens=4096) -> str:
+        if self.is_test_environment:
+            return "Test response"
+
+        try:
+            response = self.client.messages.create(
+                model=self.model,
+                max_tokens=max_tokens,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            return response.content
+        except anthropic.APIError as e:
+            raise LLMPoolError(f"Anthropic API error: {str(e)}")
+        except Exception as e:
+            raise LLMPoolError(f"Unexpected error: {str(e)}")
