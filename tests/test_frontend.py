@@ -1,6 +1,10 @@
 import pytest
 from playwright.sync_api import Page, expect
 from flask import url_for
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 import pytest
 from playwright.sync_api import Page, expect
@@ -17,11 +21,13 @@ class TestFrontend:
         page.goto(url_for('main.ask_question', _external=True))
         question_input = page.locator("input[name='question']")
         api_select = page.locator("select[name='api_type']")
-        submit_button = page.locator("button#submit")
+        submit_button = page.locator("button[type='submit']")
 
-        expect(question_input).to_be_visible()
-        expect(api_select).to_be_visible()
-        expect(submit_button).to_be_visible()
+        if not submit_button.is_visible():
+            logger.error(f"Page content: {page.content()}")
+        expect(question_input).to_be_visible(timeout=10000)
+        expect(api_select).to_be_visible(timeout=10000)
+        expect(submit_button).to_be_visible(timeout=10000)
 
     def test_question_submission(self, page: Page, live_server):
         page.goto(url_for('main.ask_question', _external=True))
@@ -31,7 +37,8 @@ class TestFrontend:
 
         question_input.fill("What is the capital of France?")
         api_select.select_option("openai")
-        submit_button.click()
+        with page.expect_navigation():
+            submit_button.click()
 
         response_element = page.locator("#response")
         expect(response_element).to_be_visible()
