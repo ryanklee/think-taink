@@ -14,8 +14,10 @@ def app():
     app = create_app(config)
     app.config.update({
         "TESTING": True,
+        "SERVER_NAME": "localhost.localdomain",  # Add this line
     })
-    yield app
+    with app.app_context():
+        yield app
 
 @pytest.fixture(scope='session')
 def client(app):
@@ -23,4 +25,5 @@ def client(app):
 
 @pytest.fixture(scope='session')
 def live_server(app):
-    return app
+    with app.test_client() as client:
+        yield client
