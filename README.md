@@ -100,7 +100,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Documentation
 
-For more detailed information about the project's components and architecture, please refer to the `docs/` directory.
+For more detailed information about the project's components and architecture, please refer to the `docs/` directory. This includes a summary of the Claude API documentation (`claude_api_summary.md`) for quick reference when working with the API.
 
 ## Error Handling and Logging
 
