@@ -4,12 +4,13 @@
 
 ### a) LLM Pool
 - Number of LLMs: 5 (Analyst, Creative, Critic, Synthesizer, Ethicist)
-- Using OpenAI API with configurable model (default: gpt-4o-mini) with different prompts/personalities to simulate different experts
+- Support for both OpenAI and Claude APIs with configurable models
 - Implemented streaming response generation for real-time output
 - Robust error handling and logging for API interactions
 - Test environment support for reliable testing without API calls
 - Implemented dynamic expert pool evolution based on discussion performance
 - Versioning system for LLM pool configurations
+- XML tag structuring for improved prompt engineering with Claude API
 
 ### b) Question/Objective Input
 - Simple text input system for questions or intellectual objectives via web interface
