@@ -7,6 +7,10 @@
         {{ form.question.label }}<br>
         {{ form.question(size=32) }}
     </p>
+    <p>
+        {{ form.api_type.label }}<br>
+        {{ form.api_type() }}
+    </p>
     <p>{{ form.submit() }}</p>
 </form>
 {% endblock %}
