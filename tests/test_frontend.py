@@ -2,33 +2,35 @@ import pytest
 from playwright.sync_api import Page, expect
 from flask import url_for
 
-def test_home_page(page: Page, live_server):
-    page.goto(live_server.url())
-    expect(page).to_have_title("Multi-LLM Think Tank Simulation")
-    expect(page.locator("body")).to_contain_text("Multi-LLM Think Tank Simulation")
+@pytest.mark.usefixtures("live_server")
+class TestFrontend:
+    def test_home_page(self, page: Page):
+        page.goto(self.live_server.url())
+        expect(page).to_have_title("Multi-LLM Think Tank Simulation")
+        expect(page.locator("body")).to_contain_text("Multi-LLM Think Tank Simulation")
 
-def test_ask_question_form(page: Page, live_server):
-    page.goto(f"{live_server.url()}/ask")
-    question_input = page.locator("input[name='question']")
-    api_select = page.locator("select[name='api_type']")
-    submit_button = page.locator("button#submit")
+    def test_ask_question_form(self, page: Page):
+        page.goto(f"{self.live_server.url()}/ask")
+        question_input = page.locator("input[name='question']")
+        api_select = page.locator("select[name='api_type']")
+        submit_button = page.locator("button#submit")
 
-    expect(question_input).to_be_visible()
-    expect(api_select).to_be_visible()
-    expect(submit_button).to_be_visible()
+        expect(question_input).to_be_visible()
+        expect(api_select).to_be_visible()
+        expect(submit_button).to_be_visible()
 
-def test_question_submission(page: Page, live_server):
-    page.goto(f"{live_server.url()}/ask")
-    question_input = page.locator("input[name='question']")
-    api_select = page.locator("select[name='api_type']")
-    submit_button = page.locator("button#submit")
+    def test_question_submission(self, page: Page):
+        page.goto(f"{self.live_server.url()}/ask")
+        question_input = page.locator("input[name='question']")
+        api_select = page.locator("select[name='api_type']")
+        submit_button = page.locator("button#submit")
 
-    question_input.fill("What is the capital of France?")
-    api_select.select_option("openai")
-    submit_button.click()
+        question_input.fill("What is the capital of France?")
+        api_select.select_option("openai")
+        submit_button.click()
 
-    response_element = page.locator("#response")
-    expect(response_element).to_be_visible()
-    expect(response_element).to_contain_text("Paris")
+        response_element = page.locator("#response")
+        expect(response_element).to_be_visible()
+        expect(response_element).to_contain_text("Paris")
 
 # Add more tests as needed
