@@ -8,21 +8,29 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 class LLMPool:
-    def __init__(self, config: Dict):
+    def __init__(self, config: Dict, api_type: str = None):
         logger.debug("Initializing LLMPool")
-        self.api_client = APIClient(config.get('llm', {}))
+        self.api_type = api_type or config.get('llm', {}).get('default_api', 'openai')
+        self.api_client = APIClient(config.get(self.api_type, {}))
         self.expert_pool = ExpertPool()
         
         self.temperature = config.get('llm', {}).get('temperature', 0.7)
         self.max_tokens = config.get('llm', {}).get('max_tokens', 4096)
         self.context_window = config.get('llm', {}).get('context_window', 128000)
-        logger.debug(f"LLMPool initialized with temperature: {self.temperature}, max_tokens: {self.max_tokens}")
+        logger.debug(f"LLMPool initialized with API: {self.api_type}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")
         
         # Note on data usage and retention
         self.data_usage_note = (
-            "Note: Data sent to the API will be handled according to the provider's data retention policies. "
-            "Please refer to the specific API provider's documentation for details on data usage and retention."
+            f"Note: Data sent to the {self.api_type.upper()} API will be handled according to the provider's data retention policies. "
+            f"Please refer to the {self.api_type.capitalize()} documentation for details on data usage and retention."
         )
+
+    def set_api_type(self, api_type: str):
+        if api_type not in ['openai', 'anthropic']:
+            raise ValueError(f"Unsupported API type: {api_type}")
+        self.api_type = api_type
+        self.api_client.set_api_type(api_type)
+        logger.debug(f"API type set to: {api_type}")
 
     def generate_response_stream(self, input_text: str) -> Generator[Dict[str, str], None, None]:
         """
@@ -47,23 +55,20 @@ class LLMPool:
             prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
             try:
                 logger.debug(f"Calling API for expert: {expert['name']}")
-                response = ""
-                for response_chunk in self.api_client.generate_response_stream(
-                    prompt, 
-                    max_tokens=self.max_tokens
-                ):
-                    logger.debug(f"Received response chunk for {expert['name']}: {response_chunk}")
-                    response += response_chunk
+                response_chunks = list(self.api_client.generate_response_stream(prompt, self.max_tokens))
+                if not response_chunks:
+                    logger.warning(f"Empty response for expert: {expert['name']}")
                     yield {
                         "expert": expert["name"],
-                        "response": response_chunk
+                        "response": "No response generated"
                     }
-                logger.debug(f"Complete response for {expert['name']}: {response}")
-                if not response:
-                    yield {
-                        "expert": expert["name"],
-                        "response": "Test response"
-                    }
+                else:
+                    for response_chunk in response_chunks:
+                        logger.debug(f"Received response chunk for {expert['name']}: {response_chunk}")
+                        yield {
+                            "expert": expert["name"],
+                            "response": response_chunk
+                        }
             except Exception as e:
                 logger.error(f"Error generating response for {expert['name']}: {str(e)}")
                 yield {
@@ -77,6 +82,10 @@ class LLMPool:
             "response": self.data_usage_note
         }
         logger.debug("Finished generate_response_stream")
+
+    @property
+    def experts(self):
+        return self.expert_pool.get_all_experts()
 
     def get_expert_names(self):
         return self.expert_pool.get_expert_names()
