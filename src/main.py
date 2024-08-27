@@ -8,7 +8,7 @@ sys.path.insert(0, str(project_root))
 
 from flask import Flask
 from src.web import create_app
-from config.config_loader import load_config
+from .config.config_loader import load_config
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
