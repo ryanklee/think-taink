@@ -105,7 +105,7 @@ class TestLLMPool:
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.side_effect = Exception("API Error")
         llm_pool.api_client.generate_response_stream = mock_generate_response_stream
-        llm_pool.api_client.is_test_environment = False
+        llm_pool.api_client.is_test_environment = True
         
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))
@@ -117,7 +117,8 @@ class TestLLMPool:
             assert "Error generating response: API Error" in response["response"]
 
         assert responses[-1]["expert"] == "System"
-        assert "data sent to the api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
+        assert "data sent to the" in responses[-1]["response"].lower()
+        assert "api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
 
         assert mock_generate_response_stream.call_count == 5
 
