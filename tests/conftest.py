@@ -23,7 +23,10 @@ def app():
 def client(app):
     return app.test_client()
 
+from types import SimpleNamespace
+
 @pytest.fixture(scope='session')
 def live_server(app):
     with app.test_client() as client:
-        yield client
+        server = SimpleNamespace(app=app, client=client)
+        yield server

@@ -4,13 +4,13 @@ from flask import url_for
 
 @pytest.mark.usefixtures("live_server")
 class TestFrontend:
-    def test_home_page(self, page: Page):
-        page.goto(self.live_server.url())
+    def test_home_page(self, page: Page, live_server):
+        page.goto(live_server.client.application.config['SERVER_NAME'])
         expect(page).to_have_title("Multi-LLM Think Tank Simulation")
         expect(page.locator("body")).to_contain_text("Multi-LLM Think Tank Simulation")
 
-    def test_ask_question_form(self, page: Page):
-        page.goto(f"{self.live_server.url()}/ask")
+    def test_ask_question_form(self, page: Page, live_server):
+        page.goto(f"http://{live_server.client.application.config['SERVER_NAME']}/ask")
         question_input = page.locator("input[name='question']")
         api_select = page.locator("select[name='api_type']")
         submit_button = page.locator("button#submit")
@@ -19,8 +19,8 @@ class TestFrontend:
         expect(api_select).to_be_visible()
         expect(submit_button).to_be_visible()
 
-    def test_question_submission(self, page: Page):
-        page.goto(f"{self.live_server.url()}/ask")
+    def test_question_submission(self, page: Page, live_server):
+        page.goto(f"http://{live_server.client.application.config['SERVER_NAME']}/ask")
         question_input = page.locator("input[name='question']")
         api_select = page.locator("select[name='api_type']")
         submit_button = page.locator("button#submit")
