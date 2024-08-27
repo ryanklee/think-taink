@@ -13,47 +13,41 @@ from src.utils.exceptions import LLMPoolError
 
 @pytest.fixture
 def mock_anthropic_api():
-    with patch('src.llm_pool.llm_pool.AnthropicAPI') as mock:
+    with patch('src.llm_pool.api_client.AnthropicAPI') as mock:
         yield mock
 
 @pytest.fixture
 def llm_pool(mock_anthropic_api):
     config = {
-        "llm": {
+        "anthropic": {
             "model": "claude-3-sonnet-20240229",
             "temperature": 0.7,
             "max_tokens": 150,
-            "api_key": "test_api_key"
+            "api_key": "test_anthropic_api_key"
         }
     }
-    return LLMPool(config)
+    return LLMPool(config, api_type='anthropic')
 
 def test_generate_response_stream_integration(llm_pool, mock_anthropic_api):
     # Mock the OpenAIAPI's generate_response_stream method
     mock_generate_response_stream = MagicMock()
-    mock_generate_response_stream.return_value = iter(["Test response chunk 1", "Test response chunk 2"])
+    mock_generate_response_stream.return_value = ["Test response chunk 1", "Test response chunk 2"]
     mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
     mock_anthropic_api.return_value.is_test_environment = True
-    llm_pool.api = mock_anthropic_api.return_value
-    llm_pool.api.is_test_environment = True
+    llm_pool.api_client.api = mock_anthropic_api.return_value
+    llm_pool.api_client.is_test_environment = True
 
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
 
     # Check that we got responses for all experts plus the data usage note
-    assert len(responses) == 7  # 5 experts (with first expert having 2 chunks) + 1 data usage note
+    assert len(responses) == 11  # (5 experts * 2 chunks) + 1 data usage note
 
     # Check that each expert response is as expected
     expert_responses = responses[:-1]  # Exclude the last response (data usage note)
-    assert expert_responses[0]["expert"] == "Analyst"
-    assert expert_responses[0]["response"] == "Test response chunk 1"
-    assert expert_responses[1]["expert"] == "Analyst"
-    assert expert_responses[1]["response"] == "Test response chunk 2"
-    
-    for response in expert_responses[2:]:
-        assert "expert" in response
-        assert "response" in response
-        assert response["response"] == "Test response"
+    for i in range(0, len(expert_responses), 2):
+        assert expert_responses[i]["response"] == "Test response chunk 1"
+        assert expert_responses[i+1]["response"] == "Test response chunk 2"
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
@@ -88,9 +82,9 @@ def test_generate_response_stream_integration_error_handling(llm_pool, mock_anth
     assert mock_generate_response_stream.call_count == 5
 
 def test_generate_response_stream_integration_empty_response(llm_pool, mock_anthropic_api):
-    # Mock the OpenAIAPI's generate_response_stream method to return an empty iterator
+    # Mock the OpenAIAPI's generate_response_stream method to return an empty list
     mock_generate_response_stream = MagicMock()
-    mock_generate_response_stream.return_value = iter([])
+    mock_generate_response_stream.return_value = []
     mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
 
     input_text = "Test question"
@@ -99,11 +93,11 @@ def test_generate_response_stream_integration_empty_response(llm_pool, mock_anth
     # Check that we got responses for all experts plus the data usage note
     assert len(responses) == 6  # 5 experts + 1 data usage note
 
-    # Check that each expert response is "Test response"
+    # Check that each expert response is "No response generated"
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert response["response"] == "Test response"
+        assert response["response"] == "No response generated"
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
