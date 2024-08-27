@@ -107,7 +107,7 @@ def test_generate_response_stream_integration_empty_response(llm_pool, mock_anth
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
-    assert "data sent to the openai api will not be used to train or improve openai models" in responses[-1]["response"].lower()
+    assert "data sent to the api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
 
     # Check that the OpenAIAPI's generate_response_stream was called for each expert
     assert mock_generate_response_stream.call_count == 5
