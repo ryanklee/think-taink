@@ -93,5 +93,8 @@ class LLMPool:
     def update_expert(self, name: str, new_prompt: str) -> None:
         self.expert_pool.update_expert(name, new_prompt)
 
+    def get_all_experts(self):
+        return self.expert_pool.get_all_experts()
+
     def set_api_type(self, api_type: str) -> None:
         self.api_client.set_api_type(api_type)
