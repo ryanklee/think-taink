@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Question:</h2>
-<p>{{ question }}</p>
-<h2>API Used:</h2>
-<p>{{ api_type }}</p>
-<h2>Response:</h2>
-<div id="response"></div>
-<div>
-    <label for="speed">Discourse Speed:</label>
-    <input type="range" id="speed" name="speed" min="1" max="10" value="5">
+<div class="max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6">Results</h2>
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <p class="mb-4"><span class="font-bold">Question:</span> {{ question }}</p>
+        <p class="mb-4"><span class="font-bold">API Type:</span> {{ api_type }}</p>
+        <div id="response" class="mt-6 space-y-4"></div>
+        <div class="mt-4">
+            <label for="speed" class="block text-sm font-medium text-gray-700">Discourse Speed:</label>
+            <input type="range" id="speed" name="speed" min="1" max="10" value="5" class="mt-1 block w-full">
+        </div>
+        <a href="{{ url_for('main.index') }}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ask another question</a>
+    </div>
 </div>
-<a href="{{ url_for('main.index') }}">Ask another question</a>
 
 <script>
     const responseDiv = document.getElementById('response');
@@ -18,7 +20,7 @@
     let currentExpert = '';
     let expertResponse = '';
 
-    const eventSource = new EventSource("{{ url_for('main.stream_response', question=question) }}");
+    const eventSource = new EventSource("{{ url_for('main.stream_response', question=question, api_type=api_type) }}");
     
     eventSource.onmessage = function(event) {
         const data = JSON.parse(event.data);
@@ -26,7 +28,7 @@
         
         if (data.expert !== currentExpert) {
             if (currentExpert) {
-                responseDiv.innerHTML += `<p><strong>${currentExpert}:</strong> <pre>${expertResponse}</pre></p>`;
+                responseDiv.innerHTML += `<div class="p-4 bg-gray-100 rounded-md"><strong class="text-blue-600">${currentExpert}:</strong> <pre class="text-gray-700 whitespace-pre-wrap">${expertResponse}</pre></div>`;
             }
             currentExpert = data.expert;
             expertResponse = '';
@@ -36,27 +38,22 @@
         expertResponse += responseText;
         
         if (responseDiv.lastChild) {
-            responseDiv.lastChild.innerHTML = `<strong>${currentExpert}:</strong> <pre>${expertResponse}</pre>`;
+            responseDiv.lastChild.innerHTML = `<strong class="text-blue-600">${currentExpert}:</strong> <pre class="text-gray-700 whitespace-pre-wrap">${expertResponse}</pre>`;
         } else {
-            responseDiv.innerHTML = `<p><strong>${currentExpert}:</strong> <pre>${expertResponse}</pre></p>`;
+            responseDiv.innerHTML = `<div class="p-4 bg-gray-100 rounded-md"><strong class="text-blue-600">${currentExpert}:</strong> <pre class="text-gray-700 whitespace-pre-wrap">${expertResponse}</pre></div>`;
         }
     };
 
     eventSource.onerror = function(event) {
         console.error("EventSource failed:", event);
         eventSource.close();
-        responseDiv.innerHTML += `<p><strong>Error:</strong> Connection to server lost. Please refresh the page and try again.</p>`;
-    };
-
-    eventSource.onerror = function(event) {
-        console.error("EventSource failed:", event);
-        eventSource.close();
+        responseDiv.innerHTML += `<div class="p-4 bg-red-100 rounded-md"><strong class="text-red-600">Error:</strong> <span class="text-red-700">Connection to server lost. Please refresh the page and try again.</span></div>`;
     };
 
     speedControl.addEventListener('input', function() {
         const speed = 11 - this.value;  // Invert the scale so that higher values mean faster
         eventSource.close();
-        eventSource = new EventSource(`{{ url_for('main.stream_response') }}?question={{ question|urlencode }}&speed=${speed}`);
+        eventSource = new EventSource(`{{ url_for('main.stream_response') }}?question={{ question|urlencode }}&api_type={{ api_type }}&speed=${speed}`);
     });
 </script>
 {% endblock %}
