@@ -19,6 +19,7 @@ def setup_logger():
 class TestModerator(unittest.TestCase):
     def setUp(self):
         self.llm_pool = MagicMock(spec=LLMPool)
+        self.llm_pool.api_type = 'test_api'
         self.principles = MagicMock(spec=Principles)
         self.moderator = Moderator(self.llm_pool, self.principles)
         self.log_stream = setup_logger()
