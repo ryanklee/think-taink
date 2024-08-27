@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, current_app, Response, stream_with_context, request, jsonify
 from src.web.forms import QuestionForm, ImprovementForm
+from src.web.models import db, Question
 import json
 
 bp = Blueprint('main', __name__)
