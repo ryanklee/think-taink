@@ -19,24 +19,35 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 
 ## Recent Updates
 
-- Completed migration to support Claude API alongside OpenAI API
-- Implemented streaming response generation for both OpenAI and Claude APIs
-- Enhanced LLMPool to seamlessly support multiple API providers
-- Updated configuration to include Anthropic API settings
+- Completed full migration to support Claude API alongside OpenAI API
+- Implemented seamless switching between OpenAI and Claude APIs in the main application
+- Enhanced LLMPool and APIClient to fully support multiple API providers
+- Updated configuration system to handle both OpenAI and Anthropic API settings
 - Improved error handling and logging for both APIs
 - Enhanced documentation and inline comments for better code readability
-- Updated integration tests to accommodate multi-API support
+- Updated all integration tests to accommodate multi-API support
 - Implemented XML tag structuring for improved prompt engineering with Claude API
-- Added initial A/B testing functionality between OpenAI and Claude APIs
+- Enhanced A/B testing functionality to compare OpenAI and Claude API performance
+- Updated main application interface to allow users to choose between APIs or run A/B tests
+
+## Current Features
+
+- Multi-API support: Seamlessly use OpenAI or Claude API for discussions
+- A/B testing: Compare performance between OpenAI and Claude APIs
+- Streaming response generation for both APIs
+- Robust error handling and logging system for multi-API support
+- Configurable LLM pool with expert management
+- Principle-based evaluation and reflection system
+- Version control for principles and heuristics
 
 ## Upcoming Changes
 
-- Enhance A/B testing capabilities and reporting
-- Update performance analysis tools for multi-API support
-- Enhance experimental control panel for managing multiple API configurations
-- Develop comparative analysis tools for different API performances
-- Implement advanced versioning system for LLM pool configurations
-- Develop system for LLMs to generate improvement suggestions based on A/B test results
+- Enhance performance analysis tools for multi-API comparisons
+- Develop an advanced experimental control panel for managing multiple API configurations
+- Implement a system for LLMs to generate improvement suggestions based on A/B test results
+- Create visualization tools for comparing API performances
+- Develop an advanced versioning system for LLM pool configurations across different APIs
+- Implement adaptive API selection based on performance metrics and task requirements
 
 ## Project Structure
 

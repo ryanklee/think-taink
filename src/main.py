@@ -30,20 +30,21 @@ from src.ab_testing import ABTestRunner
 
 def main():
     config = load_config()
-    llm_pool = LLMPool(config)
-    principles = Principles(config['principles']['version_control_file'])
-    moderator = Moderator(llm_pool, principles)
-
     print("Welcome to the Multi-LLM Think Tank Simulation!")
-    print("1. Start a discussion")
-    print("2. Run A/B test")
-    choice = input("Enter your choice (1 or 2): ")
+    print("1. Start a discussion (OpenAI)")
+    print("2. Start a discussion (Claude)")
+    print("3. Run A/B test")
+    choice = input("Enter your choice (1, 2, or 3): ")
 
-    if choice == '1':
+    if choice in ['1', '2']:
+        api_type = 'openai' if choice == '1' else 'anthropic'
+        llm_pool = LLMPool(config, api_type=api_type)
+        principles = Principles(config['principles']['version_control_file'])
+        moderator = Moderator(llm_pool, principles)
         input_text = input("Enter your question or topic: ")
         for response in moderator.start_discussion_stream(input_text):
             print(f"{response['expert']}: {response['response']}")
-    elif choice == '2':
+    elif choice == '3':
         input_text = input("Enter your question or topic for A/B testing: ")
         ab_runner = ABTestRunner(config)
         results = ab_runner.run_ab_test(input_text)
@@ -51,7 +52,7 @@ def main():
         print("A/B Test Results:")
         print(analysis)
     else:
-        print("Invalid choice. Please run the program again and select 1 or 2.")
+        print("Invalid choice. Please run the program again and select 1, 2, or 3.")
 
 if __name__ == "__main__":
     main()
