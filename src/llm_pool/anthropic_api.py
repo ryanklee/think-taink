@@ -4,6 +4,7 @@ from src.utils.exceptions import LLMPoolError
 
 class AnthropicAPI:
     def __init__(self, api_key, model="claude-3-sonnet-20240229"):
+        self.api_key = api_key
         self.client = anthropic.Anthropic(api_key=api_key)
         self.model = model
         self.is_test_environment = api_key == "test_api_key"

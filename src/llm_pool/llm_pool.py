@@ -132,7 +132,10 @@ class LLMPool:
             raise ValueError(f"Unsupported API type: {api_type}")
         self.api_type = api_type
         # Re-initialize the API object based on the new type
+        api_key = getattr(self.api, 'api_key', None)
+        if api_key is None:
+            raise ValueError("API key not found. Please reinitialize the LLMPool with a valid configuration.")
         if self.api_type == 'anthropic':
-            self.api = AnthropicAPI(self.api.api_key, model=self.api.model)
+            self.api = AnthropicAPI(api_key, model=self.api.model)
         else:
-            self.api = OpenAIAPI(self.api.api_key, model=self.api.model)
+            self.api = OpenAIAPI(api_key, model=self.api.model)
