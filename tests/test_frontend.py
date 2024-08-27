@@ -48,12 +48,20 @@ class TestFrontend:
         try:
             expect(response_element).to_be_visible(timeout=60000)  # Increase visibility timeout
             expect(response_element).not_to_be_empty(timeout=60000)  # Add check for non-empty content
-        except:
+            
+            # Check for error message
+            error_message = page.locator("text=Error:")
+            if error_message.is_visible():
+                error_text = error_message.inner_text()
+                logger.error(f"Error message found: {error_text}")
+                raise AssertionError(f"Error occurred: {error_text}")
+            
+            expect(response_element).to_contain_text("Paris", timeout=30000)
+        except Exception as e:
             logger.error(f"Page content after submission: {page.content()}")
             logger.error(f"Current URL: {page.url}")
             logger.error(f"Response element HTML: {response_element.inner_html()}")
             logger.error(f"Page console logs: {page.evaluate('() => console.logs')}")
-            raise
-        expect(response_element).to_contain_text("Paris", timeout=30000)
+            raise e
 
 # Add more tests as needed

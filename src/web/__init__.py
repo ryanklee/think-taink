@@ -4,9 +4,17 @@ from src.llm_pool.llm_pool import LLMPool
 from src.moderator.moderator import Moderator
 from src.heuristics.principles import Principles
 
+from src.llm_pool.llm_pool import LLMPool
+
 def create_app(config):
     app = Flask(__name__)
     app.config.from_mapping(config)
+    
+    # Initialize LLM pools
+    app.llm_pools = {
+        'openai': LLMPool(config, api_type='openai'),
+        'anthropic': LLMPool(config, api_type='anthropic')
+    }
     app.config['SECRET_KEY'] = config.get('secret_key', 'your-secret-key')  # Replace with a real secret key
 
     # Initialize components

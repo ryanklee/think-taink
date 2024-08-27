@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 @bp.route('/stream', methods=['GET', 'POST'])
 def stream_response():
     question = request.args.get('question') or request.form.get('question')
-    api_type = request.args.get('api_type') or request.form.get('api_type')
+    api_type = request.args.get('api_type') or request.form.get('api_type') or 'openai'  # Default to 'openai' if not specified
     logger.info(f"Received stream request for question: {question}, API type: {api_type}")
     try:
         processed_input = current_app.input_processor.process(question)
@@ -42,8 +42,8 @@ def stream_response():
         
         # Set the API type for the moderator
         if api_type not in current_app.llm_pools:
-            logger.error(f"Invalid API type: {api_type}")
-            return jsonify({"error": f"Invalid API type: {api_type}"}), 400
+            logger.error(f"Invalid API type: {api_type}, defaulting to 'openai'")
+            api_type = 'openai'
         
         current_app.moderator.set_llm_pool(current_app.llm_pools[api_type])
         
