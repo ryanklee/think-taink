@@ -24,8 +24,12 @@ class AnthropicAPI:
                     yield text
         except anthropic.APIError as e:
             raise LLMPoolError(f"Anthropic API error: {str(e)}")
+        except anthropic.APIConnectionError as e:
+            raise LLMPoolError(f"Anthropic API connection error: {str(e)}")
+        except anthropic.RateLimitError as e:
+            raise LLMPoolError(f"Anthropic API rate limit exceeded: {str(e)}")
         except Exception as e:
-            raise LLMPoolError(f"Unexpected error: {str(e)}")
+            raise LLMPoolError(f"Unexpected error in Anthropic API: {str(e)}")
 
     def set_model(self, model):
         self.model = model
