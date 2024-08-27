@@ -27,13 +27,16 @@ This project simulates a think tank using multiple Language Learning Models (LLM
 - Enhanced documentation and inline comments for better code readability
 - Updated integration tests to accommodate multi-API support
 - Implemented XML tag structuring for improved prompt engineering with Claude API
+- Added initial A/B testing functionality between OpenAI and Claude APIs
 
 ## Upcoming Changes
 
-- Implement A/B testing between OpenAI and Claude APIs
+- Enhance A/B testing capabilities and reporting
 - Update performance analysis tools for multi-API support
 - Enhance experimental control panel for managing multiple API configurations
 - Develop comparative analysis tools for different API performances
+- Implement advanced versioning system for LLM pool configurations
+- Develop system for LLMs to generate improvement suggestions based on A/B test results
 
 ## Project Structure
 
