@@ -14,7 +14,7 @@ def app():
     app = create_app(config)
     app.config.update({
         "TESTING": True,
-        "SERVER_NAME": "localhost.localdomain",  # Add this line
+        "PORT": 5000,  # Add this line
     })
     with app.app_context():
         yield app
