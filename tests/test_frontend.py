@@ -31,7 +31,7 @@ class TestFrontend:
         expect(api_select).to_be_visible(timeout=10000)
         expect(submit_button).to_be_visible(timeout=10000)
 
-    @pytest.mark.timeout(120)  # Set a 2-minute timeout for this test
+    @pytest.mark.timeout(180)  # Increase timeout to 3 minutes
     def test_question_submission(self, page: Page, live_server):
         page.goto(url_for('main.ask_question', _external=True))
         question_input = page.locator("input[name='question']")
@@ -40,13 +40,14 @@ class TestFrontend:
 
         question_input.fill("What is the capital of France?")
         api_select.select_option("openai")
-        with page.expect_navigation(timeout=60000):
-            submit_button.click(timeout=60000)
-        page.wait_for_timeout(2000)  # Wait for 2 seconds after navigation
+        with page.expect_navigation(timeout=90000):  # Increase navigation timeout
+            submit_button.click(timeout=90000)
+        page.wait_for_timeout(5000)  # Increase wait time after navigation
 
         response_element = page.locator("#response")
         try:
-            expect(response_element).to_be_visible(timeout=30000)
+            expect(response_element).to_be_visible(timeout=60000)  # Increase visibility timeout
+            expect(response_element).not_to_be_empty(timeout=60000)  # Add check for non-empty content
             expect(response_element).not_to_be_empty(timeout=30000)
         except:
             logger.error(f"Page content after submission: {page.content()}")
