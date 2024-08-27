@@ -13,19 +13,26 @@ def ask_question():
     form = QuestionForm()
     if form.validate_on_submit():
         question = form.question.data
-        return redirect(url_for('main.result', question=question))
+        api_type = form.api_type.data
+        return redirect(url_for('main.result', question=question, api_type=api_type))
     return render_template('ask_question.html', form=form)
 
 @bp.route('/result')
 def result():
     question = request.args.get('question')
-    return render_template('result.html', question=question)
+    api_type = request.args.get('api_type')
+    return render_template('result.html', question=question, api_type=api_type)
 
 @bp.route('/stream', methods=['GET', 'POST'])
 def stream_response():
     question = request.args.get('question') or request.form.get('question')
+    api_type = request.args.get('api_type') or request.form.get('api_type')
     try:
         processed_input = current_app.input_processor.process(question)
+        
+        # Set the API type for the moderator
+        current_app.moderator.set_llm_pool(current_app.llm_pools[api_type])
+        
         def generate():
             for chunk in current_app.moderator.start_discussion_stream(processed_input):
                 response_text = chunk['response']
