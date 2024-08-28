@@ -16,3 +16,4 @@ kafka-python==2.0.2
 prometheus-client==0.16.0
 grafana-api==1.0.3
 aiohttp==3.8.4
+textblob==0.15.3
