@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, Generator
+from typing import Dict, Generator, List
 from src.utils.exceptions import LLMPoolError
 from src.llm_pool.api_client import APIClient
 from src.llm_pool.expert_pool import ExpertPool
@@ -19,32 +19,12 @@ class LLMPool:
         self.context_window = config.get('llm', {}).get('context_window', 128000)
         logger.debug(f"LLMPool initialized with API: {self.api_type}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")
         
-        # Note on data usage and retention
         self.data_usage_note = (
             f"Note: Data sent to the {self.api_type.upper()} API will be handled according to the provider's data retention policies. "
             f"Please refer to the {self.api_type.capitalize()} documentation for details on data usage and retention."
         )
 
-    def set_api_type(self, api_type: str):
-        if api_type not in ['openai', 'anthropic']:
-            raise ValueError(f"Unsupported API type: {api_type}")
-        self.api_type = api_type
-        self.api_client.set_api_type(api_type)
-        logger.debug(f"API type set to: {api_type}")
-
     def generate_response_stream(self, input_text: str) -> Generator[Dict[str, str], None, None]:
-        """
-        Generate streaming responses from all experts in the LLM pool.
-        
-        Args:
-            input_text (str): The processed input text.
-        
-        Yields:
-            Dict[str, str]: A dictionary containing the expert name and a chunk of their response.
-        
-        Raises:
-            LLMPoolError: If there's an error generating responses.
-        """
         logger.debug(f"Starting generate_response_stream for input: {input_text[:50]}...")
         if not input_text:
             logger.error("Input text is empty")
@@ -89,6 +69,28 @@ class LLMPool:
         }
         logger.debug("Finished generate_response_stream")
 
+    def generate_chat_response(self, messages: List[Dict[str, str]]) -> str:
+        logger.debug(f"Starting generate_chat_response")
+        try:
+            return self.api_client.generate_chat_response(messages, self.max_tokens)
+        except LLMPoolError as e:
+            logger.error(f"LLMPoolError in generate_chat_response: {str(e)}")
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error in generate_chat_response: {str(e)}")
+            raise LLMPoolError(f"Unexpected error: {str(e)}")
+
+    def analyze_document(self, document: str, file_type: str, analysis_type: str) -> Dict:
+        logger.debug(f"Starting analyze_document for file_type: {file_type}, analysis_type: {analysis_type}")
+        try:
+            return self.api_client.analyze_document(document, file_type, analysis_type)
+        except LLMPoolError as e:
+            logger.error(f"LLMPoolError in analyze_document: {str(e)}")
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error in analyze_document: {str(e)}")
+            raise LLMPoolError(f"Unexpected error: {str(e)}")
+
     @property
     def experts(self):
         return self.expert_pool.get_all_experts()
@@ -112,4 +114,8 @@ class LLMPool:
         return self.expert_pool.get_all_experts()
 
     def set_api_type(self, api_type: str) -> None:
+        if api_type not in ['openai', 'anthropic']:
+            raise ValueError(f"Unsupported API type: {api_type}")
+        self.api_type = api_type
         self.api_client.set_api_type(api_type)
+        logger.debug(f"API type set to: {api_type}")

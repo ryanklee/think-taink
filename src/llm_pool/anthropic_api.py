@@ -1,5 +1,6 @@
 import anthropic
-from typing import Generator
+import time
+from typing import Generator, Dict, List
 from src.utils.exceptions import LLMPoolError
 
 class AnthropicAPI:
@@ -8,11 +9,26 @@ class AnthropicAPI:
         self.client = anthropic.Anthropic(api_key=api_key)
         self.model = model
         self.is_test_environment = api_key == "test_anthropic_api_key"
+        self.last_request_time = 0
+        self.daily_request_count = 0
+        self.rate_limit_delay = 0.1  # 10 requests per second
+
+    def _rate_limit(self):
+        current_time = time.time()
+        time_since_last_request = current_time - self.last_request_time
+        if time_since_last_request < self.rate_limit_delay:
+            time.sleep(self.rate_limit_delay - time_since_last_request)
+        self.last_request_time = time.time()
+        self.daily_request_count += 1
+        if self.daily_request_count > 1000:
+            raise LLMPoolError("Daily request limit exceeded")
 
     def generate_response_stream(self, prompt, max_tokens=4096) -> Generator[str, None, None]:
         if self.is_test_environment:
             yield "Test response"
             return
+
+        self._rate_limit()
 
         try:
             with self.client.messages.stream(
@@ -31,21 +47,42 @@ class AnthropicAPI:
         except Exception as e:
             raise LLMPoolError(f"Unexpected error in Anthropic API: {str(e)}")
 
-    def set_model(self, model):
-        self.model = model
-
-    def generate_response(self, prompt, max_tokens=4096) -> str:
+    def generate_chat_response(self, messages: List[Dict[str, str]], max_tokens=4096) -> str:
         if self.is_test_environment:
-            return "Test response"
+            return "Test chat response"
+
+        self._rate_limit()
 
         try:
             response = self.client.messages.create(
                 model=self.model,
                 max_tokens=max_tokens,
-                messages=[{"role": "user", "content": prompt}]
+                messages=messages
             )
             return response.content
         except anthropic.APIError as e:
             raise LLMPoolError(f"Anthropic API error: {str(e)}")
         except Exception as e:
             raise LLMPoolError(f"Unexpected error: {str(e)}")
+
+    def analyze_document(self, document: str, file_type: str, analysis_type: str) -> Dict:
+        if self.is_test_environment:
+            return {"analysis": "Test document analysis"}
+
+        self._rate_limit()
+
+        try:
+            response = self.client.messages.create(
+                model=self.model,
+                messages=[
+                    {"role": "user", "content": f"Analyze this {file_type} document. Perform a {analysis_type} analysis:\n\n{document}"}
+                ]
+            )
+            return {"analysis": response.content}
+        except anthropic.APIError as e:
+            raise LLMPoolError(f"Anthropic API error: {str(e)}")
+        except Exception as e:
+            raise LLMPoolError(f"Unexpected error: {str(e)}")
+
+    def set_model(self, model):
+        self.model = model
