@@ -195,12 +195,12 @@ def test_llm_pool_initialization():
     # Test OpenAI initialization
     openai_pool = LLMPool({}, api_type='openai')
     assert openai_pool.api_type == 'openai'
-    assert openai_pool.api.api_key == os.environ['OPENAI_API_KEY']
+    assert openai_pool.api_client.api.api_key == os.environ['OPENAI_API_KEY']
 
     # Test Anthropic initialization
     anthropic_pool = LLMPool({}, api_type='anthropic')
     assert anthropic_pool.api_type == 'anthropic'
-    assert anthropic_pool.api.api_key == os.environ['ANTHROPIC_API_KEY']
+    assert anthropic_pool.api_client.api.api_key == os.environ['ANTHROPIC_API_KEY']
 
     # Test error on invalid API type
     with pytest.raises(ValueError):
