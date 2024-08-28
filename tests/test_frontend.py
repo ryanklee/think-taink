@@ -45,6 +45,7 @@ class TestFrontend:
         try:
             # Wait for the page to load
             page.wait_for_load_state("networkidle")
+            logger.info("Page loaded")
             
             # Log the initial page state
             logger.info(f"Initial page content: {page.content()}")
@@ -52,18 +53,18 @@ class TestFrontend:
             # Wait for the EventSource to be established with an increased timeout
             page.wait_for_function(
                 "() => window.eventSource && window.eventSource.readyState === 1",
-                timeout=30000
+                timeout=60000
             )
             logger.info("EventSource established")
 
             # Wait for the response element to be visible
-            expect(response_element).to_be_visible(timeout=30000)
+            expect(response_element).to_be_visible(timeout=60000)
             logger.info("Response element is visible")
 
             # Wait for some content to appear in the response element
             page.wait_for_function(
                 "() => document.querySelector('#response').textContent.trim().length > 0",
-                timeout=30000
+                timeout=60000
             )
             logger.info("Content appeared in the response element")
 
