@@ -1,20 +1,38 @@
-# Project Documentation Index
+# Collaborative AI Reasoning System Documentation Index
 
-## Claude API Documentation
-1. [Getting Started](claude_api_docs/getting_started.md): Authentication, base URL, key concepts, and quick start guide.
-2. [API Reference](claude_api_docs/api_reference.md): Detailed information on Messages API, content moderation, embeddings, and versioning.
-3. [Error Handling](claude_api_docs/error_handling.md): HTTP status codes, error response format, common error types, and best practices.
-4. [Models and Capabilities](claude_api_docs/models_capabilities.md): Available models, key capabilities, model selection guide, and limitations.
-5. [Prompt Engineering](claude_api_docs/prompt_engineering.md): Key principles, techniques, best practices, and examples for effective prompts.
-6. [Best Practices](claude_api_docs/best_practices.md): Guidelines for API usage, security, performance optimization, testing, and monitoring.
-7. [Advanced Features](claude_api_docs/advanced_features.md): Tool use, embeddings, prompt caching, custom instructions, and future features.
-8. [Testing and Evaluation](claude_api_docs/testing_evaluation.md): Developing tests, evaluation metrics, reducing hallucinations, and continuous improvement.
+## System Architecture and Design
+1. [System Overview](system_overview.md): High-level description of the Collaborative AI Reasoning System.
+2. [Architecture Design](architecture_design.md): Detailed explanation of the microservices architecture and component interactions.
+3. [Data Model](data_model.md): Description of the graph database schema and knowledge representation.
+4. [API Reference](api_reference.md): Comprehensive documentation of the system's APIs.
 
-## Project Documentation
-9. [Project Structure](project_structure.md): Detailed overview of the project's directory structure and file organization.
-10. [Project Design](project_design.md): Comprehensive design document covering LLM pool, processing mechanism, heuristics, and implementation plan.
-11. [Implementation Plan](implementation_plan.md): Step-by-step guide for project implementation, including completed and remaining tasks.
-12. [CHANGELOG](CHANGELOG.md): Record of all notable changes to the project.
-13. [Tech Stack Notes](tech_stack_notes.md): Detailed information about the Claude AI integration and other technologies used in the project.
+## Core Components
+5. [Agent Abstraction](agent_abstraction.md): Explanation of the generic Agent model and its implementations.
+6. [Reasoning Strategies](reasoning_strategies.md): Documentation of various reasoning approaches and their implementations.
+7. [Knowledge Base](knowledge_base.md): Details on managing and versioning principles, heuristics, and learned information.
+8. [Ethics Framework](ethics_framework.md): Documentation of the ethical considerations and the Ethics Agent implementation.
 
-Each file contains concise, relevant information for our project. Refer to the specific file when you need details on a particular aspect of the Claude API or the project structure and design.
+## Development and Deployment
+9. [Development Setup](development_setup.md): Guide for setting up the development environment.
+10. [Test-Driven Development Guide](tdd_guide.md): Detailed explanation of our TDD approach and best practices.
+11. [CI/CD Pipeline](cicd_pipeline.md): Documentation of our continuous integration and deployment processes.
+12. [Deployment Guide](deployment_guide.md): Instructions for deploying the system in various environments.
+
+## User Interface
+13. [UI Documentation](ui_documentation.md): Overview of the user interface components and their functionality.
+14. [Configuration Guide](configuration_guide.md): Instructions for system configuration through the UI.
+
+## Performance and Security
+15. [Scalability and Performance](scalability_performance.md): Documentation on system scalability and performance optimization strategies.
+16. [Security Measures](security_measures.md): Overview of security implementations and best practices.
+
+## Monitoring and Maintenance
+17. [Monitoring and Observability](monitoring_observability.md): Guide to system monitoring, logging, and observability tools.
+18. [Troubleshooting Guide](troubleshooting_guide.md): Common issues and their solutions.
+
+## Miscellaneous
+19. [CHANGELOG](CHANGELOG.md): Record of all notable changes to the project.
+20. [Contributing Guidelines](CONTRIBUTING.md): Guidelines for contributing to the project.
+21. [License](LICENSE.md): Project license information.
+
+Each file contains comprehensive, relevant information for our Collaborative AI Reasoning System. Refer to the specific file when you need details on a particular aspect of the system architecture, development process, or usage guidelines.
