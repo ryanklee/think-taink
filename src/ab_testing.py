@@ -1,5 +1,6 @@
 import random
 import logging
+import os
 from typing import List, Dict
 from src.llm_pool.llm_pool import LLMPool
 from src.moderator.moderator import Moderator
