@@ -45,6 +45,7 @@
 - [ ] Document ethical considerations and guidelines
 
 ## 9. Heroku Deployment
+- [x] Create Heroku deployment documentation
 - [ ] Set up Heroku account and create a new app
 - [ ] Configure Heroku CLI and authenticate
 - [ ] Prepare application for Heroku deployment (Procfile, runtime.txt)
