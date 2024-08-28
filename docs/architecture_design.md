@@ -1,19 +1,21 @@
-# Collaborative AI Reasoning System: Architecture Design
+# Collaborative AI Reasoning and Behavioral-Psychological Testbed: Architecture Design
 
 ## 1. System Overview
 
-The Collaborative AI Reasoning System is designed as a microservices-based architecture that facilitates complex reasoning tasks through the collaboration of multiple AI agents. The system is built to be scalable, flexible, and extensible, allowing for easy integration of new AI models and reasoning strategies.
+The Collaborative AI Reasoning and Behavioral-Psychological Testbed is designed as a microservices-based architecture that facilitates complex reasoning tasks through the collaboration of multiple AI agents, while also serving as a platform for conducting behavioral and psychological experiments. The system is built to be scalable, flexible, and extensible, allowing for easy integration of new AI models, reasoning strategies, and experimental paradigms.
 
 ## 2. Core Components
 
 ### 2.1 Agent Abstraction
 
-The Agent is the fundamental unit of the system, representing an AI entity capable of performing reasoning tasks. Each Agent encapsulates:
+The Agent is the fundamental unit of the system, representing an AI entity capable of performing reasoning tasks and exhibiting specific behavioral traits. Each Agent encapsulates:
 
 - An AI model (e.g., GPT-4, Claude)
 - A set of reasoning strategies
 - A knowledge base
 - Communication interfaces
+- Behavioral traits and psychological characteristics
+- Role-specific constraints and objectives
 
 ### 2.2 Reasoning Engine
 
