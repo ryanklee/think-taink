@@ -98,3 +98,4 @@ Werkzeug==2.0.1
 WTForms==2.3.3
 yarl==1.9.4
 zipp==1.0.0
+seaborn==0.11.2
