@@ -9,16 +9,19 @@ logger = logging.getLogger(__name__)
 class APIClient:
     def __init__(self, config: dict):
         self.api_type = config.get('api_type', 'anthropic')
-        self.api_key = config.get('api_key')
         self.model = config.get('model')
         
-        if not self.api_key:
-            logger.error("API key is missing in the configuration")
-            raise ValueError("API key is missing in the configuration")
-        
         if self.api_type == 'anthropic':
+            self.api_key = config.get('anthropic', {}).get('api_key')
+            if not self.api_key:
+                logger.error("Anthropic API key is missing in the configuration")
+                raise ValueError("Anthropic API key is missing in the configuration")
             self.api = AnthropicAPI(self.api_key, model=self.model)
         elif self.api_type == 'openai':
+            self.api_key = config.get('openai', {}).get('api_key')
+            if not self.api_key:
+                logger.error("OpenAI API key is missing in the configuration")
+                raise ValueError("OpenAI API key is missing in the configuration")
             self.api = OpenAIAPI(self.api_key, model=self.model)
         else:
             raise ValueError(f"Unsupported API type: {self.api_type}")
