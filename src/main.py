@@ -21,7 +21,8 @@ config = load_config()
 app = create_app(config)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 from src.config.config_loader import load_config
 from src.llm_pool.llm_pool import LLMPool
 from src.moderator.moderator import Moderator

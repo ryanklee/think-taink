@@ -1,5 +1,8 @@
 .aider*
 
+# Dokku specific
+.dokku-monorepo
+
 # Virtual environment
 venv/
 env/
