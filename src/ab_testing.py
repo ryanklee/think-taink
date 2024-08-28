@@ -1,7 +1,5 @@
-import random
 import logging
-import os
-from typing import List, Dict
+from typing import Dict, List
 from src.llm_pool.llm_pool import LLMPool
 from src.moderator.moderator import Moderator
 from src.heuristics.principles import Principles
@@ -16,10 +14,6 @@ class ABTestRunner:
         self.openai_moderator = Moderator(self.openai_llm_pool, self.principles)
         self.claude_moderator = Moderator(self.claude_llm_pool, self.principles)
         self.logger = logging.getLogger(__name__)
-
-        # Log API key status
-        self.logger.info(f"OpenAI API key status: {'Set' if os.environ.get('OPENAI_API_KEY') else 'Not set'}")
-        self.logger.info(f"Anthropic API key status: {'Set' if os.environ.get('ANTHROPIC_API_KEY') else 'Not set'}")
 
     def run_ab_test(self, input_text: str, num_iterations: int = 5) -> Dict[str, List[Dict]]:
         results = {
@@ -111,72 +105,34 @@ class ABTestRunner:
         self.logger.info("Comparison of OpenAI and Claude results completed")
         return comparison
 
-    def run_ab_test(self, input_text: str, num_iterations: int = 5) -> Dict[str, List[Dict]]:
-        results = {
-            'openai': [],
-            'anthropic': []
-        }
-
-        for _ in range(num_iterations):
-            # Run OpenAI test
-            openai_result = list(self.openai_moderator.start_discussion_stream(input_text))
-            results['openai'].append(openai_result)
-
-            # Run Claude test
-            claude_result = list(self.claude_moderator.start_discussion_stream(input_text))
-            results['anthropic'].append(claude_result)
-
-        return results
-
-    def analyze_results(self, results: Dict[str, List[Dict]]) -> Dict[str, Dict]:
-        analysis = {
-            'openai': self._analyze_api_results(results['openai']),
-            'anthropic': self._analyze_api_results(results['anthropic'])
-        }
+    def rank_hypotheses(self, results: Dict[str, List[Dict]]) -> List[Dict]:
+        self.logger.info("Starting hypotheses ranking")
+        hypotheses = []
+        for api_name, api_results in results.items():
+            for iteration, discussion in enumerate(api_results):
+                for message in discussion:
+                    if 'hypothesis' in message:
+                        hypothesis = message['hypothesis']
+                        score = self._calculate_hypothesis_score(hypothesis, discussion)
+                        hypotheses.append({
+                            'api': api_name,
+                            'iteration': iteration,
+                            'hypothesis': hypothesis,
+                            'score': score
+                        })
         
-        # Compare the results
-        comparison = self._compare_results(analysis['openai'], analysis['anthropic'])
-        analysis['comparison'] = comparison
+        ranked_hypotheses = sorted(hypotheses, key=lambda x: x['score'], reverse=True)
+        if ranked_hypotheses:
+            self.logger.info(f"Hypotheses ranking completed. Top hypothesis: {ranked_hypotheses[0]['hypothesis']}")
+        else:
+            self.logger.warning("No hypotheses found in the results.")
+        return ranked_hypotheses
 
-        return analysis
-
-    def _analyze_api_results(self, api_results: List[Dict]) -> Dict:
-        total_responses = sum(len(result) for result in api_results)
-        avg_responses = total_responses / len(api_results)
-        
-        # Calculate sentiment scores
-        all_responses = [response['content'] for result in api_results for response in result]
-        sentiment_scores = calculate_sentiment_scores(all_responses)
-        
-        # Calculate response metrics
-        response_metrics = calculate_response_metrics(api_results)
-        
-        return {
-            'average_responses_per_discussion': avg_responses,
-            'total_discussions': len(api_results),
-            'sentiment_scores': sentiment_scores,
-            **response_metrics
-        }
-    def _compare_results(self, openai_analysis: Dict, claude_analysis: Dict) -> Dict:
-        comparison = {}
-        
-        for metric in openai_analysis.keys():
-            if isinstance(openai_analysis[metric], (int, float)):
-                difference = openai_analysis[metric] - claude_analysis[metric]
-                percentage_difference = (difference / openai_analysis[metric]) * 100
-                comparison[metric] = {
-                    'difference': difference,
-                    'percentage_difference': percentage_difference
-                }
-            elif metric == 'sentiment_scores':
-                openai_avg = sum(openai_analysis[metric]) / len(openai_analysis[metric])
-                claude_avg = sum(claude_analysis[metric]) / len(claude_analysis[metric])
-                difference = openai_avg - claude_avg
-                percentage_difference = (difference / openai_avg) * 100 if openai_avg != 0 else 0
-                comparison[metric] = {
-                    'difference': difference,
-                    'percentage_difference': percentage_difference
-                }
-        
-        self.logger.info("Comparison of OpenAI and Claude results completed")
-        return comparison
+    def _calculate_hypothesis_score(self, hypothesis: str, discussion: List[Dict]) -> float:
+        # This is a placeholder scoring function. You should implement a more sophisticated
+        # scoring mechanism based on your specific requirements.
+        score = 0
+        for message in discussion:
+            if hypothesis.lower() in message['content'].lower():
+                score += 1
+        return score
