@@ -10,6 +10,10 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from src.main import create_app
 from src.config.config_loader import load_config
 
+# Mock API keys for testing
+os.environ['OPENAI_API_KEY'] = 'test_openai_api_key'
+os.environ['ANTHROPIC_API_KEY'] = 'test_anthropic_api_key'
+
 class ServerThread(threading.Thread):
     def __init__(self, app):
         threading.Thread.__init__(self)
