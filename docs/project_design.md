@@ -130,7 +130,7 @@ v) Enhance UI/UX for experiment configuration and results analysis
 - Custom version control system for principles and heuristics (implemented)
 
 ### g) Testing
-- pytest for unit and integration testing
+- pytest for unit and integration testing (no front-end testing)
 
 ### h) Dependency Management
 - pip and requirements.txt
@@ -140,7 +140,7 @@ v) Enhance UI/UX for experiment configuration and results analysis
 - (Future improvement: Use mypy for static type checking)
 
 ### j) Continuous Integration/Continuous Deployment (CI/CD)
-- (Future improvement: Set up GitHub Actions or GitLab CI for automated testing and deployment)
+- (Future improvement: Set up GitHub Actions or GitLab CI for automated unit and integration testing and deployment)
 
 ### k) Monitoring and Logging
 - Implemented logging using Python's built-in logging module
