@@ -90,11 +90,42 @@ The system is composed of the following microservices:
 
 ## 8. Experiment Runner
 
-- Manages the setup and execution of behavioral-psychological experiments
-- Configures agent roles, traits, and interaction constraints
-- Collects and analyzes experimental data
-- Supports both ad-hoc and automated experiment execution
-- Integrates with the Knowledge Base to store and retrieve experimental results
+The Experiment Runner is a crucial component of the Behavioral-Psychological Testbed, responsible for:
+
+- Experiment Design:
+  - Defining experiment protocols and parameters
+  - Specifying agent roles, traits, and interaction rules
+  - Setting up control and experimental groups
+  - Configuring measurement and data collection points
+
+- Experiment Execution:
+  - Initializing and managing agent instances for each experiment
+  - Coordinating agent interactions based on experiment rules
+  - Simulating environmental factors or external stimuli
+  - Handling real-time adjustments to experiment parameters
+
+- Data Collection and Analysis:
+  - Capturing agent behaviors, decisions, and interactions
+  - Collecting performance metrics and behavioral indicators
+  - Integrating with the Knowledge Base for data storage and retrieval
+  - Providing real-time visualizations of experiment progress
+
+- Automated Experimentation:
+  - Supporting batch execution of multiple experiments
+  - Implementing adaptive experimentation techniques
+  - Allowing for parameter sweeps and sensitivity analyses
+
+- Experiment Reproducibility:
+  - Versioning experiment configurations and results
+  - Ensuring deterministic execution of experiments
+  - Providing detailed logs and audit trails
+
+- Integration with AI Components:
+  - Interfacing with the Reasoning Engine for complex decision-making tasks
+  - Utilizing the Ethics Framework to ensure ethical experiment design and execution
+  - Leveraging the Agent Abstraction for flexible agent behavior modeling
+
+The Experiment Runner enables researchers and developers to design, execute, and analyze complex behavioral-psychological experiments within the Collaborative AI Reasoning System, facilitating the study of AI agent behaviors, decision-making processes, and emergent phenomena in multi-agent systems.
 
 ## 9. Extensibility
 
