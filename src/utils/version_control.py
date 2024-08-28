@@ -24,9 +24,12 @@ class VersionControl:
 
     def save_versions(self):
         try:
-            os.makedirs(os.path.dirname(self.file_path), exist_ok=True)
-            with open(self.file_path, 'w') as f:
-                json.dump(self.versions, f, indent=2)
+            if self.file_path:
+                os.makedirs(os.path.dirname(self.file_path), exist_ok=True)
+                with open(self.file_path, 'w') as f:
+                    json.dump(self.versions, f, indent=2)
+            else:
+                raise VersionControlError("File path is empty")
         except IOError as e:
             raise VersionControlError(f"Error saving versions: {str(e)}")
 

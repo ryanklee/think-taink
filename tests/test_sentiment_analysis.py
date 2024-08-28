@@ -3,8 +3,8 @@ from src.ab_testing import ABTestRunner
 from src.utils.metrics import calculate_sentiment_scores
 
 @pytest.fixture
-def ab_test_runner():
-    config = {'principles': {'version_control_file': 'test_principles.json'}}
+def ab_test_runner(tmp_path):
+    config = {'principles': {'version_control_file': str(tmp_path / 'test_principles.json')}}
     return ABTestRunner(config)
 
 def test_sentiment_analysis(ab_test_runner, mocker):
