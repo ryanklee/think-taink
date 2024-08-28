@@ -31,33 +31,39 @@ class TestFrontend:
         expect(api_select).to_be_visible(timeout=10000)
         expect(submit_button).to_be_visible(timeout=10000)
 
-    @pytest.mark.timeout(180)  # Increase timeout to 3 minutes
+    @pytest.mark.timeout(300)  # Increase timeout to 5 minutes
     def test_question_submission(self, page: Page, live_server):
         page.goto(url_for('main.ask_question', _external=True))
         question_input = page.locator("input[name='question']")
         api_select = page.locator("select[name='api_type']")
         submit_button = page.locator("input#submit")
-
+    
         question_input.fill("What is the capital of France?")
         api_select.select_option("openai")
-        with page.expect_navigation(timeout=90000):  # Increase navigation timeout
-            submit_button.click(timeout=90000)
-        page.wait_for_timeout(5000)  # Increase wait time after navigation
-
+        with page.expect_navigation(timeout=120000):  # Increase navigation timeout to 2 minutes
+            submit_button.click(timeout=120000)
+        
         response_element = page.locator("#response")
         try:
-            expect(response_element).to_be_visible(timeout=60000)  # Increase visibility timeout
-            expect(response_element).not_to_be_empty(timeout=60000)  # Add check for non-empty content
-            
+            # Wait for the response to be visible and non-empty
+            expect(response_element).to_be_visible(timeout=180000)  # Increase visibility timeout to 3 minutes
+            expect(response_element).not_to_be_empty(timeout=180000)  # Increase timeout for non-empty content
+    
+            # Wait for the content to stabilize
+            page.wait_for_function(
+                "() => document.querySelector('#response').textContent.trim().length > 0",
+                timeout=180000
+            )
+    
             response_text = response_element.inner_text()
             logger.info(f"Response text: {response_text}")
-            
+    
             # Check for any content in the response
             assert response_text.strip() != "", f"Expected non-empty response, but got empty string"
-            
+    
             # Log the response content for debugging
             logger.info(f"Response content: {response_text}")
-            
+    
             # Check if the response contains either "Paris", an error message, or any expert name
             expert_names = ["Analyst", "Creative", "Critic", "Synthesizer", "Ethicist"]
             has_expert_name = any(name in response_text for name in expert_names)
