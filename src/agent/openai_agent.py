@@ -1,27 +1,28 @@
 from typing import Dict, Any
 from .agent import Agent
-import openai
+import anthropic
 
-class OpenAIAgent(Agent):
+class ClaudeAgent(Agent):
     """
-    OpenAI-based agent implementation.
+    Claude-based agent implementation.
     """
 
     def __init__(self, agent_id: str, config: Dict[str, Any]):
         super().__init__(agent_id, config)
         self.api_key = config.get('api_key')
-        self.model = config.get('model', 'gpt-4')
-        openai.api_key = self.api_key
+        self.model = config.get('model', 'claude-instant-1')
+        self.client = anthropic.Client(api_key=self.api_key)
 
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         prompt = input_data.get('prompt', '')
         try:
-            response = openai.ChatCompletion.create(
+            response = self.client.completion(
                 model=self.model,
-                messages=[{"role": "user", "content": prompt}]
+                prompt=f"\n\nHuman: {prompt}\n\nAssistant:",
+                max_tokens_to_sample=300,
             )
             return {
-                'output': response.choices[0].message['content'],
+                'output': response.completion,
                 'status': 'success'
             }
         except Exception as e:
@@ -45,4 +46,4 @@ class OpenAIAgent(Agent):
         self.agent_id = state.get('agent_id', self.agent_id)
         self.config = state.get('config', self.config)
         self.model = state.get('model', self.model)
-        openai.api_key = self.config.get('api_key', self.api_key)
+        self.client = anthropic.Client(api_key=self.config.get('api_key', self.api_key))
