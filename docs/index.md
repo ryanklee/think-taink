@@ -17,22 +17,23 @@
 10. [Test-Driven Development Guide](tdd_guide.md): Detailed explanation of our TDD approach and best practices.
 11. [CI/CD Pipeline](cicd_pipeline.md): Documentation of our continuous integration and deployment processes.
 12. [Deployment Guide](deployment_guide.md): Instructions for deploying the system in various environments.
+13. [Dokku Deployment Guide](dokku_deployment.md): Comprehensive guide for deploying the system using Dokku.
 
 ## User Interface
-13. [UI Documentation](ui_documentation.md): Overview of the user interface components and their functionality.
-14. [Configuration Guide](configuration_guide.md): Instructions for system configuration through the UI.
+14. [UI Documentation](ui_documentation.md): Overview of the user interface components and their functionality.
+15. [Configuration Guide](configuration_guide.md): Instructions for system configuration through the UI.
 
 ## Performance and Security
-15. [Scalability and Performance](scalability_performance.md): Documentation on system scalability and performance optimization strategies.
-16. [Security Measures](security_measures.md): Overview of security implementations and best practices.
+16. [Scalability and Performance](scalability_performance.md): Documentation on system scalability and performance optimization strategies.
+17. [Security Measures](security_measures.md): Overview of security implementations and best practices.
 
 ## Monitoring and Maintenance
-17. [Monitoring and Observability](monitoring_observability.md): Guide to system monitoring, logging, and observability tools.
-18. [Troubleshooting Guide](troubleshooting_guide.md): Common issues and their solutions.
+18. [Monitoring and Observability](monitoring_observability.md): Guide to system monitoring, logging, and observability tools.
+19. [Troubleshooting Guide](troubleshooting_guide.md): Common issues and their solutions.
 
 ## Miscellaneous
-19. [CHANGELOG](CHANGELOG.md): Record of all notable changes to the project.
-20. [Contributing Guidelines](CONTRIBUTING.md): Guidelines for contributing to the project.
-21. [License](LICENSE.md): Project license information.
+20. [CHANGELOG](CHANGELOG.md): Record of all notable changes to the project.
+21. [Contributing Guidelines](CONTRIBUTING.md): Guidelines for contributing to the project.
+22. [License](LICENSE.md): Project license information.
 
 Each file contains comprehensive, relevant information for our Collaborative AI Reasoning System. Refer to the specific file when you need details on a particular aspect of the system architecture, development process, or usage guidelines.
