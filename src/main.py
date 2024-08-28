@@ -55,14 +55,41 @@ def ab_test():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+import httpx
+import os
 
 app = FastAPI()
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+# Define service URLs
+REASONING_ENGINE_URL = os.getenv("REASONING_ENGINE_URL", "http://reasoning_engine:5002")
+
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the Collaborative AI Reasoning System"}
+    return {"message": "Welcome to the Collaborative AI Reasoning System API Gateway"}
+
+@app.post("/reason")
+async def reason(data: dict):
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.post(f"{REASONING_ENGINE_URL}/reason", json=data)
+            response.raise_for_status()
+            return response.json()
+        except httpx.HTTPStatusError as e:
+            raise HTTPException(status_code=e.response.status_code, detail=str(e))
+        except httpx.RequestError as e:
+            raise HTTPException(status_code=500, detail=f"An error occurred while requesting the reasoning engine: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))

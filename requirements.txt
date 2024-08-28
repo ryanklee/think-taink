@@ -102,3 +102,4 @@ zipp==1.0.0
 seaborn==0.11.2
 fastapi==0.68.0
 uvicorn==0.15.0
+httpx==0.27.0
