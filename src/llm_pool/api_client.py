@@ -33,12 +33,26 @@ class APIClient:
         # Set a flag for test environment
         self.is_test_environment = self.api_key.startswith('test_')
 
-    def generate_response_stream(self, prompt: str, max_tokens: int) -> Generator[str, None, None]:
+    def generate_response_stream(self, prompt: str, max_tokens: int, system_prompt: str = None) -> Generator[str, None, None]:
         try:
-            return self.api.generate_response_stream(prompt, max_tokens)
+            return self.api.generate_response_stream(prompt, max_tokens, system_prompt=system_prompt)
         except Exception as e:
             logger.error(f"Error generating response: {str(e)}")
             raise LLMPoolError(f"Error generating response: {str(e)}")
+
+    def generate_chat_response(self, messages: List[Dict[str, str]], max_tokens: int, system_prompt: str = None) -> str:
+        try:
+            return self.api.generate_chat_response(messages, max_tokens, system_prompt=system_prompt)
+        except Exception as e:
+            logger.error(f"Error generating chat response: {str(e)}")
+            raise LLMPoolError(f"Error generating chat response: {str(e)}")
+
+    def analyze_document(self, document: str, file_type: str, analysis_type: str, system_prompt: str = None) -> Dict:
+        try:
+            return self.api.analyze_document(document, file_type, analysis_type, system_prompt=system_prompt)
+        except Exception as e:
+            logger.error(f"Error analyzing document: {str(e)}")
+            raise LLMPoolError(f"Error analyzing document: {str(e)}")
 
     def set_model(self, model: str) -> None:
         self.model = model
