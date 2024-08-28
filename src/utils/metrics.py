@@ -36,3 +36,22 @@ def calculate_sentiment_scores(api_results: List[Dict]) -> Dict:
         'average_polarity': total_polarity / total_responses if total_responses > 0 else 0,
         'average_subjectivity': total_subjectivity / total_responses if total_responses > 0 else 0,
     }
+from typing import List, Dict
+from textblob import TextBlob
+
+def calculate_response_metrics(api_results: List[Dict]) -> Dict:
+    # Implement response metrics calculation
+    # This is a placeholder and should be implemented based on your specific requirements
+    return {}
+
+def calculate_sentiment_scores(api_results: List[Dict]) -> List[float]:
+    sentiment_scores = []
+    for result in api_results:
+        discussion_sentiment = 0
+        for message in result:
+            content = message.get('content', '')
+            blob = TextBlob(content)
+            discussion_sentiment += blob.sentiment.polarity
+        average_sentiment = discussion_sentiment / len(result) if result else 0
+        sentiment_scores.append(average_sentiment)
+    return sentiment_scores
