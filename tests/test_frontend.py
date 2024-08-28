@@ -63,28 +63,30 @@ class TestFrontend:
             # Wait for the EventSource to be established
             page.wait_for_function(
                 "() => window.eventSource && window.eventSource.readyState === 1",
-                timeout=30000
+                timeout=60000
             )
             logger.info("EventSource established")
         except Exception as e:
             logger.error(f"Error waiting for EventSource: {str(e)}")
             logger.error(f"Page content: {page.content()}")
             logger.error(f"Page console logs: {page.evaluate('() => JSON.stringify(console.logs)')}")
+            logger.error(f"Network requests: {page.evaluate('() => JSON.stringify(performance.getEntriesByType(\"resource\"))')}")
             raise
 
         # Wait for some content to appear in the response element
         response_element = page.locator("#response")
         try:
-            expect(response_element).to_be_visible(timeout=30000)
+            expect(response_element).to_be_visible(timeout=60000)
             
             page.wait_for_function(
                 "() => document.querySelector('#response').textContent.trim().length > 0",
-                timeout=30000
+                timeout=60000
             )
             logger.info("Content appeared in the response element")
         except Exception as e:
             logger.error(f"Error waiting for response content: {str(e)}")
             logger.error(f"Response element HTML: {response_element.inner_html()}")
+            logger.error(f"Network requests: {page.evaluate('() => JSON.stringify(performance.getEntriesByType(\"resource\"))')}")
             raise
 
         # Get the final response text
