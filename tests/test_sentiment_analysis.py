@@ -3,14 +3,11 @@ from src.ab_testing import ABTestRunner
 from src.utils.metrics import calculate_sentiment_scores
 
 @pytest.fixture
-def ab_test_runner(mocker):
+def ab_test_runner():
     config = {'principles': {'version_control_file': 'test_principles.json'}}
-    mocker.patch('src.llm_pool.llm_pool.LLMPool')
-    mocker.patch('src.heuristics.principles.Principles')
-    mocker.patch('src.moderator.moderator.Moderator')
     return ABTestRunner(config)
 
-def test_sentiment_analysis(ab_test_runner):
+def test_sentiment_analysis(ab_test_runner, mocker):
     # Mock input and results
     input_text = "What are your thoughts on artificial intelligence?"
     mock_results = {
@@ -25,7 +22,10 @@ def test_sentiment_analysis(ab_test_runner):
     }
 
     # Mock the run_ab_test method to return our mock results
-    ab_test_runner.run_ab_test = lambda *args, **kwargs: mock_results
+    mocker.patch.object(ab_test_runner, 'run_ab_test', return_value=mock_results)
+
+    # Mock the calculate_sentiment_scores function
+    mocker.patch('src.utils.metrics.calculate_sentiment_scores', return_value=[0.5, -0.2])
 
     # Run the analysis
     analysis = ab_test_runner.analyze_results(mock_results)
