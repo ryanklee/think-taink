@@ -12,12 +12,12 @@ def test_sentiment_analysis(ab_test_runner, mocker):
     input_text = "What are your thoughts on artificial intelligence?"
     mock_results = {
         'openai': [
-            [{'content': 'AI is fascinating and has great potential.'}],
-            [{'content': 'AI raises important ethical considerations.'}]
+            [{'content': 'AI is fascinating and has great potential.', 'hypothesis': 'AI has great potential'}],
+            [{'content': 'AI raises important ethical considerations.', 'hypothesis': 'AI raises ethical concerns'}]
         ],
         'anthropic': [
-            [{'content': 'AI is a powerful tool that needs careful management.'}],
-            [{'content': 'The future of AI looks promising but challenging.'}]
+            [{'content': 'AI is a powerful tool that needs careful management.', 'hypothesis': 'AI needs careful management'}],
+            [{'content': 'The future of AI looks promising but challenging.', 'hypothesis': 'AI future is promising and challenging'}]
         ]
     }
 
@@ -46,4 +46,9 @@ def test_sentiment_analysis(ab_test_runner, mocker):
     assert len(analysis['anthropic']['sentiment_scores']) == 2
 
     # Check if the logger.info was called for the analysis
-    ab_test_runner.logger.info.assert_called_with("Analysis completed")
+    ab_test_runner.logger.info.assert_called_with("Result analysis completed")
+
+    # Test hypotheses ranking
+    ranked_hypotheses = ab_test_runner.rank_hypotheses(mock_results)
+    assert len(ranked_hypotheses) == 4
+    assert all('api' in h and 'iteration' in h and 'hypothesis' in h and 'score' in h for h in ranked_hypotheses)
