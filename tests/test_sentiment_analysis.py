@@ -11,7 +11,7 @@ def ab_test_runner(tmp_path):
 def test_sentiment_analysis(ab_test_runner, mocker):
     # Mock the logger
     mock_logger = mocker.Mock(spec=logging.Logger)
-    mocker.patch.object(ab_test_runner, 'logger', mock_logger)
+    mocker.patch.object(ab_test_runner, '_setup_logger', return_value=mock_logger)
 
     # Mock input and results
     input_text = "What are your thoughts on artificial intelligence?"
