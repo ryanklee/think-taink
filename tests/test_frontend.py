@@ -86,7 +86,7 @@ class TestFrontend:
         except Exception as e:
             logger.error(f"Error waiting for response content: {str(e)}")
             logger.error(f"Response element HTML: {response_element.inner_html()}")
-            logger.error(f"Network requests: {page.evaluate('() => JSON.stringify(performance.getEntriesByType(\"resource\"))')}")
+            logger.error("Network requests: {}".format(page.evaluate('() => JSON.stringify(performance.getEntriesByType("resource"))')))
             raise
 
         # Get the final response text
