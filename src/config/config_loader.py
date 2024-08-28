@@ -17,26 +17,19 @@ def load_config():
         config = yaml.safe_load(config_file)
     
     # Load API keys from environment variables
-    openai_api_key = os.environ.get('OPENAI_API_KEY')
-    anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
+    config['openai'] = config.get('openai', {})
+    config['anthropic'] = config.get('anthropic', {})
+    
+    config['openai']['api_key'] = os.environ.get('OPENAI_API_KEY')
+    config['anthropic']['api_key'] = os.environ.get('ANTHROPIC_API_KEY')
 
-    if not openai_api_key:
+    if not config['openai']['api_key']:
         raise ValueError("OPENAI_API_KEY environment variable is not set")
-    if not anthropic_api_key:
+    if not config['anthropic']['api_key']:
         raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
     
     # Log the API keys (first few characters) for debugging
-    print(f"OpenAI API Key loaded (first 5 chars): {openai_api_key[:5]}...")
-    print(f"Anthropic API Key loaded (first 5 chars): {anthropic_api_key[:5]}...")
-
-    # Ensure the 'openai' and 'anthropic' keys exist in the config
-    if 'openai' not in config:
-        config['openai'] = {}
-    if 'anthropic' not in config:
-        config['anthropic'] = {}
-    
-    # Add the API keys to the respective configurations
-    config['openai']['api_key'] = openai_api_key
-    config['anthropic']['api_key'] = anthropic_api_key
+    print(f"OpenAI API Key loaded (first 5 chars): {config['openai']['api_key'][:5]}...")
+    print(f"Anthropic API Key loaded (first 5 chars): {config['anthropic']['api_key'][:5]}...")
     
     return config
