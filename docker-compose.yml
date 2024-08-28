@@ -4,10 +4,11 @@ services:
   web:
     build: .
     ports:
-      - "5001:5001"
+      - "8000:8000"
     volumes:
       - .:/app
     environment:
+      - DEBUG=1
       - FLASK_ENV=development
       - ANTHROPIC_API_KEY
     depends_on:
@@ -30,12 +31,17 @@ services:
       - kafka
 
   neo4j:
-    image: neo4j:4.4
+    image: neo4j:latest
     ports:
       - "7474:7474"
       - "7687:7687"
     environment:
       - NEO4J_AUTH=neo4j/password
+    volumes:
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+      - ./neo4j/import:/import
+      - ./neo4j/plugins:/plugins
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -66,25 +72,3 @@ services:
       - "3000:3000"
     depends_on:
       - prometheus
-version: '3'
-services:
-  web:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-    environment:
-      - DEBUG=1
-  neo4j:
-    image: neo4j:latest
-    ports:
-      - "7474:7474"
-      - "7687:7687"
-    environment:
-      - NEO4J_AUTH=neo4j/password
-    volumes:
-      - ./neo4j/data:/data
-      - ./neo4j/logs:/logs
-      - ./neo4j/import:/import
-      - ./neo4j/plugins:/plugins
