@@ -39,67 +39,53 @@ class TestFrontend:
 
         question_input.fill("Test question")
         api_select.select_option("openai")
-        submit_button.click()
+        
+        # Use page.expect_navigation to wait for the form submission and page navigation
+        with page.expect_navigation():
+            submit_button.click()
 
+        # Now we're on the results page
+        page.wait_for_load_state("networkidle")
+        logger.info("Results page loaded")
+        logger.info(f"Current URL: {page.url}")
+
+        # Check if we're on the results page
+        assert "result" in page.url, "Not on the results page after form submission"
+
+        # Check for the presence of the question and API type on the results page
+        question_element = page.locator("text=Test question")
+        api_type_element = page.locator("text=openai")
+        
+        expect(question_element).to_be_visible(timeout=5000)
+        expect(api_type_element).to_be_visible(timeout=5000)
+
+        # Wait for the EventSource to be established
+        page.wait_for_function(
+            "() => window.eventSource && window.eventSource.readyState === 1",
+            timeout=30000
+        )
+        logger.info("EventSource established")
+
+        # Wait for some content to appear in the response element
         response_element = page.locator("#response")
-        try:
-            # Wait for the page to load
-            page.wait_for_load_state("networkidle")
-            logger.info("Page loaded")
-            
-            # Log the initial page state
-            logger.info(f"Initial page content: {page.content()}")
-            
-            # Wait for the network request to be sent
-            with page.expect_request("**/stream") as request_info:
-                submit_button.click()
-            
-            request = request_info.value
-            logger.info(f"Request URL: {request.url}")
-            logger.info(f"Request method: {request.method}")
-            logger.info(f"Request headers: {request.headers}")
-            
-            # Wait for the response
-            response = request.response()
-            logger.info(f"Response status: {response.status}")
-            logger.info(f"Response headers: {response.headers}")
-            
-            # Wait for the EventSource to be established
-            page.wait_for_function(
-                "() => window.eventSource && window.eventSource.readyState === 1",
-                timeout=30000
-            )
-            logger.info("EventSource established")
+        expect(response_element).to_be_visible(timeout=30000)
+        
+        page.wait_for_function(
+            "() => document.querySelector('#response').textContent.trim().length > 0",
+            timeout=30000
+        )
+        logger.info("Content appeared in the response element")
 
-            # Wait for the response element to be visible
-            expect(response_element).to_be_visible(timeout=30000)
-            logger.info("Response element is visible")
+        # Get the final response text
+        response_text = response_element.inner_text()
+        logger.info(f"Response text: {response_text}")
 
-            # Wait for some content to appear in the response element
-            page.wait_for_function(
-                "() => document.querySelector('#response').textContent.trim().length > 0",
-                timeout=30000
-            )
-            logger.info("Content appeared in the response element")
+        # Check for non-empty response
+        assert response_text.strip() != "", "Expected non-empty response, but got empty string"
 
-            # Get the final response text
-            response_text = response_element.inner_text()
-            logger.info(f"Response text: {response_text}")
-
-            # Check for non-empty response
-            assert response_text.strip() != "", "Expected non-empty response, but got empty string"
-
-            # Check if the response contains expected content
-            expected_content = ["Test", "question", "response"]
-            assert any(content in response_text for content in expected_content), \
-                f"Expected content not found in response: {response_text}"
-
-        except Exception as e:
-            logger.error(f"Test failed: {str(e)}")
-            logger.error(f"Page content: {page.content()}")
-            logger.error(f"Current URL: {page.url}")
-            logger.error(f"Response element HTML: {response_element.inner_html()}")
-            logger.error(f"Page console logs: {page.evaluate('() => console.logs')}")
-            raise e
+        # Check if the response contains expected content
+        expected_content = ["Test", "question", "response"]
+        assert any(content in response_text for content in expected_content), \
+            f"Expected content not found in response: {response_text}"
 
 # Add more tests as needed
