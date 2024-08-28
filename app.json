@@ -6,8 +6,8 @@
     "reasoning",
     "collaboration"
   ],
-  "website": "https://github.com/yourusername/think-taink",
-  "repository": "https://github.com/yourusername/think-taink",
+  "website": "https://think-taink-490ce94a34b6.herokuapp.com/",
+  "repository": "https://git.heroku.com/think-taink.git",
   "success_url": "/",
   "scripts": {
     "dokku": {
