@@ -10,7 +10,7 @@ class OpenAIAPI:
         self.model = model
         self.last_request_time = 0
         self.rate_limit_delay = 1  # 1 request per second
-        self.is_test_environment = api_key == "test_api_key"
+        self.is_test_environment = api_key == "test_openai_api_key"
         
         # Set the API key for the openai module
         openai.api_key = self.api_key

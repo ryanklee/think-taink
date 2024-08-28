@@ -7,7 +7,7 @@ class AnthropicAPI:
         self.api_key = api_key
         self.client = anthropic.Anthropic(api_key=api_key)
         self.model = model
-        self.is_test_environment = api_key == "test_api_key"
+        self.is_test_environment = api_key == "test_anthropic_api_key"
 
     def generate_response_stream(self, prompt, max_tokens=4096) -> Generator[str, None, None]:
         if self.is_test_environment:

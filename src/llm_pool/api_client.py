@@ -28,6 +28,9 @@ class APIClient:
         
         logger.debug(f"APIClient initialized with API: {self.api_type}, model: {self.model}")
         logger.debug(f"API Key (first 5 chars): {self.api_key[:5]}...")
+        
+        # Set a flag for test environment
+        self.is_test_environment = self.api_key.startswith('test_')
 
     def generate_response_stream(self, prompt: str, max_tokens: int) -> Generator[str, None, None]:
         try:
