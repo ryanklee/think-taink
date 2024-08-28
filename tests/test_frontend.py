@@ -59,22 +59,33 @@ class TestFrontend:
         expect(question_element).to_be_visible(timeout=5000)
         expect(api_type_element).to_be_visible(timeout=5000)
 
-        # Wait for the EventSource to be established
-        page.wait_for_function(
-            "() => window.eventSource && window.eventSource.readyState === 1",
-            timeout=30000
-        )
-        logger.info("EventSource established")
+        try:
+            # Wait for the EventSource to be established
+            page.wait_for_function(
+                "() => window.eventSource && window.eventSource.readyState === 1",
+                timeout=30000
+            )
+            logger.info("EventSource established")
+        except Exception as e:
+            logger.error(f"Error waiting for EventSource: {str(e)}")
+            logger.error(f"Page content: {page.content()}")
+            logger.error(f"Page console logs: {page.evaluate('() => JSON.stringify(console.logs)')}")
+            raise
 
         # Wait for some content to appear in the response element
         response_element = page.locator("#response")
-        expect(response_element).to_be_visible(timeout=30000)
-        
-        page.wait_for_function(
-            "() => document.querySelector('#response').textContent.trim().length > 0",
-            timeout=30000
-        )
-        logger.info("Content appeared in the response element")
+        try:
+            expect(response_element).to_be_visible(timeout=30000)
+            
+            page.wait_for_function(
+                "() => document.querySelector('#response').textContent.trim().length > 0",
+                timeout=30000
+            )
+            logger.info("Content appeared in the response element")
+        except Exception as e:
+            logger.error(f"Error waiting for response content: {str(e)}")
+            logger.error(f"Response element HTML: {response_element.inner_html()}")
+            raise
 
         # Get the final response text
         response_text = response_element.inner_text()
