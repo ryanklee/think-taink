@@ -59,17 +59,11 @@ class LLMPool:
                             "expert": expert["name"],
                             "response": response_chunk
                         }
-            except LLMPoolError as e:
-                logger.error(f"LLMPoolError for {expert['name']}: {str(e)}")
-                yield {
-                    "expert": expert["name"],
-                    "response": f"Error: {str(e)}"
-                }
             except Exception as e:
-                logger.error(f"Unexpected error for {expert['name']}: {str(e)}")
+                logger.error(f"Error for {expert['name']}: {str(e)}")
                 yield {
                     "expert": expert["name"],
-                    "response": f"Unexpected error: {str(e)}"
+                    "response": f"Error generating response: {str(e)}"
                 }
         
         logger.debug("Generating data usage note")
