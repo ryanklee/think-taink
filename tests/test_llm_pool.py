@@ -183,3 +183,25 @@ class TestLLMPool:
 
 if __name__ == '__main__':
     pytest.main()
+import os
+import pytest
+from src.llm_pool.llm_pool import LLMPool
+
+def test_llm_pool_initialization():
+    # Ensure environment variables are set
+    assert 'OPENAI_API_KEY' in os.environ, "OPENAI_API_KEY is not set in the environment"
+    assert 'ANTHROPIC_API_KEY' in os.environ, "ANTHROPIC_API_KEY is not set in the environment"
+
+    # Test OpenAI initialization
+    openai_pool = LLMPool({}, api_type='openai')
+    assert openai_pool.api_type == 'openai'
+    assert openai_pool.openai_api_key == os.environ['OPENAI_API_KEY']
+
+    # Test Anthropic initialization
+    anthropic_pool = LLMPool({}, api_type='anthropic')
+    assert anthropic_pool.api_type == 'anthropic'
+    assert anthropic_pool.anthropic_api_key == os.environ['ANTHROPIC_API_KEY']
+
+    # Test error on invalid API type
+    with pytest.raises(ValueError):
+        LLMPool({}, api_type='invalid')

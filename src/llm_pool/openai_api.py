@@ -4,13 +4,19 @@ from functools import lru_cache
 from typing import Generator
 from src.utils.exceptions import LLMPoolError
 
+import os
+import openai
+from typing import Generator
+
 class OpenAIAPI:
-    def __init__(self, api_key, model="gpt-4o-mini"):
-        self.api_key = api_key
+    def __init__(self, api_key=None, model="gpt-4o-mini"):
+        self.api_key = api_key or os.environ.get('OPENAI_API_KEY')
+        if not self.api_key:
+            raise ValueError("OpenAI API key is not set")
         self.model = model
         self.last_request_time = 0
         self.rate_limit_delay = 1  # 1 request per second
-        self.is_test_environment = api_key == "test_openai_api_key"
+        self.is_test_environment = self.api_key == "test_openai_api_key"
         
         # Set the API key for the openai module
         openai.api_key = self.api_key

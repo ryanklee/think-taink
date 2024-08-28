@@ -7,7 +7,34 @@ from src.llm_pool.expert_pool import ExpertPool
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+import os
+from typing import Dict
+from src.llm_pool.openai_api import OpenAIAPI
+from src.llm_pool.anthropic_api import AnthropicAPI
+
 class LLMPool:
+    def __init__(self, config: Dict, api_type: str = 'openai'):
+        self.config = config
+        self.api_type = api_type
+        self.openai_api_key = os.environ.get('OPENAI_API_KEY')
+        self.anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
+
+        if self.api_type == 'openai':
+            if not self.openai_api_key:
+                raise ValueError("OPENAI_API_KEY environment variable is not set")
+            self.api = OpenAIAPI(self.openai_api_key)
+        elif self.api_type == 'anthropic':
+            if not self.anthropic_api_key:
+                raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
+            self.api = AnthropicAPI(self.anthropic_api_key)
+        else:
+            raise ValueError(f"Unsupported API type: {self.api_type}")
+
+    def generate_response(self, prompt: str, max_tokens: int = 100):
+        return self.api.generate_response(prompt, max_tokens)
+
+    def generate_response_stream(self, prompt: str, max_tokens: int = 100):
+        return self.api.generate_response_stream(prompt, max_tokens)
     def __init__(self, config: Dict, api_type: str = None):
         logger.debug("Initializing LLMPool")
         self.api_type = api_type or config.get('llm', {}).get('default_api', 'openai')

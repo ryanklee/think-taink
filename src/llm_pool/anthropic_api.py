@@ -3,12 +3,18 @@ import time
 from typing import Generator, Dict, List
 from src.utils.exceptions import LLMPoolError
 
+import os
+import anthropic
+from typing import Generator
+
 class AnthropicAPI:
-    def __init__(self, api_key, model="claude-3-sonnet-20240229"):
-        self.api_key = api_key
-        self.client = anthropic.Anthropic(api_key=api_key)
+    def __init__(self, api_key=None, model="claude-3-sonnet-20240229"):
+        self.api_key = api_key or os.environ.get('ANTHROPIC_API_KEY')
+        if not self.api_key:
+            raise ValueError("Anthropic API key is not set")
+        self.client = anthropic.Anthropic(api_key=self.api_key)
         self.model = model
-        self.is_test_environment = api_key == "test_anthropic_api_key"
+        self.is_test_environment = self.api_key == "test_anthropic_api_key"
         self.last_request_time = 0
         self.daily_request_count = 0
         self.rate_limit_delay = 0.1  # 10 requests per second
