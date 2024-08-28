@@ -14,6 +14,7 @@ class AnthropicAPI:
             raise ValueError("Anthropic API key is not set")
         self.client = anthropic.Anthropic(api_key=self.api_key)
         self.model = model
+        self.api = self.client  # Add this line to maintain compatibility
         self.is_test_environment = self.api_key == "test_anthropic_api_key"
         self.last_request_time = 0
         self.daily_request_count = 0

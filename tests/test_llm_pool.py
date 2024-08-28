@@ -42,7 +42,7 @@ class TestLLMPool:
     
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.return_value = ["Test ", "response"]
-        llm_pool.api.generate_response_stream = mock_generate_response_stream
+        llm_pool.api_client.generate_response_stream = mock_generate_response_stream
     
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))
@@ -68,7 +68,7 @@ class TestLLMPool:
     def test_generate_response_stream_for_each_expert(self, expert, llm_pool):
         mock_generate_response_stream = MagicMock()
         mock_generate_response_stream.return_value = ["Test response"]
-        llm_pool.api.generate_response_stream = mock_generate_response_stream
+        llm_pool.api_client.generate_response_stream = mock_generate_response_stream
     
         input_text = "Test question"
         responses = list(llm_pool.generate_response_stream(input_text))

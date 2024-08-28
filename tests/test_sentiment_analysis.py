@@ -8,8 +8,13 @@ def ab_test_runner(tmp_path):
     config = {'principles': {'version_control_file': str(tmp_path / 'test_principles.json')}}
     return ABTestRunner(config)
 
+import nltk
+
 def test_sentiment_analysis(ab_test_runner, mocker, caplog):
     caplog.set_level(logging.DEBUG)
+    
+    # Download NLTK data
+    nltk.download('punkt')
     
     # Mock input and results
     input_text = "What are your thoughts on artificial intelligence?"
