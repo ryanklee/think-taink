@@ -49,10 +49,6 @@ class APIClient:
         self.api.set_model(model)
 
     def set_api_type(self, api_type: str) -> None:
-        if api_type not in ['anthropic', 'openai']:
+        if api_type != 'anthropic':
             raise ValueError(f"Unsupported API type: {api_type}")
         self.api_type = api_type
-        if self.api_type == 'anthropic':
-            self.api = AnthropicAPI(self.api_key, model=self.model)
-        else:
-            self.api = OpenAIAPI(self.api_key, model=self.model)
