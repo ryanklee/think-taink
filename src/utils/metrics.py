@@ -71,7 +71,7 @@ def calculate_sentiment_scores(api_results: List[Dict]) -> List[float]:
         message_count = 0
         for message in result:
             try:
-                content = message.get('content', '')
+                content = message['content'] if isinstance(message, dict) else message
                 blob = TextBlob(content)
                 discussion_sentiment += blob.sentiment.polarity
                 message_count += 1
