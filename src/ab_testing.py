@@ -32,8 +32,8 @@ class ABTestRunner:
 
     def analyze_results(self, results: Dict[str, List[Dict]]) -> Dict[str, Dict]:
         analysis = {
-            'openai': self._analyze_api_results(results['openai'], 'OpenAI'),
-            'anthropic': self._analyze_api_results(results['anthropic'], 'Claude')
+            'openai': self._analyze_api_results(results['openai']),
+            'anthropic': self._analyze_api_results(results['anthropic'])
         }
         
         # Compare the results
