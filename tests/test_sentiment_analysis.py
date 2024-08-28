@@ -8,11 +8,9 @@ def ab_test_runner(tmp_path):
     config = {'principles': {'version_control_file': str(tmp_path / 'test_principles.json')}}
     return ABTestRunner(config)
 
-def test_sentiment_analysis(ab_test_runner, mocker):
-    # Mock the logger
-    mock_logger = mocker.Mock(spec=logging.Logger)
-    mocker.patch.object(ab_test_runner, 'logger', mock_logger)
-
+def test_sentiment_analysis(ab_test_runner, mocker, caplog):
+    caplog.set_level(logging.DEBUG)
+    
     # Mock input and results
     input_text = "What are your thoughts on artificial intelligence?"
     mock_results = {
@@ -50,9 +48,19 @@ def test_sentiment_analysis(ab_test_runner, mocker):
     assert len(analysis['openai']['sentiment_scores']) == 2
     assert len(analysis['anthropic']['sentiment_scores']) == 2
 
-    # Check if the logger.info was called for the analysis
-    mock_logger.info.assert_any_call("Result analysis completed")
-    mock_logger.info.assert_any_call("Comparison of OpenAI and Claude results completed")
+    # Check if the expected log messages are present
+    assert "Starting result analysis" in caplog.text
+    assert "Analyzing results for OpenAI" in caplog.text
+    assert "Analyzing results for Claude" in caplog.text
+    assert "Analysis completed for OpenAI" in caplog.text
+    assert "Analysis completed for Claude" in caplog.text
+    assert "Starting comparison of OpenAI and Claude results" in caplog.text
+    assert "Comparison of OpenAI and Claude results completed" in caplog.text
+    assert "Result analysis completed" in caplog.text
+
+    # Print out all captured logs for debugging
+    print("\nCaptured logs:")
+    print(caplog.text)
 
     # Test hypotheses ranking
     ranked_hypotheses = ab_test_runner.rank_hypotheses(mock_results)
