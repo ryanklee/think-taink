@@ -88,7 +88,15 @@ The system is composed of the following microservices:
 - Real-time monitoring dashboards are provided using Grafana
 - Alerting systems are in place for critical issues
 
-## 8. Extensibility
+## 8. Experiment Runner
+
+- Manages the setup and execution of behavioral-psychological experiments
+- Configures agent roles, traits, and interaction constraints
+- Collects and analyzes experimental data
+- Supports both ad-hoc and automated experiment execution
+- Integrates with the Knowledge Base to store and retrieve experimental results
+
+## 9. Extensibility
 
 - A plugin system allows for easy integration of new AI models and reasoning strategies
 - The microservices architecture enables independent scaling and updating of components
