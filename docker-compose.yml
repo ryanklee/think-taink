@@ -15,11 +15,12 @@ services:
       - neo4j
       - kafka
       - reasoning_engine
+    command: ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--log-level", "info"]
 
   reasoning_engine:
     build:
       context: .
-      dockerfile: Dockerfile.reasoning_engine
+      dockerfile: Dockerfile
     ports:
       - "5002:5002"
     volumes:
@@ -29,6 +30,7 @@ services:
     depends_on:
       - neo4j
       - kafka
+    command: ["python", "src/reasoning_engine/app.py"]
 
   neo4j:
     image: neo4j:latest
@@ -52,6 +54,8 @@ services:
       - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
       - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    depends_on:
+      - zookeeper
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
