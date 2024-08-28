@@ -1,8 +1,10 @@
 import random
+import logging
 from typing import List, Dict
 from src.llm_pool.llm_pool import LLMPool
 from src.moderator.moderator import Moderator
 from src.heuristics.principles import Principles
+from src.utils.metrics import calculate_response_metrics, calculate_sentiment_scores
 
 class ABTestRunner:
     def __init__(self, config: Dict):
@@ -12,6 +14,11 @@ class ABTestRunner:
         self.principles = Principles(config['principles']['version_control_file'])
         self.openai_moderator = Moderator(self.openai_llm_pool, self.principles)
         self.claude_moderator = Moderator(self.claude_llm_pool, self.principles)
+        self.logger = logging.getLogger(__name__)
+
+        # Log API key status
+        self.logger.info(f"OpenAI API key status: {'Set' if os.environ.get('OPENAI_API_KEY') else 'Not set'}")
+        self.logger.info(f"Anthropic API key status: {'Set' if os.environ.get('ANTHROPIC_API_KEY') else 'Not set'}")
 
     def run_ab_test(self, input_text: str, num_iterations: int = 5) -> Dict[str, List[Dict]]:
         results = {
