@@ -23,7 +23,6 @@
 - [X] Unit tests (expanded coverage)
 - [X] Integration tests
 - [ ] CI pipeline
-- [ ] User acceptance testing
 - [ ] Refinement based on feedback
 
 ## 4. Documentation [/]

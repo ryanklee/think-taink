@@ -109,11 +109,13 @@ docs/
 
 ## Testing
 
-To run the test suite:
+To run the unit and integration test suite:
 
 ```
 pytest
 ```
+
+Note: We do not perform front-end testing. Our testing strategy focuses on unit and integration tests to ensure the core functionality of the system.
 
 ## Contributing
 
