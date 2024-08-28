@@ -44,3 +44,7 @@ def test_sentiment_analysis(ab_test_runner, mocker):
     # Check if the number of sentiment scores matches the number of responses
     assert len(analysis['openai']['sentiment_scores']) == 2
     assert len(analysis['anthropic']['sentiment_scores']) == 2
+
+    # Check if the logger.info was called for each API analysis
+    ab_test_runner.logger.info.assert_any_call("Analysis completed for OpenAI")
+    ab_test_runner.logger.info.assert_any_call("Analysis completed for Claude")
