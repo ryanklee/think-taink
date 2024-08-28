@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Generator
+from typing import Generator, List, Dict
 from src.utils.exceptions import LLMPoolError
 from src.llm_pool.anthropic_api import AnthropicAPI
 from src.llm_pool.openai_api import OpenAIAPI
