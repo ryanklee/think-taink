@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, Generator, List
 from src.utils.exceptions import LLMPoolError
-from src.llm_pool.api_client import APIClient
+from src.llm_pool.anthropic_api import AnthropicAPI
 from src.llm_pool.expert_pool import ExpertPool
 
 logging.basicConfig(level=logging.DEBUG)
@@ -9,32 +9,22 @@ logger = logging.getLogger(__name__)
 
 import os
 from typing import Dict
-from src.llm_pool.openai_api import OpenAIAPI
-from src.llm_pool.anthropic_api import AnthropicAPI
 
 class LLMPool:
-    def __init__(self, config: Dict, api_type: str = 'openai'):
+    def __init__(self, config: Dict):
         self.config = config
-        self.api_type = api_type
-        self.openai_api_key = os.environ.get('OPENAI_API_KEY')
         self.anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
 
-        if self.api_type == 'openai':
-            if not self.openai_api_key:
-                raise ValueError("OPENAI_API_KEY environment variable is not set")
-            self.api_client = APIClient({'api_type': 'openai', 'openai': {'api_key': self.openai_api_key}})
-        elif self.api_type == 'anthropic':
-            if not self.anthropic_api_key:
-                raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
-            self.api = AnthropicAPI(self.anthropic_api_key)
-        else:
-            raise ValueError(f"Unsupported API type: {self.api_type}")
+        if not self.anthropic_api_key:
+            raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
+        self.api = AnthropicAPI(self.anthropic_api_key)
 
-    def generate_response(self, prompt: str, max_tokens: int = 100):
-        return self.api.generate_response(prompt, max_tokens)
-
-    def generate_response_stream(self, prompt: str, max_tokens: int = 100):
-        return self.api.generate_response_stream(prompt, max_tokens)
+        self.expert_pool = ExpertPool()
+        self.temperature = config.get('llm', {}).get('temperature', 0.7)
+        self.max_tokens = config.get('llm', {}).get('max_tokens', 4096)
+        self.context_window = config.get('llm', {}).get('context_window', 128000)
+        
+        logger.debug(f"LLMPool initialized with temperature: {self.temperature}, max_tokens: {self.max_tokens}")
     def __init__(self, config: Dict, api_type: str = None):
         logger.debug("Initializing LLMPool")
         self.api_type = api_type or config.get('llm', {}).get('default_api', 'openai')

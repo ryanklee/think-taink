@@ -2,13 +2,11 @@ import logging
 import os
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-import httpx
 from prometheus_client import make_asgi_app, Counter, Histogram
 from src.config.config_loader import load_config
 from src.llm_pool.llm_pool import LLMPool
 from src.moderator.moderator import Moderator
 from src.heuristics.principles import Principles
-from src.ab_testing import ABTestRunner
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -52,24 +50,14 @@ def create_app():
 
     @app.post("/api/discuss")
     async def discuss(data: dict):
-        api_type = data.get('api_type', 'openai')
         input_text = data.get('input_text', '')
 
-        llm_pool = LLMPool(config, api_type=api_type)
+        llm_pool = LLMPool(config)
         principles = Principles(config['principles']['version_control_file'])
         moderator = Moderator(llm_pool, principles)
 
         responses = list(moderator.start_discussion_stream(input_text))
         return responses
-
-    @app.post("/api/ab_test")
-    async def ab_test(data: dict):
-        input_text = data.get('input_text', '')
-
-        ab_runner = ABTestRunner(config)
-        results = ab_runner.run_ab_test(input_text)
-        analysis = ab_runner.analyze_results(results)
-        return analysis
 
     return app
 
