@@ -51,9 +51,6 @@ def live_server(app):
 @pytest.fixture(scope='session')
 def live_server_url(live_server):
     return f'http://localhost:{live_server.port}'
-        "SERVER_NAME": "localhost:5000",
-    })
-    return app
 
 @pytest.fixture(scope='session')
 def live_server(app):
