@@ -1,11 +1,9 @@
 # Getting Started with Claude API
 
-## Authentication
+## Authentication and Setup
 - Use API key in the `x-api-key` header for all requests
 - Keep API key secure, don't expose in client-side code
-
-## Base URL
-- `https://api.anthropic.com`
+- Base URL: `https://api.anthropic.com`
 
 ## Key Concepts
 - Messages API: Main endpoint for interacting with Claude
@@ -33,6 +31,10 @@
    print(message.content)
    ```
 
-## Rate Limits
-- Implement exponential backoff for retries
+## Best Practices
+- Implement exponential backoff for retries on rate limit errors
 - Use `Retry-After` header to adjust retry timing
+- Implement proper error handling
+- Use appropriate model for the task
+- Optimize `max_tokens` and `temperature` for your use case
+- Use streaming for real-time applications
