@@ -17,7 +17,7 @@
 10. [Test-Driven Development Guide](tdd_guide.md): Detailed explanation of our TDD approach and best practices.
 11. [CI/CD Pipeline](cicd_pipeline.md): Documentation of our continuous integration and deployment processes.
 12. [Deployment Guide](deployment_guide.md): Instructions for deploying the system in various environments.
-13. [Dokku Deployment Guide](dokku_deployment.md): Comprehensive guide for deploying the system using Dokku.
+13. [Heroku Deployment Guide](heroku_deployment.md): Comprehensive guide for deploying the system on Heroku.
 
 ## User Interface
 14. [UI Documentation](ui_documentation.md): Overview of the user interface components and their functionality.
