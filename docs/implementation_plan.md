@@ -143,8 +143,6 @@
 
 ## Development Methodology: Test-Driven Development (TDD)
 
-(No changes to this section)
-
 ## Next Steps:
 1. Complete the microservices architecture design and implementation
 2. Set up the event-driven system using Apache Kafka
