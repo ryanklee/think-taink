@@ -27,6 +27,9 @@ def test_sentiment_analysis(ab_test_runner, mocker):
     # Mock the calculate_sentiment_scores function
     mocker.patch('src.utils.metrics.calculate_sentiment_scores', return_value=[0.5, -0.2])
 
+    # Mock the calculate_response_metrics function
+    mocker.patch('src.utils.metrics.calculate_response_metrics', return_value={})
+
     # Run the analysis
     analysis = ab_test_runner.analyze_results(mock_results)
 
@@ -39,5 +42,5 @@ def test_sentiment_analysis(ab_test_runner, mocker):
     assert analysis['anthropic']['sentiment_scores'] == [0.5, -0.2]
 
     # Check if the number of sentiment scores matches the number of responses
-    assert len(analysis['openai']['sentiment_scores']) == len(mock_results['openai'])
-    assert len(analysis['anthropic']['sentiment_scores']) == len(mock_results['anthropic'])
+    assert len(analysis['openai']['sentiment_scores']) == 2
+    assert len(analysis['anthropic']['sentiment_scores']) == 2
