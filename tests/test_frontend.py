@@ -50,21 +50,35 @@ class TestFrontend:
             # Log the initial page state
             logger.info(f"Initial page content: {page.content()}")
             
-            # Wait for the EventSource to be established with an increased timeout
+            # Wait for the network request to be sent
+            with page.expect_request("**/stream") as request_info:
+                submit_button.click()
+            
+            request = request_info.value
+            logger.info(f"Request URL: {request.url}")
+            logger.info(f"Request method: {request.method}")
+            logger.info(f"Request headers: {request.headers}")
+            
+            # Wait for the response
+            response = request.response()
+            logger.info(f"Response status: {response.status}")
+            logger.info(f"Response headers: {response.headers}")
+            
+            # Wait for the EventSource to be established
             page.wait_for_function(
                 "() => window.eventSource && window.eventSource.readyState === 1",
-                timeout=60000
+                timeout=30000
             )
             logger.info("EventSource established")
 
             # Wait for the response element to be visible
-            expect(response_element).to_be_visible(timeout=60000)
+            expect(response_element).to_be_visible(timeout=30000)
             logger.info("Response element is visible")
 
             # Wait for some content to appear in the response element
             page.wait_for_function(
                 "() => document.querySelector('#response').textContent.trim().length > 0",
-                timeout=60000
+                timeout=30000
             )
             logger.info("Content appeared in the response element")
 
