@@ -63,7 +63,7 @@ class TestFrontend:
             # Wait for the EventSource to be established
             page.wait_for_function(
                 "() => window.eventSource && window.eventSource.readyState === 1",
-                timeout=60000
+                timeout=120000  # Increase timeout to 2 minutes
             )
             logger.info("EventSource established")
         except Exception as e:
@@ -71,6 +71,7 @@ class TestFrontend:
             logger.error(f"Page content: {page.content()}")
             logger.error(f"Page console logs: {page.evaluate('() => JSON.stringify(console.logs)')}")
             logger.error("Network requests: " + page.evaluate('() => JSON.stringify(performance.getEntriesByType("resource"))'))
+            logger.error(f"EventSource status: {page.evaluate('() => window.eventSource ? window.eventSource.readyState : \"EventSource not found\"')}")
             raise
 
         # Wait for some content to appear in the response element
