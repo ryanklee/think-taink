@@ -12,13 +12,13 @@ from flask import url_for
 
 @pytest.mark.usefixtures("live_server")
 class TestFrontend:
-    def test_home_page(self, page: Page, live_server):
-        page.goto(url_for('main.index', _external=True))
+    def test_home_page(self, page: Page, live_server_url):
+        page.goto(f"{live_server_url}/")
         expect(page).to_have_title("Multi-LLM Think Tank Simulation")
         expect(page.locator("body")).to_contain_text("Multi-LLM Think Tank Simulation")
 
-    def test_ask_question_form(self, page: Page, live_server):
-        page.goto(url_for('main.ask_question', _external=True))
+    def test_ask_question_form(self, page: Page, live_server_url):
+        page.goto(f"{live_server_url}/ask")
         page.wait_for_load_state('networkidle')
         question_input = page.locator("input[name='question']")
         api_select = page.locator("select[name='api_type']")
@@ -32,8 +32,8 @@ class TestFrontend:
         expect(submit_button).to_be_visible(timeout=10000)
 
     @pytest.mark.timeout(600)  # Increase timeout to 10 minutes
-    def test_question_submission(self, page: Page, live_server):
-        page.goto(url_for('main.ask_question', _external=True))
+    def test_question_submission(self, page: Page, live_server_url):
+        page.goto(f"{live_server_url}/ask")
         question_input = page.locator("input[name='question']")
         api_select = page.locator("select[name='api_type']")
         submit_button = page.locator("input#submit")
