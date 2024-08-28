@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-LLM Think Tank Simulation</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Multi-LLM Think Tank Simulation</h1>
+    <div>
+        <h2>Start a Discussion</h2>
+        <select id="api-type">
+            <option value="openai">OpenAI</option>
+            <option value="anthropic">Claude</option>
+        </select>
+        <input type="text" id="input-text" placeholder="Enter your question or topic">
+        <button onclick="startDiscussion()">Start Discussion</button>
+    </div>
+    <div>
+        <h2>Run A/B Test</h2>
+        <input type="text" id="ab-input-text" placeholder="Enter your question or topic for A/B testing">
+        <button onclick="runABTest()">Run A/B Test</button>
+    </div>
+    <div id="results"></div>
+
+    <script>
+        async function startDiscussion() {
+            const apiType = document.getElementById('api-type').value;
+            const inputText = document.getElementById('input-text').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = 'Loading...';
+
+            try {
+                const response = await axios.post('/api/discuss', { api_type: apiType, input_text: inputText });
+                resultsDiv.innerHTML = response.data.map(r => `<p><strong>${r.expert}:</strong> ${r.response}</p>`).join('');
+            } catch (error) {
+                resultsDiv.innerHTML = `Error: ${error.message}`;
+            }
+        }
+
+        async function runABTest() {
+            const inputText = document.getElementById('ab-input-text').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = 'Running A/B Test...';
+
+            try {
+                const response = await axios.post('/api/ab_test', { input_text: inputText });
+                resultsDiv.innerHTML = `<pre>${JSON.stringify(response.data, null, 2)}</pre>`;
+            } catch (error) {
+                resultsDiv.innerHTML = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
