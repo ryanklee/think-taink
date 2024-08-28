@@ -34,10 +34,9 @@ def test_sentiment_analysis(ab_test_runner, mocker):
     assert 'sentiment_scores' in analysis['openai']
     assert 'sentiment_scores' in analysis['anthropic']
 
-    # Check if sentiment scores are within expected range (-1 to 1)
-    for api in ['openai', 'anthropic']:
-        scores = analysis[api]['sentiment_scores']
-        assert all(-1 <= score <= 1 for score in scores)
+    # Check if sentiment scores are present and match the mocked values
+    assert analysis['openai']['sentiment_scores'] == [0.5, -0.2]
+    assert analysis['anthropic']['sentiment_scores'] == [0.5, -0.2]
 
     # Check if the number of sentiment scores matches the number of responses
     assert len(analysis['openai']['sentiment_scores']) == len(mock_results['openai'])
