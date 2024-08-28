@@ -1,4 +1,5 @@
 import pytest
+import logging
 from src.ab_testing import ABTestRunner
 from src.utils.metrics import calculate_sentiment_scores
 
@@ -8,6 +9,10 @@ def ab_test_runner(tmp_path):
     return ABTestRunner(config)
 
 def test_sentiment_analysis(ab_test_runner, mocker):
+    # Mock the logger
+    mock_logger = mocker.Mock(spec=logging.Logger)
+    mocker.patch.object(ab_test_runner, 'logger', mock_logger)
+
     # Mock input and results
     input_text = "What are your thoughts on artificial intelligence?"
     mock_results = {
@@ -46,7 +51,8 @@ def test_sentiment_analysis(ab_test_runner, mocker):
     assert len(analysis['anthropic']['sentiment_scores']) == 2
 
     # Check if the logger.info was called for the analysis
-    ab_test_runner.logger.info.assert_called_with("Result analysis completed")
+    mock_logger.info.assert_any_call("Result analysis completed")
+    mock_logger.info.assert_any_call("Comparison of OpenAI and Claude results completed")
 
     # Test hypotheses ranking
     ranked_hypotheses = ab_test_runner.rank_hypotheses(mock_results)
