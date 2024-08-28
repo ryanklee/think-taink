@@ -11,14 +11,15 @@ import os
 from typing import Dict
 
 class LLMPool:
-    def __init__(self, config: Dict):
+    def __init__(self, config: Dict, api_type: str = 'anthropic'):
         logger.debug("Initializing LLMPool")
         self.config = config
+        self.api_type = api_type
         self.anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
 
         if not self.anthropic_api_key:
             raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
-        self.api = AnthropicAPI(self.anthropic_api_key)
+        self.api_client = AnthropicAPI(self.anthropic_api_key)
 
         self.expert_pool = ExpertPool()
         self.temperature = config.get('llm', {}).get('temperature', 0.7)

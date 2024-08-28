@@ -28,14 +28,13 @@ def setup_logger():
 def llm_pool():
     config = {
         "anthropic": {
-            "api_type": "anthropic",
             "model": "claude-3-sonnet-20240229",
             "temperature": 0.7,
             "max_tokens": 150,
             "api_key": "test_anthropic_api_key"
         }
     }
-    return LLMPool(config)
+    return LLMPool(config, api_type='anthropic')
 
 class TestLLMPool:
     def test_generate_response_stream_success(self, llm_pool):
