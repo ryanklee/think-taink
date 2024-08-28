@@ -13,44 +13,49 @@ from src.ab_testing import ABTestRunner
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Load configuration
-config = load_config()
+def create_app():
+    # Load configuration
+    config = load_config()
 
-app = FastAPI()
+    app = FastAPI()
 
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
-    allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
-)
+    # Add CORS middleware
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Allows all origins
+        allow_credentials=True,
+        allow_methods=["*"],  # Allows all methods
+        allow_headers=["*"],  # Allows all headers
+    )
 
-@app.get("/")
-async def root():
-    return {"message": "Welcome to the Collaborative AI Reasoning System"}
+    @app.get("/")
+    async def root():
+        return {"message": "Welcome to the Collaborative AI Reasoning System"}
 
-@app.post("/api/discuss")
-async def discuss(data: dict):
-    api_type = data.get('api_type', 'openai')
-    input_text = data.get('input_text', '')
+    @app.post("/api/discuss")
+    async def discuss(data: dict):
+        api_type = data.get('api_type', 'openai')
+        input_text = data.get('input_text', '')
 
-    llm_pool = LLMPool(config, api_type=api_type)
-    principles = Principles(config['principles']['version_control_file'])
-    moderator = Moderator(llm_pool, principles)
+        llm_pool = LLMPool(config, api_type=api_type)
+        principles = Principles(config['principles']['version_control_file'])
+        moderator = Moderator(llm_pool, principles)
 
-    responses = list(moderator.start_discussion_stream(input_text))
-    return responses
+        responses = list(moderator.start_discussion_stream(input_text))
+        return responses
 
-@app.post("/api/ab_test")
-async def ab_test(data: dict):
-    input_text = data.get('input_text', '')
+    @app.post("/api/ab_test")
+    async def ab_test(data: dict):
+        input_text = data.get('input_text', '')
 
-    ab_runner = ABTestRunner(config)
-    results = ab_runner.run_ab_test(input_text)
-    analysis = ab_runner.analyze_results(results)
-    return analysis
+        ab_runner = ABTestRunner(config)
+        results = ab_runner.run_ab_test(input_text)
+        analysis = ab_runner.analyze_results(results)
+        return analysis
+
+    return app
+
+app = create_app()
 
 if __name__ == "__main__":
     import uvicorn
