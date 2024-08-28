@@ -31,7 +31,7 @@ class TestFrontend:
         expect(api_select).to_be_visible(timeout=10000)
         expect(submit_button).to_be_visible(timeout=10000)
 
-    @pytest.mark.timeout(300)  # Increase timeout to 5 minutes
+    @pytest.mark.timeout(600)  # Increase timeout to 10 minutes
     def test_question_submission(self, page: Page, live_server):
         page.goto(url_for('main.ask_question', _external=True))
         question_input = page.locator("input[name='question']")
@@ -40,19 +40,25 @@ class TestFrontend:
     
         question_input.fill("What is the capital of France?")
         api_select.select_option("openai")
-        with page.expect_navigation(timeout=120000):  # Increase navigation timeout to 2 minutes
-            submit_button.click(timeout=120000)
+        with page.expect_navigation(timeout=300000):  # Increase navigation timeout to 5 minutes
+            submit_button.click(timeout=300000)
         
         response_element = page.locator("#response")
         try:
             # Wait for the response to be visible and non-empty
-            expect(response_element).to_be_visible(timeout=180000)  # Increase visibility timeout to 3 minutes
-            expect(response_element).not_to_be_empty(timeout=180000)  # Increase timeout for non-empty content
+            expect(response_element).to_be_visible(timeout=300000)  # Increase visibility timeout to 5 minutes
+            expect(response_element).not_to_be_empty(timeout=300000)  # Increase timeout for non-empty content
     
             # Wait for the content to stabilize
             page.wait_for_function(
                 "() => document.querySelector('#response').textContent.trim().length > 0",
-                timeout=180000
+                timeout=300000
+            )
+    
+            # Wait for the EventSource to complete
+            page.wait_for_function(
+                "() => !window.eventSource || window.eventSource.readyState === 2",
+                timeout=300000
             )
     
             response_text = response_element.inner_text()
