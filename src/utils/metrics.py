@@ -38,20 +38,48 @@ def calculate_sentiment_scores(api_results: List[Dict]) -> Dict:
     }
 from typing import List, Dict
 from textblob import TextBlob
+import logging
+
+logger = logging.getLogger(__name__)
 
 def calculate_response_metrics(api_results: List[Dict]) -> Dict:
-    # Implement response metrics calculation
-    # This is a placeholder and should be implemented based on your specific requirements
-    return {}
+    total_words = 0
+    total_sentences = 0
+    total_messages = 0
+
+    for result in api_results:
+        for message in result:
+            content = message.get('content', '')
+            blob = TextBlob(content)
+            total_words += len(blob.words)
+            total_sentences += len(blob.sentences)
+            total_messages += 1
+
+    avg_words_per_message = total_words / total_messages if total_messages > 0 else 0
+    avg_sentences_per_message = total_sentences / total_messages if total_messages > 0 else 0
+
+    return {
+        'avg_words_per_message': avg_words_per_message,
+        'avg_sentences_per_message': avg_sentences_per_message,
+        'total_messages': total_messages
+    }
 
 def calculate_sentiment_scores(api_results: List[Dict]) -> List[float]:
     sentiment_scores = []
     for result in api_results:
         discussion_sentiment = 0
+        message_count = 0
         for message in result:
-            content = message.get('content', '')
-            blob = TextBlob(content)
-            discussion_sentiment += blob.sentiment.polarity
-        average_sentiment = discussion_sentiment / len(result) if result else 0
+            try:
+                content = message.get('content', '')
+                blob = TextBlob(content)
+                discussion_sentiment += blob.sentiment.polarity
+                message_count += 1
+            except Exception as e:
+                logger.error(f"Error calculating sentiment for message: {str(e)}")
+        
+        average_sentiment = discussion_sentiment / message_count if message_count > 0 else 0
         sentiment_scores.append(average_sentiment)
+    
+    logger.info(f"Calculated sentiment scores: {sentiment_scores}")
     return sentiment_scores
