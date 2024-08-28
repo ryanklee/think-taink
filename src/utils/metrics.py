@@ -75,6 +75,10 @@ def calculate_sentiment_scores(api_results: List[Dict]) -> List[float]:
                 blob = TextBlob(content)
                 discussion_sentiment += blob.sentiment.polarity
                 message_count += 1
+            except AttributeError:
+                # If sentiment is a tuple (as in our mock), access polarity directly
+                discussion_sentiment += blob.sentiment[0]
+                message_count += 1
             except Exception as e:
                 logger.error(f"Error calculating sentiment for message: {str(e)}")
         

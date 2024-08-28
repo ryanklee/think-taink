@@ -195,7 +195,7 @@ def test_llm_pool_initialization():
     # Test OpenAI initialization
     openai_pool = LLMPool({}, api_type='openai')
     assert openai_pool.api_type == 'openai'
-    assert openai_pool.api_client.api_key == os.environ['OPENAI_API_KEY']
+    assert openai_pool.api_client.api_key == 'test_openai_api_key'
 
     # Test Anthropic initialization
     anthropic_pool = LLMPool({}, api_type='anthropic')

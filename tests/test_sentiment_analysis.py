@@ -34,7 +34,7 @@ def test_sentiment_analysis(ab_test_runner, mocker, caplog):
     mocker.patch('src.utils.metrics.calculate_response_metrics', return_value={})
 
     # Mock TextBlob to avoid NLTK data issues
-    mocker.patch('textblob.TextBlob.sentiment', new_callable=mocker.PropertyMock, return_value=(0.5, 0.5))
+    mocker.patch('textblob.TextBlob.sentiment', new_callable=mocker.PropertyMock, return_value=mocker.Mock(polarity=0.5, subjectivity=0.5))
 
     # Run the analysis
     analysis = ab_test_runner.analyze_results(mock_results)
