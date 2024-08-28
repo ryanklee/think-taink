@@ -70,7 +70,7 @@ class TestFrontend:
             logger.error(f"Error waiting for EventSource: {str(e)}")
             logger.error(f"Page content: {page.content()}")
             logger.error(f"Page console logs: {page.evaluate('() => JSON.stringify(console.logs)')}")
-            logger.error(f"Network requests: {page.evaluate(r'() => JSON.stringify(performance.getEntriesByType("resource"))')}")
+            logger.error(f"Network requests: {page.evaluate('() => JSON.stringify(performance.getEntriesByType(\"resource\"))')}")
             raise
 
         # Wait for some content to appear in the response element
