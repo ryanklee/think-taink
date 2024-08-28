@@ -32,9 +32,14 @@ class ABTestRunner:
 
     def analyze_results(self, results: Dict[str, List[Dict]]) -> Dict[str, Dict]:
         analysis = {
-            'openai': self._analyze_api_results(results['openai']),
-            'anthropic': self._analyze_api_results(results['anthropic'])
+            'openai': self._analyze_api_results(results['openai'], 'OpenAI'),
+            'anthropic': self._analyze_api_results(results['anthropic'], 'Claude')
         }
+        
+        # Compare the results
+        comparison = self._compare_results(analysis['openai'], analysis['anthropic'])
+        analysis['comparison'] = comparison
+
         return analysis
 
     def _analyze_api_results(self, api_results: List[Dict]) -> Dict:
@@ -46,3 +51,26 @@ class ABTestRunner:
             'average_responses_per_discussion': avg_responses,
             'total_discussions': len(api_results)
         }
+    def _compare_results(self, openai_analysis: Dict, claude_analysis: Dict) -> Dict:
+        comparison = {}
+        
+        for metric in openai_analysis.keys():
+            if isinstance(openai_analysis[metric], (int, float)):
+                difference = openai_analysis[metric] - claude_analysis[metric]
+                percentage_difference = (difference / openai_analysis[metric]) * 100
+                comparison[metric] = {
+                    'difference': difference,
+                    'percentage_difference': percentage_difference
+                }
+            elif metric == 'sentiment_scores':
+                openai_avg = sum(openai_analysis[metric]) / len(openai_analysis[metric])
+                claude_avg = sum(claude_analysis[metric]) / len(claude_analysis[metric])
+                difference = openai_avg - claude_avg
+                percentage_difference = (difference / openai_avg) * 100 if openai_avg != 0 else 0
+                comparison[metric] = {
+                    'difference': difference,
+                    'percentage_difference': percentage_difference
+                }
+        
+        self.logger.info("Comparison of OpenAI and Claude results completed")
+        return comparison
