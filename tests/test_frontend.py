@@ -43,14 +43,29 @@ class TestFrontend:
 
         response_element = page.locator("#response")
         try:
-            # Wait for the EventSource to be established
-            page.wait_for_function("() => window.eventSource && window.eventSource.readyState === 1", timeout=10000)
+            # Wait for the page to load
+            page.wait_for_load_state("networkidle")
+            
+            # Log the initial page state
+            logger.info(f"Initial page content: {page.content()}")
+            
+            # Wait for the EventSource to be established with an increased timeout
+            page.wait_for_function(
+                "() => window.eventSource && window.eventSource.readyState === 1",
+                timeout=30000
+            )
+            logger.info("EventSource established")
 
-            # Wait for the response element to be visible with a longer timeout
+            # Wait for the response element to be visible
             expect(response_element).to_be_visible(timeout=30000)
+            logger.info("Response element is visible")
 
             # Wait for some content to appear in the response element
-            page.wait_for_function("() => document.querySelector('#response').textContent.trim().length > 0", timeout=30000)
+            page.wait_for_function(
+                "() => document.querySelector('#response').textContent.trim().length > 0",
+                timeout=30000
+            )
+            logger.info("Content appeared in the response element")
 
             # Get the final response text
             response_text = response_element.inner_text()
