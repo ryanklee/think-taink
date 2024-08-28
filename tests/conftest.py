@@ -15,7 +15,7 @@ os.environ['ANTHROPIC_API_KEY'] = 'test_anthropic_api_key'
 @pytest.fixture(scope='session')
 def app():
     config = load_config()
-    app = create_app(config)
+    app = create_app()
     app.config.update({
         "TESTING": True,
     })
