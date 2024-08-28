@@ -1,8 +1,9 @@
 import logging
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
+from prometheus_client import make_asgi_app, Counter, Histogram
 from src.config.config_loader import load_config
 from src.llm_pool.llm_pool import LLMPool
 from src.moderator.moderator import Moderator
@@ -13,11 +14,20 @@ from src.ab_testing import ABTestRunner
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Set up Prometheus metrics
+REQUESTS = Counter('app_requests_total', 'Total app HTTP requests')
+RESPONSES = Counter('app_responses_total', 'Total app HTTP responses', ['status_code'])
+LATENCY = Histogram('app_request_latency_seconds', 'Request latency in seconds')
+
 def create_app():
     # Load configuration
     config = load_config()
 
     app = FastAPI()
+
+    # Add Prometheus metrics
+    metrics_app = make_asgi_app()
+    app.mount("/metrics", metrics_app)
 
     # Add CORS middleware
     app.add_middleware(
@@ -27,6 +37,14 @@ def create_app():
         allow_methods=["*"],  # Allows all methods
         allow_headers=["*"],  # Allows all headers
     )
+
+    @app.middleware("http")
+    async def add_process_time_header(request: Request, call_next):
+        REQUESTS.inc()
+        with LATENCY.time():
+            response = await call_next(request)
+        RESPONSES.labels(status_code=response.status_code).inc()
+        return response
 
     @app.get("/")
     async def root():
