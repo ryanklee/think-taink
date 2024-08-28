@@ -43,15 +43,14 @@ class TestFrontend:
 
         response_element = page.locator("#response")
         try:
-            # Wait for the response to start loading
-            expect(response_element).to_be_visible()
+            # Wait for the EventSource to be established
+            page.wait_for_function("() => window.eventSource && window.eventSource.readyState === 1", timeout=10000)
 
-            # Wait for the response to finish loading or timeout after 30 seconds
-            with page.expect_response(lambda response: "data:" in response.text(), timeout=30000) as response_info:
-                response = response_info.value
+            # Wait for the response element to be visible with a longer timeout
+            expect(response_element).to_be_visible(timeout=30000)
 
-            # Check if we received a response
-            assert response.ok, f"Failed to receive response: {response.status}"
+            # Wait for some content to appear in the response element
+            page.wait_for_function("() => document.querySelector('#response').textContent.trim().length > 0", timeout=30000)
 
             # Get the final response text
             response_text = response_element.inner_text()
