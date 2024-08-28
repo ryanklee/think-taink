@@ -1,13 +1,13 @@
 {
-  "name": "collaborative-ai-system",
-  "description": "Collaborative AI Reasoning System",
+  "name": "think-taink",
+  "description": "Think Taink - Collaborative AI Reasoning System",
   "keywords": [
     "ai",
     "reasoning",
     "collaboration"
   ],
-  "website": "https://github.com/yourusername/collaborative-ai-system",
-  "repository": "https://github.com/yourusername/collaborative-ai-system",
+  "website": "https://github.com/yourusername/think-taink",
+  "repository": "https://github.com/yourusername/think-taink",
   "success_url": "/",
   "scripts": {
     "dokku": {
