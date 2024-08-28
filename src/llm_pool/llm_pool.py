@@ -12,6 +12,7 @@ from typing import Dict
 
 class LLMPool:
     def __init__(self, config: Dict):
+        logger.debug("Initializing LLMPool")
         self.config = config
         self.anthropic_api_key = os.environ.get('ANTHROPIC_API_KEY')
 
@@ -25,20 +26,10 @@ class LLMPool:
         self.context_window = config.get('llm', {}).get('context_window', 128000)
         
         logger.debug(f"LLMPool initialized with temperature: {self.temperature}, max_tokens: {self.max_tokens}")
-    def __init__(self, config: Dict, api_type: str = None):
-        logger.debug("Initializing LLMPool")
-        self.api_type = api_type or config.get('llm', {}).get('default_api', 'openai')
-        self.api_client = APIClient(config.get(self.api_type, {}))
-        self.expert_pool = ExpertPool()
-        
-        self.temperature = config.get('llm', {}).get('temperature', 0.7)
-        self.max_tokens = config.get('llm', {}).get('max_tokens', 4096)
-        self.context_window = config.get('llm', {}).get('context_window', 128000)
-        logger.debug(f"LLMPool initialized with API: {self.api_type}, temperature: {self.temperature}, max_tokens: {self.max_tokens}")
         
         self.data_usage_note = (
-            f"Note: Data sent to the {self.api_type.upper()} API will be handled according to the provider's data retention policies. "
-            f"Please refer to the {self.api_type.capitalize()} documentation for details on data usage and retention."
+            "Note: Data sent to the Anthropic API will be handled according to the provider's data retention policies. "
+            "Please refer to the Anthropic documentation for details on data usage and retention."
         )
 
     def generate_response_stream(self, input_text: str) -> Generator[Dict[str, str], None, None]:
