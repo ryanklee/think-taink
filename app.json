@@ -1,0 +1,39 @@
+{
+  "name": "collaborative-ai-system",
+  "description": "Collaborative AI Reasoning System",
+  "keywords": [
+    "ai",
+    "reasoning",
+    "collaboration"
+  ],
+  "website": "https://github.com/yourusername/collaborative-ai-system",
+  "repository": "https://github.com/yourusername/collaborative-ai-system",
+  "success_url": "/",
+  "scripts": {
+    "dokku": {
+      "predeploy": "python manage.py db upgrade"
+    }
+  },
+  "env": {
+    "FLASK_APP": {
+      "description": "Path to the Flask application",
+      "value": "src/main.py"
+    },
+    "FLASK_ENV": {
+      "description": "Flask environment",
+      "value": "production"
+    },
+    "OPENAI_API_KEY": {
+      "description": "API key for OpenAI",
+      "required": true
+    },
+    "ANTHROPIC_API_KEY": {
+      "description": "API key for Anthropic",
+      "required": true
+    }
+  },
+  "addons": [
+    "dokku-postgres",
+    "dokku-redis"
+  ]
+}

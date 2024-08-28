@@ -1,72 +1,107 @@
-# Dokku Deployment Guide
+# Dokku Deployment Guide for Collaborative AI Reasoning System
 
-## Installation
+## Prerequisites
 
-1. Install Dokku on a server:
+1. A server with Dokku installed (follow the official Dokku installation guide)
+2. SSH access to the Dokku server
+3. Git installed on your local machine
+
+## Initial Setup
+
+1. Create the application on the Dokku server:
    ```
-   wget https://raw.githubusercontent.com/dokku/dokku/v0.30.x/bootstrap.sh
-   sudo DOKKU_TAG=v0.30.x bash bootstrap.sh
-   ```
-
-2. Visit the server's IP in a browser to complete the setup.
-
-## Application Deployment
-
-1. On your local machine, add the Dokku server as a remote:
-   ```
-   git remote add dokku dokku@your-server-ip:your-app-name
+   ssh dokku@your-server-ip apps:create collaborative-ai-system
    ```
 
-2. Deploy your application:
+2. Set up the required plugins:
+   ```
+   ssh dokku@your-server-ip plugin:install https://github.com/dokku/dokku-postgres.git
+   ssh dokku@your-server-ip plugin:install https://github.com/dokku/dokku-redis.git
+   ```
+
+3. Create and link the required services:
+   ```
+   ssh dokku@your-server-ip postgres:create collaborative-ai-db
+   ssh dokku@your-server-ip postgres:link collaborative-ai-db collaborative-ai-system
+   ssh dokku@your-server-ip redis:create collaborative-ai-cache
+   ssh dokku@your-server-ip redis:link collaborative-ai-cache collaborative-ai-system
+   ```
+
+## Environment Variables
+
+Set the required environment variables:
+
+```
+ssh dokku@your-server-ip config:set collaborative-ai-system \
+  FLASK_APP=src/main.py \
+  FLASK_ENV=production \
+  OPENAI_API_KEY=your_openai_api_key \
+  ANTHROPIC_API_KEY=your_anthropic_api_key
+```
+
+## Persistent Storage
+
+Set up persistent storage for the application:
+
+```
+ssh dokku@your-server-ip storage:ensure-directory collaborative-ai-system
+ssh dokku@your-server-ip storage:mount collaborative-ai-system /var/lib/dokku/data/storage/collaborative-ai-system:/app/data
+```
+
+## Deployment
+
+1. On your local machine, add the Dokku remote to your Git repository:
+   ```
+   git remote add dokku dokku@your-server-ip:collaborative-ai-system
+   ```
+
+2. Deploy the application:
    ```
    git push dokku main
    ```
 
-## Application Management
+## SSL/TLS Configuration
 
-- List applications: `dokku apps:list`
-- Rename an app: `dokku apps:rename old-name new-name`
-- Destroy an app: `dokku apps:destroy app-name`
+Enable SSL for your application:
 
-## Logs
-
-- View logs: `dokku logs app-name`
-- View live logs: `dokku logs app-name -t`
-
-## Remote Commands
-
-Execute commands on the Dokku server:
 ```
-ssh dokku@your-server-ip command
+ssh dokku@your-server-ip config:set --no-restart collaborative-ai-system DOKKU_LETSENCRYPT_EMAIL=your-email@example.com
+ssh dokku@your-server-ip letsencrypt:enable collaborative-ai-system
 ```
 
-## User Management
+## Scaling
 
-- Add SSH key: `dokku ssh-keys:add key-name path/to/key.pub`
-- List SSH keys: `dokku ssh-keys:list`
+Scale your application as needed:
 
-## Zero Downtime Deploys
+```
+ssh dokku@your-server-ip ps:scale collaborative-ai-system web=2
+```
 
-Dokku supports zero downtime deploys by default using the `DOKKU_WAIT_TO_RETIRE` environment variable.
+## Monitoring
 
-## Builders
+View application logs:
 
-Dokku supports various builders:
-- Cloud Native Buildpacks
-- Herokuish Buildpacks
-- Dockerfiles
-- Lambda
-- Nixpacks
-- Null (for static sites)
+```
+ssh dokku@your-server-ip logs collaborative-ai-system -t
+```
 
-## Deployment Methods
+## Updating the Application
 
-- Git push
-- Docker image
+To update the application, simply push to the Dokku remote:
 
-## Environment Variables
+```
+git push dokku main
+```
 
-- Set an env var: `dokku config:set app-name KEY=VALUE`
-- Get all env vars: `dokku config:show app-name`
+## Troubleshooting
 
-For more detailed information, refer to the official Dokku documentation.
+- If you encounter issues, check the application logs:
+  ```
+  ssh dokku@your-server-ip logs collaborative-ai-system
+  ```
+- Ensure all required environment variables are set correctly:
+  ```
+  ssh dokku@your-server-ip config:show collaborative-ai-system
+  ```
+
+For more detailed information on Dokku features and advanced usage, refer to the official Dokku documentation.

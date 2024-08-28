@@ -22,11 +22,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 5001
+EXPOSE 5000
 
 # Set environment variables
 ENV FLASK_APP=src/main.py
+ENV FLASK_ENV=production
 ENV FLASK_RUN_HOST=0.0.0.0
 
 # Run the application
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:5001", "src.main:app"]
+CMD gunicorn --bind 0.0.0.0:$PORT src.main:app
