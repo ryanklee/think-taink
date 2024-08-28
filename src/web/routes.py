@@ -99,26 +99,3 @@ def run_improvement():
         except Exception as e:
             flash(f"An error occurred during the improvement run: {str(e)}", 'error')
     return redirect(url_for('main.improvement_dashboard'))
-@bp.route('/dashboard')
-def improvement_dashboard():
-    # Mock data for performance metrics (replace with actual data in the future)
-    metrics = {
-        'Average Response Time': '2.5 seconds',
-        'Discussion Quality Score': '8.7/10',
-        'Principle Evolution Rate': '0.05 per discussion'
-    }
-    
-    # Get the current configuration
-    config = current_app.config
-    
-    return render_template('improvement_dashboard.html', metrics=metrics, config=config)
-@bp.route('/run_improvement', methods=['POST'])
-def run_improvement():
-    form = ImprovementForm()
-    if form.validate_on_submit():
-        try:
-            # Implement the improvement run logic here
-            flash("Improvement run completed successfully", 'success')
-        except Exception as e:
-            flash(f"An error occurred during the improvement run: {str(e)}", 'error')
-    return redirect(url_for('main.improvement_dashboard'))
