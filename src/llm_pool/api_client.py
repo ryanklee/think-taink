@@ -3,29 +3,19 @@ import os
 from typing import Generator, List, Dict
 from src.utils.exceptions import LLMPoolError
 from src.llm_pool.anthropic_api import AnthropicAPI
-from src.llm_pool.openai_api import OpenAIAPI
 
 logger = logging.getLogger(__name__)
 
 class APIClient:
     def __init__(self, config: dict):
-        self.api_type = config.get('api_type', 'anthropic')
+        self.api_type = 'anthropic'
         self.model = config.get('model')
         
-        if self.api_type == 'anthropic':
-            self.api_key = config.get('anthropic', {}).get('api_key') or os.environ.get('ANTHROPIC_API_KEY')
-            if not self.api_key:
-                logger.warning("Anthropic API key is missing in the configuration and environment. Using a default key for testing.")
-                self.api_key = "default_anthropic_api_key_for_testing"
-            self.api = AnthropicAPI(self.api_key, model=self.model)
-        elif self.api_type == 'openai':
-            self.api_key = config.get('openai', {}).get('api_key') or os.environ.get('OPENAI_API_KEY')
-            if not self.api_key:
-                logger.warning("OpenAI API key is missing in the configuration and environment. Using a default key for testing.")
-                self.api_key = "default_openai_api_key_for_testing"
-            self.api = OpenAIAPI(self.api_key, model=self.model)
-        else:
-            raise ValueError(f"Unsupported API type: {self.api_type}")
+        self.api_key = config.get('anthropic', {}).get('api_key') or os.environ.get('ANTHROPIC_API_KEY')
+        if not self.api_key:
+            logger.warning("Anthropic API key is missing in the configuration and environment. Using a default key for testing.")
+            self.api_key = "default_anthropic_api_key_for_testing"
+        self.api = AnthropicAPI(self.api_key, model=self.model)
         
         logger.debug(f"APIClient initialized with API: {self.api_type}, model: {self.model}")
         logger.debug(f"API Key (first 5 chars): {self.api_key[:5]}...")
