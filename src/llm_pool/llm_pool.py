@@ -22,7 +22,7 @@ class LLMPool:
         if self.api_type == 'openai':
             if not self.openai_api_key:
                 raise ValueError("OPENAI_API_KEY environment variable is not set")
-            self.api = OpenAIAPI(self.openai_api_key)
+            self.api_client = APIClient({'api_type': 'openai', 'openai': {'api_key': self.openai_api_key}})
         elif self.api_type == 'anthropic':
             if not self.anthropic_api_key:
                 raise ValueError("ANTHROPIC_API_KEY environment variable is not set")

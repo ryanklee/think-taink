@@ -51,13 +51,21 @@ class ABTestRunner:
         return analysis
 
     def _analyze_api_results(self, api_results: List[Dict]) -> Dict:
-        # Implement your analysis logic here
-        # This is a placeholder implementation
         total_responses = sum(len(result) for result in api_results)
         avg_responses = total_responses / len(api_results)
+        
+        # Calculate sentiment scores
+        all_responses = [response['content'] for result in api_results for response in result]
+        sentiment_scores = calculate_sentiment_scores(all_responses)
+        
+        # Calculate response metrics
+        response_metrics = calculate_response_metrics(api_results)
+        
         return {
             'average_responses_per_discussion': avg_responses,
-            'total_discussions': len(api_results)
+            'total_discussions': len(api_results),
+            'sentiment_scores': sentiment_scores,
+            **response_metrics
         }
     def _compare_results(self, openai_analysis: Dict, claude_analysis: Dict) -> Dict:
         comparison = {}
