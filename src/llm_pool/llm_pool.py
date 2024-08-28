@@ -32,10 +32,11 @@ class LLMPool:
 
         for expert in self.expert_pool.get_all_experts():
             logger.debug(f"Generating response for expert: {expert['name']}")
-            prompt = f"{expert['prompt']}\n\nQuestion: {input_text}\n\nResponse:"
+            prompt = f"Question: {input_text}\n\nResponse:"
+            system_prompt = expert['prompt']
             try:
                 logger.debug(f"Calling API for expert: {expert['name']}")
-                response_chunks = list(self.api_client.generate_response_stream(prompt, self.max_tokens))
+                response_chunks = list(self.api_client.generate_response_stream(prompt, self.max_tokens, system_prompt=system_prompt))
                 if not response_chunks:
                     logger.warning(f"Empty response for expert: {expert['name']}")
                     yield {
@@ -69,10 +70,10 @@ class LLMPool:
         }
         logger.debug("Finished generate_response_stream")
 
-    def generate_chat_response(self, messages: List[Dict[str, str]]) -> str:
+    def generate_chat_response(self, messages: List[Dict[str, str]], system_prompt: str = None) -> str:
         logger.debug(f"Starting generate_chat_response")
         try:
-            return self.api_client.generate_chat_response(messages, self.max_tokens)
+            return self.api_client.generate_chat_response(messages, self.max_tokens, system_prompt=system_prompt)
         except LLMPoolError as e:
             logger.error(f"LLMPoolError in generate_chat_response: {str(e)}")
             raise
@@ -80,10 +81,10 @@ class LLMPool:
             logger.error(f"Unexpected error in generate_chat_response: {str(e)}")
             raise LLMPoolError(f"Unexpected error: {str(e)}")
 
-    def analyze_document(self, document: str, file_type: str, analysis_type: str) -> Dict:
+    def analyze_document(self, document: str, file_type: str, analysis_type: str, system_prompt: str = None) -> Dict:
         logger.debug(f"Starting analyze_document for file_type: {file_type}, analysis_type: {analysis_type}")
         try:
-            return self.api_client.analyze_document(document, file_type, analysis_type)
+            return self.api_client.analyze_document(document, file_type, analysis_type, system_prompt=system_prompt)
         except LLMPoolError as e:
             logger.error(f"LLMPoolError in analyze_document: {str(e)}")
             raise

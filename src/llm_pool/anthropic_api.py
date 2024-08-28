@@ -23,18 +23,23 @@ class AnthropicAPI:
         if self.daily_request_count > 1000:
             raise LLMPoolError("Daily request limit exceeded")
 
-    def generate_response_stream(self, prompt, max_tokens=4096) -> Generator[str, None, None]:
+    def generate_response_stream(self, prompt, max_tokens=4096, system_prompt=None) -> Generator[str, None, None]:
         if self.is_test_environment:
             yield "Test response"
             return
 
         self._rate_limit()
 
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+
         try:
             with self.client.messages.stream(
                 model=self.model,
                 max_tokens=max_tokens,
-                messages=[{"role": "user", "content": prompt}]
+                messages=messages
             ) as stream:
                 for text in stream.text_stream:
                     yield text
@@ -47,11 +52,14 @@ class AnthropicAPI:
         except Exception as e:
             raise LLMPoolError(f"Unexpected error in Anthropic API: {str(e)}")
 
-    def generate_chat_response(self, messages: List[Dict[str, str]], max_tokens=4096) -> str:
+    def generate_chat_response(self, messages: List[Dict[str, str]], max_tokens=4096, system_prompt=None) -> str:
         if self.is_test_environment:
             return "Test chat response"
 
         self._rate_limit()
+
+        if system_prompt:
+            messages = [{"role": "system", "content": system_prompt}] + messages
 
         try:
             response = self.client.messages.create(
@@ -65,18 +73,21 @@ class AnthropicAPI:
         except Exception as e:
             raise LLMPoolError(f"Unexpected error: {str(e)}")
 
-    def analyze_document(self, document: str, file_type: str, analysis_type: str) -> Dict:
+    def analyze_document(self, document: str, file_type: str, analysis_type: str, system_prompt=None) -> Dict:
         if self.is_test_environment:
             return {"analysis": "Test document analysis"}
 
         self._rate_limit()
 
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": f"Analyze this {file_type} document. Perform a {analysis_type} analysis:\n\n{document}"})
+
         try:
             response = self.client.messages.create(
                 model=self.model,
-                messages=[
-                    {"role": "user", "content": f"Analyze this {file_type} document. Perform a {analysis_type} analysis:\n\n{document}"}
-                ]
+                messages=messages
             )
             return {"analysis": response.content}
         except anthropic.APIError as e:
