@@ -484,6 +484,14 @@ This UML class diagram represents the core domain entities and their relationshi
 - Investigating the use of large language models for behavior tree generation in multi-agent robot systems
 - Exploring the enhancement of dialogue systems in multi-agent environments using large language models
 - Developing methods to measure and improve the trustworthiness of large language models in multi-agent systems
+- Developing frameworks for building proactive cooperative agents using large language models
+- Exploring the potential of large language models in simulating complex historical scenarios in multi-agent systems
+- Investigating the integration of coevolutionary theory with large language models for multi-agent cooperation
+- Developing knowledge-driven multi-agent frameworks using large language models for specialized domains
+- Studying techniques for propagating intentions and reasoning in multi-agent coordination using large language models
+- Investigating the use of large language models for behavior tree generation in multi-agent robot systems
+- Exploring the enhancement of dialogue systems in multi-agent environments using large language models
+- Developing methods to measure and improve the trustworthiness of large language models in multi-agent systems
 
 ### 4.11 Privacy-Preserving AI
 - Implementing federated learning and differential privacy techniques in multi-agent systems
