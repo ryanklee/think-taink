@@ -7,7 +7,7 @@ from .cli import main as cli_main
 __all__ = ['Axiom', 'Requirement', 'ProblemStatement', 'IntegrityChecker', 'cli_main']
 
 # Add version information
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 import argparse
 import sys
 from typing import List
