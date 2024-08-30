@@ -6,11 +6,12 @@ The AI Behavioral Experiment Testbed is a sophisticated platform designed for co
 
 This system is modeled using Unified Modeling Language (UML) and follows Domain-Driven Design (DDD) principles to ensure a clear and consistent representation of the domain.
 
-### 1.1 UML Diagram
+### 1.1 UML Class Diagram
 
 ```mermaid
 classDiagram
     class Experiment {
+        <<Aggregate Root>>
         +id: UUID
         +name: String
         +description: String
@@ -23,6 +24,7 @@ classDiagram
         +stop()
     }
     class Agent {
+        <<Aggregate Root>>
         +id: UUID
         +name: String
         +model: AIModel
@@ -31,30 +33,46 @@ classDiagram
         +communicate()
     }
     class TraitBundle {
-        +id: UUID
-        +traits: Map<String, Float>
+        <<Value Object>>
+        -traits: Map<String, Float>
         +addTrait(name: String, value: Float)
         +removeTrait(name: String)
         +updateTrait(name: String, value: Float)
     }
     class ReasoningEngine {
+        <<Service>>
         +orchestrateReasoning()
         +applyStrategy(strategy: ReasoningStrategy)
     }
     class KnowledgeBase {
+        <<Repository>>
         +addConcept(concept: Concept)
         +addRelationship(relationship: Relationship)
         +query(query: String): QueryResult
     }
     class EthicsFramework {
+        <<Service>>
         +evaluateDecision(decision: Decision): EthicalAssessment
         +flagEthicalConcern(concern: EthicalConcern)
     }
     class ExperimentRunner {
+        <<Service>>
         +setupExperiment(config: ExperimentConfig)
         +runExperiment(experiment: Experiment)
         +collectData()
         +analyzeResults()
+    }
+    class ExperimentRepository {
+        <<Repository>>
+        +save(experiment: Experiment)
+        +findById(id: UUID): Experiment
+        +findAll(): List<Experiment>
+    }
+    class AgentRepository {
+        <<Repository>>
+        +save(agent: Agent)
+        +findById(id: UUID): Agent
+        +findAll(): List<Agent>
     }
 
     Experiment "1" -- "many" Agent: contains
@@ -63,9 +81,11 @@ classDiagram
     Experiment "1" -- "1" KnowledgeBase: uses
     Experiment "1" -- "1" EthicsFramework: uses
     ExperimentRunner "1" -- "many" Experiment: manages
+    ExperimentRepository "1" -- "many" Experiment: manages
+    AgentRepository "1" -- "many" Agent: manages
 ```
 
-This UML class diagram represents the core domain entities and their relationships in our AI Behavioral Experiment Testbed.
+This UML class diagram represents the core domain entities, their relationships, and DDD concepts in our AI Behavioral Experiment Testbed.
 
 ### 1.2 Domain-Driven Design Concepts
 
@@ -73,11 +93,25 @@ This UML class diagram represents the core domain entities and their relationshi
 - **Aggregates**: 
   - Experiment (root entity)
   - Agent (root entity)
-  - TraitBundle (value object)
-- **Entities**: Experiment, Agent, ReasoningEngine, KnowledgeBase, EthicsFramework, ExperimentRunner
+- **Entities**: Experiment, Agent
 - **Value Objects**: TraitBundle, ExperimentConfig, Decision, EthicalAssessment
 - **Domain Events**: ExperimentStarted, ExperimentCompleted, EthicalConcernRaised
-- **Repositories**: ExperimentRepository, AgentRepository, KnowledgeBaseRepository
+- **Repositories**: ExperimentRepository, AgentRepository, KnowledgeBase
+- **Services**: ReasoningEngine, EthicsFramework, ExperimentRunner
+- **Factories**: ExperimentFactory, AgentFactory (not shown in the diagram)
+- **Domain Services**: ReasoningEngine, EthicsFramework
+
+### 1.3 DDD Patterns Applied
+
+1. **Aggregate Pattern**: Experiment and Agent are designed as aggregate roots, encapsulating related entities and value objects.
+2. **Repository Pattern**: ExperimentRepository and AgentRepository provide a collection-like interface for accessing and persisting aggregates.
+3. **Factory Pattern**: (Not shown in the diagram) ExperimentFactory and AgentFactory would be responsible for creating complex Experiment and Agent instances.
+4. **Service Pattern**: ReasoningEngine, EthicsFramework, and ExperimentRunner are stateless services that perform domain-specific operations.
+5. **Value Object Pattern**: TraitBundle is implemented as a value object, representing a collection of traits without a distinct identity.
+
+### 1.4 Ubiquitous Language
+
+To ensure a shared understanding across all stakeholders, we maintain a glossary of domain-specific terms in our `ubiquitous_language.md` file. This includes definitions for key concepts such as Experiment, Agent, TraitBundle, and domain-specific processes.
 
 This system is modeled using Unified Modeling Language (UML) and follows Domain-Driven Design (DDD) principles to ensure a clear and consistent representation of the domain.
 
