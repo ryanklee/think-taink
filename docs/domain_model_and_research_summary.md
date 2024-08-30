@@ -349,6 +349,11 @@ This UML class diagram represents the core domain entities and their relationshi
 - Exploring the potential of AI to revolutionize decision-making processes in different sectors
 - Evaluating AI performance in complex domains such as robotic surgery and cognitive impairment detection
 - Investigating the translation of AI models from research to clinical practice
+- Implementing domain generalization techniques to improve AI performance across different scenarios
+- Developing multimodal AI systems to enhance out-of-distribution generalization in medical applications
+- Exploring domain adaptation strategies for multi-camera, multi-target tracking systems
+- Investigating robust AI-based intrusion detection systems for automotive networks
+- Addressing bias and generalization challenges in AI systems for medical imaging across diverse patient populations
 
 ### 4.14 AI Reproducibility and Data Quality
 - Developing best practices for ensuring reproducibility in AI experiments
