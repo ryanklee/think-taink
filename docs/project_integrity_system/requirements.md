@@ -60,3 +60,9 @@
     11.1. The system shall provide comprehensive documentation on how to create and format each document type.
     11.2. The system shall include detailed explanations of all validation rules and their rationales.
     11.3. The system shall offer examples of correctly formatted documents and common error scenarios.
+
+12. Testing Framework
+    12.1. The system shall use pytest as the primary testing framework for implementing integrity checks.
+    12.2. The system shall support the use of pytest fixtures for efficient test setup and data management.
+    12.3. The system shall utilize pytest's parameterization features for comprehensive rule testing.
+    12.4. The system shall leverage pytest's built-in reporting capabilities for clear and informative test results.
