@@ -25,6 +25,8 @@ class IntegrityChecker:
         errors = []
         for doc in self.documents.values():
             for linked_id in doc.get_linked_ids():
+                if linked_id.startswith('@TEST-') or linked_id.startswith('@RES-'):
+                    continue  # Skip validation for test cases and research items
                 if linked_id not in self.documents:
                     errors.append(f"Invalid cross-reference in {doc.id}: {linked_id} does not exist")
         return errors

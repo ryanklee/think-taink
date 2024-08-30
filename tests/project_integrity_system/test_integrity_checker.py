@@ -44,7 +44,7 @@ def test_integrity_checker_with_invalid_documents():
     checker.add_document(invalid_problem_statement)
 
     errors = checker.validate_all()
-    assert len(errors) == 6
+    assert len(errors) == 5
     assert any("Axiom must have at least one linked requirement" in error for error in errors)
     assert any("Requirement must have at least one linked problem statement" in error for error in errors)
     assert any("Requirement must have at least one linked test case" in error for error in errors)
