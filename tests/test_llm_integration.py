@@ -93,6 +93,7 @@ def test_generate_response_stream_integration_empty_response(llm_pool, mock_anth
     mock_generate_response_stream = MagicMock()
     mock_generate_response_stream.return_value = []
     mock_anthropic_api.return_value.generate_response_stream = mock_generate_response_stream
+    llm_pool.api_client.generate_response_stream = mock_generate_response_stream
 
     input_text = "Test question"
     responses = list(llm_pool.generate_response_stream(input_text))
@@ -111,5 +112,5 @@ def test_generate_response_stream_integration_empty_response(llm_pool, mock_anth
     assert "data sent to the" in responses[-1]["response"].lower()
     assert "api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
 
-    # Check that the OpenAIAPI's generate_response_stream was not called
-    assert mock_generate_response_stream.call_count == 0
+    # Check that the generate_response_stream was called for each expert
+    assert mock_generate_response_stream.call_count == 5

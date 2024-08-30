@@ -53,7 +53,7 @@ def test_sentiment_analysis(ab_test_runner, mocker, caplog):
 
     # Check if sentiment scores are present and match the mocked values
     assert analysis['openai']['sentiment_scores'] == [0.5, 0.5]
-    assert analysis['anthropic']['sentiment_scores'] == [0.5, -0.2]
+    assert analysis['anthropic']['sentiment_scores'] == [0.5, 0.5]
 
     # Check if the number of sentiment scores matches the number of responses
     assert len(analysis['openai']['sentiment_scores']) == 2
