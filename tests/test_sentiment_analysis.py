@@ -39,9 +39,10 @@ def test_sentiment_analysis(ab_test_runner, mocker, caplog):
     mocker.patch('src.utils.metrics.calculate_response_metrics', return_value={})
 
     # Mock TextBlob and NLTK to avoid data issues
-    mocker.patch('nltk.tokenize.sent_tokenize', return_value=['Test sentence'])
-    mocker.patch('nltk.tokenize.word_tokenize', return_value=['Test', 'word'])
+    mocker.patch('nltk.tokenize.sent_tokenize', return_value=['AI is fascinating and has great potential.'])
+    mocker.patch('nltk.tokenize.word_tokenize', return_value=['AI', 'is', 'fascinating', 'and', 'has', 'great', 'potential'])
     mocker.patch('textblob.TextBlob.sentiment', new_callable=mocker.PropertyMock, return_value=mocker.Mock(polarity=0.5, subjectivity=0.5))
+    mocker.patch('textblob.TextBlob.sentences', new_callable=mocker.PropertyMock, return_value=[mocker.Mock(raw='AI is fascinating and has great potential.')])
 
     # Run the analysis
     analysis = ab_test_runner.analyze_results(mock_results)
