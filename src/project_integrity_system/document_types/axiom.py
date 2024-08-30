@@ -20,19 +20,11 @@ class Axiom(BaseDocument):
 
     def get_document_type(self) -> str:
         return "Axiom"
-
-# Ensure that the Axiom class is available when importing from this module
-Axiom = Axiom
 from .axiom import Axiom
 from .requirement import Requirement
 from .problem_statement import ProblemStatement
 
 __all__ = ['Axiom', 'Requirement', 'ProblemStatement']
-
-# Ensure that the Axiom class is available when importing from this package
-Axiom = Axiom
-Requirement = Requirement
-ProblemStatement = ProblemStatement
 from .base_document import BaseDocument
 from typing import List
 
