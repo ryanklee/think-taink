@@ -15,8 +15,10 @@ def test_axiom():
     assert axiom.get_document_type() == "Axiom"
     axiom.validate()  # Should not raise an exception
 
-    with pytest.raises(ValueError):
-        Axiom({'id': 'INVALID-001', 'description': 'Test axiom', 'linked_requirements': []}).validate()
+    invalid_axiom = Axiom({'id': 'INVALID-001', 'description': 'Test axiom', 'linked_requirements': []})
+    errors = invalid_axiom.validate()
+    assert len(errors) > 0
+    assert any("Invalid Axiom ID" in error for error in errors)
 
 def test_requirement():
     data = {

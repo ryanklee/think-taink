@@ -9,20 +9,26 @@ class Requirement(BaseDocument):
         self.linked_test_cases = data.get('linked_test_cases', [])
 
     def validate(self):
-        super().validate()
+        errors = super().validate()
         if not self.id.startswith('@REQ-'):
-            self.logger.error(f"Invalid Requirement ID: {self.id}")
-            raise ValueError(f"Requirement ID must start with '@REQ-': {self.id}")
+            error_msg = f"Invalid Requirement ID: {self.id}"
+            self.logger.error(error_msg)
+            errors.append(error_msg)
         if not self.description:
-            self.logger.error(f"Requirement {self.id} is missing a description")
-            raise ValueError(f"Requirement {self.id} must have a description")
+            error_msg = f"Requirement {self.id} is missing a description"
+            self.logger.error(error_msg)
+            errors.append(error_msg)
         if not self.linked_problem_statements:
-            self.logger.error(f"Requirement {self.id} has no linked problem statements")
-            raise ValueError(f"Requirement {self.id} must have at least one linked problem statement")
+            error_msg = f"Requirement {self.id} has no linked problem statements"
+            self.logger.error(error_msg)
+            errors.append(error_msg)
         if not self.linked_test_cases:
-            self.logger.error(f"Requirement {self.id} has no linked test cases")
-            raise ValueError(f"Requirement {self.id} must have at least one linked test case")
-        self.logger.debug(f"Requirement {self.id} passed validation")
+            error_msg = f"Requirement {self.id} has no linked test cases"
+            self.logger.error(error_msg)
+            errors.append(error_msg)
+        if not errors:
+            self.logger.debug(f"Requirement {self.id} passed validation")
+        return errors
 
     def get_linked_ids(self) -> List[str]:
         return self.linked_problem_statements + self.linked_test_cases
