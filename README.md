@@ -1,6 +1,16 @@
-# Collaborative AI Reasoning System
+# AI Behavioral Experiment Testbed: A Platform for Studying Trait Bundle Interactions
 
-This project implements a sophisticated system for collaborative AI reasoning, leveraging multiple Language Models (LLMs) to generate, discuss, and refine ideas on given topics or questions. It creates a dynamic, collaborative environment for idea generation, problem-solving, and serves as a platform for conducting behavioral and psychological experiments with AI agents.
+This project implements a sophisticated experimental testbed for conducting complex behavioral and psychological experiments with AI agents, focusing on the interactions between different behavioral trait bundles (roles). It provides a flexible, scalable platform for researchers to design, execute, and analyze experiments in AI behavior and collaboration, grounded in established psychological theories and ethical AI practices.
+
+## Academic Foundations
+
+Our work is informed by cutting-edge research in AI and psychology, including:
+
+- Experimental design in AI [1][2][3]
+- Trait theories in psychology [4][5]
+- Ethical considerations in AI research [6][7]
+
+We leverage established AI research platforms and domain-specific languages to ensure robustness and reproducibility in our experiments.
 
 ## Features
 
