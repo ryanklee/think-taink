@@ -1,3 +1,3 @@
-from .document_types.base_document import BaseDocument
+from . import document_types
 
-__all__ = ['BaseDocument']
+__all__ = ['document_types']
