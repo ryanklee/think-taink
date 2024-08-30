@@ -50,11 +50,14 @@ This document outlines the additional resources and documentation needed to addr
 23. [ ] Scalable frameworks for autonomous separation assurance using heterogeneous multi-agent reinforcement learning
 24. [ ] Socially-attentive policy optimization techniques for multi-agent self-driving systems
 25. [ ] Decentralized scheduling management strategies for controllable loads in power grids using blockchain technology
-26. [ ] Frameworks for building proactive cooperative agents using large language models
-27. [ ] Techniques for simulating complex historical scenarios using large language model-based multi-agent systems
-28. [ ] Methods for integrating coevolutionary theory with large language models in multi-agent systems
+26. [x] Frameworks for building proactive cooperative agents using large language models
+27. [x] Techniques for simulating complex historical scenarios using large language model-based multi-agent systems
+28. [x] Methods for integrating coevolutionary theory with large language models in multi-agent systems
 29. [ ] Approaches for knowledge-driven multi-agent frameworks in specialized domains like autonomous driving
 30. [ ] Strategies for propagating intentions and reasoning for multi-agent coordination using large language models
+31. [ ] Techniques for generating and managing behavior trees in multi-agent robot systems using large language models
+32. [ ] Methods for enhancing dialogue systems in multi-agent environments using large language models
+33. [ ] Approaches for measuring and improving trustworthiness of large language models in multi-agent systems
 
 ## Current Research Needs
 
