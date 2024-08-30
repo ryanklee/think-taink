@@ -80,7 +80,9 @@ class IntegrityChecker:
         for req_id in axiom.linked_requirements:
             req = self.documents.get(req_id)
             if not req:
-                errors.append(f"Inconsistency: {axiom.id} links to non-existent requirement {req_id}")
+                error_msg = f"Inconsistency: {axiom.id} links to non-existent requirement {req_id}"
+                self.logger.error(error_msg)
+                errors.append(error_msg)
         return errors
 
     def generate_document_summary(self) -> str:
