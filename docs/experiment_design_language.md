@@ -120,8 +120,13 @@ reproducibility:
 3. **Complex Interactions**: Enables specification of various interaction types and rules between agents, including communication and alliance formation.
 4. **Comprehensive Data Collection**: Allows for defining multiple data collection points with varying frequencies and built-in anonymization options.
 5. **Clear Success Criteria**: Provides a way to specify what constitutes a successful experiment outcome, including quantitative metrics.
-6. **Ethical Considerations**: Includes a dedicated section for outlining ethical guidelines and considerations specific to the experiment.
+6. **Ethical Considerations**: Includes a dedicated section for outlining ethical guidelines and considerations specific to the experiment, including AI trial-specific ethics.
 7. **Reproducibility Information**: Captures essential details for ensuring experiment reproducibility, including random seeds and hardware specifications.
+8. **Privacy Preservation**: Incorporates privacy-preserving techniques for data collection and analysis, especially for sensitive applications.
+9. **Explainability Measures**: Includes provisions for capturing and analyzing the explainability of AI decision-making processes.
+10. **Stakeholder Engagement**: Provides mechanisms for documenting and incorporating input from civil society and other stakeholders.
+11. **Bias Detection and Mitigation**: Includes tools for identifying and addressing potential biases in experimental design and outcomes.
+12. **Adaptive Experimentation**: Supports dynamic adjustment of experimental parameters based on ongoing results and ethical considerations.
 
 ## Implementation
 

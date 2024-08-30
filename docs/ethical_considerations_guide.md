@@ -19,6 +19,11 @@ This guide outlines the ethical principles, review processes, oversight mechanis
 11. **Reproducibility**: Ensure that experiments can be replicated and verified by other researchers.
 12. **Informed Consent**: Obtain proper consent from human participants and consider the ethical implications of AI agent participation.
 13. **Bias Mitigation**: Actively work to identify and mitigate biases in experimental design, data, and AI models.
+14. **Explainability**: Strive for transparency in AI decision-making processes, especially in sensitive applications like healthcare.
+15. **Civil Society Integration**: Engage with broader societal stakeholders in the development and governance of AI systems.
+16. **Ethical AI Trials**: Implement specific ethical considerations for AI trials, particularly in medical and healthcare contexts.
+17. **Data Minimization**: Collect and use only the data necessary for the experiment, adhering to privacy-preserving principles.
+18. **Continuous Ethical Assessment**: Regularly evaluate and update ethical guidelines based on emerging research and societal norms.
 
 ## Ethical Review Process
 
