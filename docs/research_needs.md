@@ -31,6 +31,15 @@ This document outlines the additional resources and documentation needed to addr
 9. [x] Swarm robotics and cooperative control in multi-agent systems
    - Source: "A review: Swarm Robotics: Cooperative Control in Multi-Agent Systems" (2022)
    - URL: https://www.semanticscholar.org/paper/ddbbd2213767025e15b9eb80373c02c2ab4d753a
+10. [x] Emergent language protocols in multi-agent systems
+    - Source: "Emergent Language-Based Coordination In Deep Multi-Agent Systems" (2022)
+    - URL: https://www.semanticscholar.org/paper/9e5b99f3bf5383e75ceb858149b9ecf03304287b
+11. [x] Hierarchical reference systems in multi-agent communication
+    - Source: "Emergence of Hierarchical Reference Systems in Multi-agent Communication" (2022)
+    - URL: https://arxiv.org/abs/2203.13176
+12. [x] Multi-agent collaborative systems with knowledge graph enhancement
+    - Source: "Chatlaw: A Multi-Agent Collaborative Legal Assistant with Knowledge Graph Enhanced Mixture-of-Experts Large Language Model" (2023)
+    - URL: https://arxiv.org/abs/2306.16092
 
 ## Current Research Needs
 
