@@ -21,7 +21,24 @@ This document outlines the additional resources and documentation needed to addr
    - URL: https://www.semanticscholar.org/paper/dfe17abe75f36a787c7511a178827c34864fe550
 6. [x] AI robustness and generalization strategies
    - Source: "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
-   - URL: Not available in the provided search results
+   - URL: https://www.semanticscholar.org/paper/1a8e0929c9bc7aa96757a161528f836932a191fd
+7. [x] Cooperative and competitive multi-agent reinforcement learning
+   - Source: "Cooperative and competitive multi-agent deep reinforcement learning" (2022)
+   - URL: https://www.semanticscholar.org/paper/de5ebf2ed4433eac7bceb16484d33f66e6b5b580
+8. [x] Large-scale multi-agent simulations using language models
+   - Source: "War and Peace (WarAgent): Large Language Model-based Multi-Agent Simulation of World Wars" (2023)
+   - URL: https://arxiv.org/abs/2311.17227
+9. [x] Swarm robotics and cooperative control in multi-agent systems
+   - Source: "A review: Swarm Robotics: Cooperative Control in Multi-Agent Systems" (2022)
+   - URL: https://www.semanticscholar.org/paper/ddbbd2213767025e15b9eb80373c02c2ab4d753a
+
+## Current Research Needs
+
+10. [ ] Advanced techniques for analyzing emergent behaviors in large-scale multi-agent systems
+11. [ ] Methods for balancing individual agent goals with collective swarm objectives
+12. [ ] Strategies for integrating emergent communication protocols with existing language models
+13. [ ] Techniques for scaling decentralized decision-making to complex, real-world scenarios
+14. [ ] Approaches for ensuring ethical considerations in large-scale multi-agent simulations
 
 ## Current Research Needs
 

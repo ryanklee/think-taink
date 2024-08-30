@@ -336,6 +336,9 @@ This UML class diagram represents the core domain entities and their relationshi
 - Studying the impact of swarm intelligence on decentralized decision-making in multi-agent environments
 - Exploring self-adaptive mechanisms in swarm systems for improved cooperation and decision-making
 - Investigating the emergence of cooperative strategies and their adaptation in multi-agent systems using coevolutionary theory with LLMs
+- Analyzing the effectiveness of cooperative and competitive multi-agent deep reinforcement learning in various scenarios
+- Exploring the potential of large language model-based multi-agent simulations for complex, real-world scenarios
+- Investigating the application of swarm robotics principles in diverse multi-agent system contexts
 
 ### 4.3 Ethical AI and Decision Making
 - Implementing and evaluating various ethical frameworks in AI systems

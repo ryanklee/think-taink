@@ -13,6 +13,9 @@ References:
 - [REF001] "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
 - [REF002] "Balancing Collective Exploration and Exploitation in Multi-Agent and Multi-Robot Systems: A Review" (2022)
 - [REF003] "A review: Swarm Robotics: Cooperative Control in Multi-Agent Systems" (2022)
+- [REF004] "Emergent Language-Based Coordination In Deep Multi-Agent Systems" (2022)
+- [REF005] "Cooperative and competitive multi-agent deep reinforcement learning" (2022)
+- [REF006] "War and Peace (WarAgent): Large Language Model-based Multi-Agent Simulation of World Wars" (2023)
 
 Gaps/Inconsistencies:
 - Need for more detailed integration plans between cognitive architectures and our TraitBundle value object system
@@ -22,6 +25,9 @@ Gaps/Inconsistencies:
 - Need for balancing collective exploration and exploitation in our multi-agent experiments
 - Lack of decentralized decision-making models in our current Agent entities
 - Need for incorporating cooperative control strategies from swarm robotics into our multi-agent system
+- Lack of mechanisms for integrating emergent language-based coordination in deep multi-agent systems
+- Need for strategies to balance cooperative and competitive behaviors in multi-agent reinforcement learning
+- Lack of frameworks for large-scale, language model-based multi-agent simulations in complex scenarios
 - [REF001] "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
 - [REF002] "Balancing Collective Exploration and Exploitation in Multi-Agent and Multi-Robot Systems: A Review" (2022)
 - [REF003] "A review: Swarm Robotics: Cooperative Control in Multi-Agent Systems" (2022)
