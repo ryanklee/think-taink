@@ -45,6 +45,11 @@ This document outlines the additional resources and documentation needed to addr
 18. [ ] Approaches for creating foundation decision models for generalization across various tasks
 19. [ ] Techniques for integrating human-in-the-loop learning in multi-agent systems for long-term adaptation
 20. [ ] Methods for addressing policy-value alignment and robustness in search-based multi-agent learning
+21. [ ] Algorithms for reducing conflicts in hybrid intelligent multi-agent systems
+22. [ ] Bandit approaches for conflict-free multi-agent Q-learning in photonic implementations
+23. [ ] Scalable frameworks for autonomous separation assurance using heterogeneous multi-agent reinforcement learning
+24. [ ] Socially-attentive policy optimization techniques for multi-agent self-driving systems
+25. [ ] Decentralized scheduling management strategies for controllable loads in power grids using blockchain technology
 
 ## Current Research Needs
 

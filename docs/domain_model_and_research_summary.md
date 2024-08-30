@@ -339,6 +339,11 @@ This UML class diagram represents the core domain entities and their relationshi
 - Analyzing the effectiveness of cooperative and competitive multi-agent deep reinforcement learning in various scenarios
 - Exploring the potential of large language model-based multi-agent simulations for complex, real-world scenarios
 - Investigating the application of swarm robotics principles in diverse multi-agent system contexts
+- Developing algorithms for reducing conflicts in hybrid intelligent multi-agent systems
+- Implementing bandit approaches for conflict-free multi-agent Q-learning
+- Designing scalable autonomous separation assurance systems using heterogeneous multi-agent reinforcement learning
+- Exploring socially-attentive policy optimization in multi-agent self-driving systems
+- Investigating decentralized scheduling management for controllable loads in power grids using blockchain technology
 
 ### 4.3 Ethical AI and Decision Making
 - Implementing and evaluating various ethical frameworks in AI systems
