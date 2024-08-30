@@ -67,6 +67,6 @@ class Axiom(BaseDocument):
 from .base_document import BaseDocument
 from .axiom import Axiom
 from typing import List
-from .problem_statement import ProblemStatement
+# Remove circular import
 
 __all__ = ['BaseDocument', 'Axiom', 'Requirement', 'ProblemStatement']
