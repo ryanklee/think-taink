@@ -66,31 +66,31 @@ This document outlines the additional resources and documentation needed to addr
 32. [ ] Methods for enhancing dialogue systems in multi-agent environments using large language models
 33. [ ] Approaches for measuring and improving trustworthiness of large language models in multi-agent systems
 
-## Current Research Needs
+## Additional Research Needs Aligned with Problem Statements
 
-7. [ ] Ethical frameworks for long-term AI experiments
-   - Purpose: Address Problem Statement 2 (Ethical Considerations in AI Experiments)
-   - Focus: Guidelines for extended studies and experiments in sensitive domains like healthcare
+34. [ ] Advanced privacy-preserving techniques for multi-agent AI experiments
+    - Purpose: Address Problem Statement 7 (Privacy-Preserving AI in Experimental Settings)
+    - Focus: Developing and implementing privacy-preserving methods specifically tailored for multi-agent AI experiments
 
-8. [ ] Privacy-preserving AI techniques for experimental settings
-   - Purpose: Address Problem Statement 7 (Privacy-Preserving AI in Experimental Settings)
-   - Focus: Implementing robust privacy measures while maintaining data utility and experimental validity
+35. [ ] Reproducibility frameworks for emergent behaviors in multi-agent systems
+    - Purpose: Address Problem Statement 9 (Reproducibility in AI Experiments)
+    - Focus: Developing methods to ensure reproducibility of emergent behaviors and complex interactions in multi-agent experiments
 
-9. [ ] Reproducibility frameworks for complex AI experiments
-   - Purpose: Address Problem Statement 9 (Reproducibility in AI Experiments)
-   - Focus: Methods for ensuring reproducibility in multi-agent experiments with diverse traits and dynamic environments
-
-10. [ ] Integration frameworks for specialized AI applications
+36. [ ] Integration techniques for specialized AI applications in multi-agent environments
     - Purpose: Address Problem Statement 10 (Integration of Specialized AI Applications)
-    - Focus: Approaches for incorporating AI applications from various domains while maintaining system coherence and ethical standards
+    - Focus: Developing frameworks and methodologies for seamlessly integrating diverse AI applications into our multi-agent system
 
-11. [ ] Advanced visualization techniques for multi-agent interactions
-    - Purpose: Support analysis and interpretation across multiple problem statements
-    - Focus: Tools and methods for visualizing complex agent behaviors and system dynamics
+37. [ ] Ethical decision-making models for autonomous AI agents
+    - Purpose: Address Problem Statement 2 (Ethical Considerations in AI Experiments)
+    - Focus: Developing and implementing ethical decision-making frameworks for individual AI agents and multi-agent systems
 
-12. [ ] Scalable architectures for large-scale AI experiments
+38. [ ] Advanced visualization and interpretation techniques for multi-agent system dynamics
+    - Purpose: Support analysis across multiple problem statements
+    - Focus: Developing tools and methods for visualizing and interpreting complex agent behaviors, interactions, and system dynamics
+
+39. [ ] Scalable architectures for large-scale, heterogeneous multi-agent experiments
     - Purpose: Enable comprehensive studies addressing multiple problem statements
-    - Focus: Designs for handling computationally intensive multi-agent simulations and data analysis
+    - Focus: Designing and implementing scalable system architectures capable of handling diverse, large-scale multi-agent experiments
 
 ## Next Steps
 
@@ -187,6 +187,9 @@ Next steps include:
 2. Refining our implementation plan to include the development of these features.
 3. Conducting a thorough review of our ethical considerations to ensure they cover the implications of these advanced techniques.
 4. Updating our Experiment Design Language (EDL) to support the specification of experiments using these new capabilities.
+5. Developing a traceability matrix that maps each research finding to specific problem statements and goals.
+6. Creating a prioritized roadmap for implementing these new features based on their potential impact and alignment with our project objectives.
+7. Establishing a system for continuous monitoring of new research in these areas to ensure our testbed remains at the forefront of AI behavioral experimentation.
 # Research Synthesis for AI Behavioral Experiment Testbed
 
 ## Introduction
