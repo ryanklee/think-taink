@@ -38,14 +38,11 @@ This document outlines the plan for refining the domain model and documentation 
 - [ ] Design protocols for emergent language-based coordination in deep multi-agent systems as part of the Agent Aggregate Root
 - [ ] Develop strategies for implementing containment control in multi-agent experimental scenarios within the Experiment Aggregate
 - [ ] Plan for integration of coevolutionary theory with LLMs in multi-agent cooperation experiments as part of the ReasoningEngine Domain Service
-- [ ] Incorporate swarm intelligence principles for decentralized decision-making in multi-agent experiments within the Experiment Aggregate
-- [ ] Design protocols for emergent language-based coordination in deep multi-agent systems as part of the Agent Aggregate Root
-- [ ] Develop strategies for implementing containment control in multi-agent experimental scenarios within the Experiment Aggregate
-- [ ] Plan for integration of coevolutionary theory with LLMs in multi-agent cooperation experiments as part of the ReasoningEngine Domain Service
-- [ ] Incorporate swarm intelligence principles for decentralized decision-making in multi-agent experiments within the Experiment Aggregate
-- [ ] Design protocols for emergent language-based coordination in deep multi-agent systems as part of the Agent Aggregate Root
-- [ ] Develop strategies for implementing containment control in multi-agent experimental scenarios within the Experiment Aggregate
-- [ ] Plan for integration of coevolutionary theory with LLMs in multi-agent cooperation experiments as part of the ReasoningEngine Domain Service
+- [ ] Implement adaptive curriculum learning and novel self-play strategies for balancing individual and collective learning in complex environments within the ExperimentRunner Service
+- [ ] Integrate coevolutionary dynamics and LLM-based strategy recommendations for modeling strategic interactions among heterogeneous agents in the ReasoningEngine Domain Service
+- [ ] Develop multi-agent deep reinforcement learning methods for adaptive control strategies in dynamic environments like power systems within the Agent Aggregate Root
+- [ ] Explore the potential of photonic neuromorphic architectures for lifelong learning to maintain performance while acquiring new skills in AI agents within the Agent Aggregate Root
+- [ ] Investigate and implement coordination and machine learning techniques specific to multi-robot systems for balancing individual and collective learning in dynamic scenarios within the ExperimentRunner Service
 
 ## 4. Behavioral Trait Bundle System Planning
 - [x] Define taxonomy of behavioral traits based on psychological research and recent advancements in AI-specific traits for the TraitBundle Value Object
@@ -55,6 +52,11 @@ This document outlines the plan for refining the domain model and documentation 
 - [ ] Conceptualize trait evolution system using genetic algorithms and other innovative approaches from recent AI research as part of the Agent Factory
 - [ ] Develop framework for assessing the impact of trait bundles on AI system robustness and generalization within the Agent Aggregate Root
 - [ ] Plan for integration of cultural and contextual factors in trait expression modeling within the TraitBundle Value Object
+- [ ] Implement hierarchical compound intrinsic value reinforcement learning for complex behaviors in multi-agent cooperation as part of the ReasoningEngine Domain Service
+- [ ] Develop hybrid AI models combining unsupervised and self-supervised learning for long-term adaptation within the Agent Aggregate Root
+- [ ] Design metareasoning frameworks for enhancing artificial reasoning in complex decision-making environments as part of the ReasoningEngine Domain Service
+- [ ] Integrate Hebbian learning techniques for predicting and adapting to evolving agent behaviors within the Agent Aggregate Root
+- [ ] Develop strategies for optimizing long-term efficiency and fairness in multi-agent systems as part of the ExperimentRunner Service
 - [ ] Implement hierarchical compound intrinsic value reinforcement learning for complex behaviors in multi-agent cooperation as part of the ReasoningEngine Domain Service
 - [ ] Develop hybrid AI models combining unsupervised and self-supervised learning for long-term adaptation within the Agent Aggregate Root
 - [ ] Design metareasoning frameworks for enhancing artificial reasoning in complex decision-making environments as part of the ReasoningEngine Domain Service
