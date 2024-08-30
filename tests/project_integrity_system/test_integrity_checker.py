@@ -31,6 +31,7 @@ def test_integrity_checker():
     assert "Validation error in @REQ-002: Requirement must have at least one linked problem statement" in errors
     assert "Validation error in @REQ-002: Requirement must have at least one linked test case" in errors
     assert "Invalid cross-reference in @AXIOM-002: @REQ-002 does not exist" in errors
+    assert "Invalid cross-reference in @AXIOM-002: @REQ-002 does not exist" in errors
 
 def test_integrity_checker_with_invalid_documents():
     checker = IntegrityChecker()
