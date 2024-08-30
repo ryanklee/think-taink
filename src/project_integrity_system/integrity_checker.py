@@ -37,6 +37,14 @@ class IntegrityChecker:
     def _check_linking_rules(self) -> Set[str]:
         errors = set()
         for doc in self.documents.values():
+            if isinstance(doc, Axiom):
+                if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
+                    errors.add(f"Validation error in {doc.id}: Axiom must have at least one linked requirement")
+        return errors
+
+    def _check_linking_rules(self) -> Set[str]:
+        errors = set()
+        for doc in self.documents.values():
             if isinstance(doc, ProblemStatement):
                 if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
                     errors.add(f"Validation error in {doc.id}: Problem Statement must have at least one linked requirement")
