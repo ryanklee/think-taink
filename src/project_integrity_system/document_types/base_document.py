@@ -19,9 +19,12 @@ class BaseDocument(ABC):
             raise ValueError(f"Invalid YAML format: {e}")
 
     def validate(self):
+        errors = []
         if not self.id:
-            self.logger.error(f"{self.get_document_type()} is missing an ID")
-            raise ValueError(f"{self.get_document_type()} is missing an ID")
+            error_msg = f"{self.get_document_type()} is missing an ID"
+            self.logger.error(error_msg)
+            errors.append(error_msg)
+        return errors
 
     def to_dict(self) -> Dict:
         return self.data

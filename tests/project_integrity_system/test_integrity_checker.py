@@ -16,7 +16,7 @@ def test_integrity_checker(caplog):
 
     # Create valid documents
     axiom = Axiom({'id': '@AXIOM-001', 'description': 'Test axiom', 'linked_requirements': ['@REQ-001']})
-    requirement = Requirement('@REQ-001', 'Test requirement', ['@PROB-001'], ['@TEST-001'])
+    requirement = Requirement({'id': '@REQ-001', 'description': 'Test requirement', 'linked_problem_statements': ['@PROB-001'], 'linked_test_cases': ['@TEST-001']})
     problem_statement = ProblemStatement('@PROB-001', 'Test problem', ['@RES-001'], ['@REQ-001'])
 
     checker.add_document(axiom)
@@ -55,7 +55,7 @@ def test_integrity_checker_with_invalid_documents(caplog):
 
     # Create invalid documents
     invalid_axiom = Axiom({'id': '@AXIOM-001', 'description': 'Invalid axiom', 'linked_requirements': []})
-    invalid_requirement = Requirement('@REQ-001', 'Invalid requirement', [], [])
+    invalid_requirement = Requirement({'id': '@REQ-001', 'description': 'Invalid requirement', 'linked_problem_statements': [], 'linked_test_cases': []})
     invalid_problem_statement = ProblemStatement('@PROB-001', 'Invalid problem', [], [])
 
     checker.add_document(invalid_axiom)

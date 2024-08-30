@@ -26,7 +26,9 @@ class IntegrityChecker:
         self.logger.info("Checking individual documents")
         errors = []
         for doc in self.documents.values():
-            errors.extend(doc.validate())
+            doc_errors = doc.validate()
+            if doc_errors:
+                errors.extend(doc_errors)
         return errors
 
     def _check_cross_references(self) -> List[str]:

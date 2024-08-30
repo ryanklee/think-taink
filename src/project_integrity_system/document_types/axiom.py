@@ -30,17 +30,22 @@ class Axiom(BaseDocument):
         self.linked_requirements = data.get('linked_requirements', [])
 
     def validate(self):
-        super().validate()
+        errors = super().validate()
         if not self.id.startswith('@AXIOM-'):
-            self.logger.error(f"Invalid Axiom ID: {self.id}")
-            raise ValueError(f"Axiom ID must start with '@AXIOM-': {self.id}")
+            error_msg = f"Invalid Axiom ID: {self.id}"
+            self.logger.error(error_msg)
+            errors.append(error_msg)
         if not self.description:
-            self.logger.error(f"Axiom {self.id} is missing a description")
-            raise ValueError(f"Axiom {self.id} must have a description")
+            error_msg = f"Axiom {self.id} is missing a description"
+            self.logger.error(error_msg)
+            errors.append(error_msg)
         if not self.linked_requirements:
-            self.logger.error(f"Axiom {self.id} has no linked requirements")
-            raise ValueError(f"Axiom {self.id} must have at least one linked requirement")
-        self.logger.debug(f"Axiom {self.id} passed validation")
+            error_msg = f"Axiom {self.id} has no linked requirements"
+            self.logger.error(error_msg)
+            errors.append(error_msg)
+        if not errors:
+            self.logger.debug(f"Axiom {self.id} passed validation")
+        return errors
 
     def get_linked_ids(self) -> List[str]:
         return self.linked_requirements
