@@ -1,33 +1,38 @@
 from abc import ABC, abstractmethod
 import yaml
 from typing import List, Dict
+import logging
 
 class BaseDocument(ABC):
     def __init__(self, data: Dict):
         self.data = data
         self.id = data.get('id')
+        self.logger = logging.getLogger(__name__)
 
     @classmethod
     def from_yaml(cls, yaml_string: str):
-        data = yaml.safe_load(yaml_string)
-        return cls(data)
+        try:
+            data = yaml.safe_load(yaml_string)
+            return cls(data)
+        except yaml.YAMLError as e:
+            logging.error(f"Error parsing YAML: {e}")
+            raise ValueError(f"Invalid YAML format: {e}")
 
     @abstractmethod
     def validate(self):
-        pass
+        if not self.id:
+            self.logger.error(f"{self.get_document_type()} is missing an ID")
+            raise ValueError(f"{self.get_document_type()} is missing an ID")
 
     def to_dict(self) -> Dict:
         return self.data
 
-    def get_linked_ids(self) -> List[str]:
-        return []
-
     @abstractmethod
-    def get_document_type(self) -> str:
+    def get_linked_ids(self) -> List[str]:
         pass
 
     @abstractmethod
-    def get_linked_ids(self) -> List[str]:
+    def get_document_type(self) -> str:
         pass
 from .base_document import BaseDocument
 from typing import List
