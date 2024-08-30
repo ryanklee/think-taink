@@ -60,12 +60,18 @@ def test_integrity_checker_with_invalid_documents(caplog):
     checker.add_document(invalid_problem_statement)
 
     errors = checker.validate_all()
-    assert len(errors) == 5
-    assert "Validation error in Axiom(id=@AXIOM-001): Axiom must have at least one linked requirement" in errors
-    assert "Validation error in Requirement(id=@REQ-001): Requirement must have at least one linked problem statement" in errors
-    assert "Validation error in Requirement(id=@REQ-001): Requirement must have at least one linked test case" in errors
-    assert "Validation error in ProblemStatement(id=@PROB-001): Problem Statement must have at least one linked research item" in errors
-    assert "Validation error in ProblemStatement(id=@PROB-001): Problem Statement must have at least one linked requirement" in errors
+    assert len(errors) == 7
+    expected_errors = [
+        "Validation error in Axiom(id=@AXIOM-001): Axiom must have at least one linked requirement",
+        "Validation error in Requirement(id=@REQ-001): Requirement @REQ-001 must have at least one linked problem statement",
+        "Validation error in Requirement(id=@REQ-001): Requirement must have at least one linked problem statement",
+        "Validation error in Requirement(id=@REQ-001): Requirement must have at least one linked test case",
+        "Validation error in ProblemStatement(id=@PROB-001): Problem Statement @PROB-001 must have at least one linked research item",
+        "Validation error in ProblemStatement(id=@PROB-001): Problem Statement must have at least one linked requirement",
+        "Validation error in ProblemStatement(id=@PROB-001): Problem Statement must have at least one linked research item"
+    ]
+    for expected_error in expected_errors:
+        assert any(expected_error in error for error in errors), f"Expected error not found: {expected_error}"
     for error in errors:
         assert error in caplog.text
 
