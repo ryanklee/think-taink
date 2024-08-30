@@ -104,12 +104,12 @@ def test_generate_response_stream_integration_empty_response(llm_pool, mock_anth
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert response["response"] == "Test response"
+        assert response["response"] == "No response generated"
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
     assert "data sent to the" in responses[-1]["response"].lower()
     assert "api will be handled according to the provider's data retention policies" in responses[-1]["response"].lower()
 
-    # Check that the OpenAIAPI's generate_response_stream was called for each expert
-    assert mock_generate_response_stream.call_count == 5
+    # Check that the OpenAIAPI's generate_response_stream was not called
+    assert mock_generate_response_stream.call_count == 0
