@@ -474,6 +474,11 @@ This UML class diagram represents the core domain entities and their relationshi
 - Studying the evolution of prompt engineering techniques and their applications in AI systems
 - Evaluating the performance of large language models in specialized domains, such as medical guideline interpretation
 - Investigating the implications of advanced language models on scholarly integrity and academic research
+- Developing frameworks for building proactive cooperative agents using large language models
+- Exploring the potential of large language models in simulating complex historical scenarios in multi-agent systems
+- Investigating the integration of coevolutionary theory with large language models for multi-agent cooperation
+- Developing knowledge-driven multi-agent frameworks using large language models for specialized domains
+- Studying techniques for propagating intentions and reasoning in multi-agent coordination using large language models
 
 ### 4.11 Privacy-Preserving AI
 - Implementing federated learning and differential privacy techniques in multi-agent systems
