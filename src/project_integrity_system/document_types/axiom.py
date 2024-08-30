@@ -1,4 +1,5 @@
 from .base_document import BaseDocument
+from .requirement import Requirement
 from typing import List
 
 class Axiom(BaseDocument):
