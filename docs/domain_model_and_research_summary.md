@@ -129,6 +129,11 @@ For a detailed UML Class Diagram of the core components, please refer to the [UM
 - Trade-offs between privacy preservation and performance
 - Privacy-preserving methods for sensitive domains
 - Balancing data sharing and privacy in clinical applications
+- Advanced privacy-preserving models using deep learning for smart healthcare
+- Blockchain-based privacy-preserving techniques for IoT healthcare systems
+- Self-Sovereign Identity frameworks for healthcare data protection
+- Proportionally fair hospital collaborations in federated learning
+- Robust and privacy-preserving decentralized deep federated learning for digital healthcare
 
 ### 2.12 AI Robustness and Generalization
 - Techniques for cross-scenario performance improvement

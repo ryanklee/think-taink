@@ -166,12 +166,21 @@ References:
 - [DOC001] Domain Model and Research Summary
 - [DOC003] Research Needs
 - [REF017] "Federated Deep Reinforcement Learning for Efficient Jamming Attack Mitigation in O-RAN" (2024)
+- [REF018] "Advanced Privacy Preserving Model for Smart Healthcare Using Deep Learning" (2023)
+- [REF019] "Privacy Preserving Blockchain with Energy Aware Clustering Scheme for IoT Healthcare Systems" (2023)
+- [REF020] "Towards building a Self-Sovereign Identity Framework for Healthcare" (2023)
+- [REF021] "Proportionally Fair Hospital Collaborations in Federated Learning of Histopathology Images" (2023)
+- [REF022] "Robust and Privacy-Preserving Decentralized Deep Federated Learning Training: Focusing on Digital Healthcare Applications" (2023)
 
 Gaps/Inconsistencies:
 - Lack of specific strategies for implementing federated learning in our multi-agent experiments, possibly requiring updates to our ExperimentRunner service
 - Need for more detailed plans on balancing privacy preservation with data utility in experiments, potentially affecting our KnowledgeBase repository and Experiment aggregate
 - Lack of mechanisms for secure multi-party computation in distributed AI experiments
 - Need for integrating differential privacy techniques in our data collection and analysis processes
+- Lack of blockchain-based privacy-preserving mechanisms for IoT healthcare data in our system
+- Need for implementing Self-Sovereign Identity frameworks for healthcare data protection
+- Lack of proportionally fair collaboration mechanisms in federated learning scenarios
+- Need for robust and privacy-preserving decentralized deep federated learning techniques specific to healthcare applications
 
 ## 8. AI Robustness and Generalization in Agent Entities
 
