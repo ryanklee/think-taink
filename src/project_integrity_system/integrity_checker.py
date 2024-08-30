@@ -13,7 +13,7 @@ class IntegrityChecker:
         errors.extend(self._check_individual_documents())
         errors.extend(self._check_linking_rules())
         errors.extend(self._check_cross_references())
-        return sorted(errors)  # Sort the errors for consistent output
+        return sorted(list(set(errors)))  # Remove duplicates and sort for consistent output
 
     def _check_individual_documents(self) -> List[str]:
         errors = []
