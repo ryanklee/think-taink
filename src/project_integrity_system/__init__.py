@@ -2,11 +2,12 @@ from .document_types.axiom import Axiom
 from .document_types.requirement import Requirement
 from .document_types.problem_statement import ProblemStatement
 from .integrity_checker import IntegrityChecker
+from .cli import main as cli_main
 
-__all__ = ['Axiom', 'Requirement', 'ProblemStatement', 'IntegrityChecker']
+__all__ = ['Axiom', 'Requirement', 'ProblemStatement', 'IntegrityChecker', 'cli_main']
 
 # Add version information
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 import argparse
 import sys
 from typing import List
