@@ -348,6 +348,8 @@ This UML class diagram represents the core domain entities and their relationshi
 - Simulating complex historical scenarios using large language model-based multi-agent systems
 - Developing knowledge-driven multi-agent frameworks for specialized domains like autonomous driving
 - Investigating techniques for propagating intentions and reasoning in multi-agent coordination using large language models
+- Applying Evolutionary Game Theory to analyze and model emergent behaviors in multi-agent systems
+- Utilizing agent-based modeling techniques to study the evolution of collective behaviors in dynamic multi-agent environments
 
 ### 4.3 Ethical AI and Decision Making
 - Implementing and evaluating various ethical frameworks in AI systems

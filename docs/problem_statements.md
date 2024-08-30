@@ -21,6 +21,8 @@ References:
 - [REF009] "Scalable Autonomous Separation Assurance With Heterogeneous Multi-Agent Reinforcement Learning" (2022)
 - [REF010] "Socially-Attentive Policy Optimization in Multi-Agent Self-Driving System" (2022)
 - [REF011] "Scheduling Management of Controllable Load Participating in Power Grid Enhanced by Double-Chain Structure" (2022)
+- [REF012] "Emergent behaviours in multi-agent systems with Evolutionary Game Theory" (2022)
+- [REF013] "Understanding Emergent Behaviours in Multi-Agent Systems with Evolutionary Game Theory" (2022)
 
 Gaps/Inconsistencies:
 - Need for more detailed integration plans between cognitive architectures and our TraitBundle value object system
@@ -38,6 +40,8 @@ Gaps/Inconsistencies:
 - Need for scalable frameworks for autonomous separation assurance in our ExperimentRunner service
 - Lack of socially-attentive policy optimization techniques in our Agent entities for self-driving scenarios
 - Need for decentralized scheduling management strategies for controllable loads in our ExperimentRunner service
+- Lack of integration of Evolutionary Game Theory principles in our Agent and Experiment aggregates for modeling emergent behaviors
+- Need for agent-based modeling techniques to study the evolution of collective behaviors in our multi-agent experiments
 - [REF001] "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
 - [REF002] "Balancing Collective Exploration and Exploitation in Multi-Agent and Multi-Robot Systems: A Review" (2022)
 - [REF003] "A review: Swarm Robotics: Cooperative Control in Multi-Agent Systems" (2022)

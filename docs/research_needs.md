@@ -34,7 +34,14 @@ This document outlines the additional resources and documentation needed to addr
 
 ## Current Research Needs
 
-10. [ ] Advanced techniques for analyzing emergent behaviors in large-scale multi-agent systems
+10. [x] Advanced techniques for analyzing emergent behaviors in large-scale multi-agent systems
+   - Source: "Emergent behaviours in multi-agent systems with Evolutionary Game Theory" (2022)
+   - URL: https://www.semanticscholar.org/paper/d5f2245011dfd06236544f0dcce492722d476ae9
+   - Key findings: Summarizes research directions and challenges in using Evolutionary Game Theory and agent-based modeling to study emergent behaviors in multi-agent systems.
+
+   - Source: "Understanding Emergent Behaviours in Multi-Agent Systems with Evolutionary Game Theory" (2022)
+   - URL: https://arxiv.org/abs/2205.07369
+   - Key findings: Discusses the use of Evolutionary Game Theory and agent-based modeling techniques to study the emergence and evolution of collective behaviors in dynamic multi-agent systems.
 11. [ ] Methods for balancing individual agent goals with collective swarm objectives
 12. [ ] Strategies for integrating emergent communication protocols with existing language models
 13. [ ] Techniques for scaling decentralized decision-making to complex, real-world scenarios
