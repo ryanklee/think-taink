@@ -3,30 +3,36 @@
 ```
 src/
 ├── __init__.py
-├── config/
+├── agent/
 │   ├── __init__.py
-│   └── config_loader.py
-├── ethics/
+│   └── agent.py
+├── reasoning_engine/
+│   ├── __init__.py
+│   └── engine.py
+├── knowledge_base/
+│   ├── __init__.py
+│   └── graph_db.py
+├── ethics_framework/
 │   ├── __init__.py
 │   ├── guidelines.py
 │   └── version_control.py
-├── heuristics/
+├── ui/
 │   ├── __init__.py
-│   ├── principles.py
-│   └── version_control.py
-├── input_processing/
+│   ├── routes.py
+│   └── templates/
+│       ├── base.html
+│       ├── index.html
+│       ├── experiment.html
+│       └── results.html
+├── experiment_runner/
 │   ├── __init__.py
-│   └── processor.py
+│   └── runner.py
 ├── llm_pool/
 │   ├── __init__.py
 │   ├── llm_pool.py
 │   ├── openai_api.py
+│   ├── anthropic_api.py
 │   └── pool_evolution.py
-├── tests/
-│   ├── __init__.py
-│   ├── test_llm_pool.py
-│   ├── test_openai_api.py
-│   └── test_integration.py
 ├── moderator/
 │   ├── __init__.py
 │   └── moderator.py
@@ -37,16 +43,6 @@ src/
 │   ├── __init__.py
 │   ├── exceptions.py
 │   └── version_control.py
-├── web/
-│   ├── __init__.py
-│   ├── forms.py
-│   ├── routes.py
-│   └── templates/
-│       ├── base.html
-│       ├── index.html
-│       ├── ask_question.html
-│       ├── result.html
-│       └── improvement_dashboard.html
 ├── data_models/
 │   ├── __init__.py
 │   ├── experiment.py
@@ -68,11 +64,14 @@ src/
 └── main.py
 tests/
 ├── __init__.py
-├── test_input_processing.py
+├── test_agent.py
+├── test_reasoning_engine.py
+├── test_knowledge_base.py
+├── test_ethics_framework.py
+├── test_experiment_runner.py
 ├── test_llm_pool.py
 ├── test_moderator.py
 ├── test_principles_evolution.py
-├── test_reflector.py
 ├── test_data_models.py
 ├── test_performance_analysis.py
 └── test_ab_testing.py
@@ -82,7 +81,8 @@ docs/
 ├── api/
 ├── user_guide/
 ├── ethical_considerations/
-└── data_model/
+├── experiment_design/
+└── system_architecture/
 .devcontainer/
 ├── devcontainer.json
 └── docker-compose.yml

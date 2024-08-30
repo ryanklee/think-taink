@@ -1,68 +1,49 @@
-# Multi-LLM Think Tank Simulation
+# Collaborative AI Reasoning System
 
-This project simulates a think tank using multiple Language Learning Models (LLMs) to generate, discuss, and refine ideas on given topics or questions. It leverages the power of various AI models to create a dynamic, collaborative environment for idea generation and problem-solving.
+This project implements a sophisticated system for collaborative AI reasoning, leveraging multiple Language Models (LLMs) to generate, discuss, and refine ideas on given topics or questions. It creates a dynamic, collaborative environment for idea generation, problem-solving, and serves as a platform for conducting behavioral and psychological experiments with AI agents.
 
 ## Features
 
-- Multiple LLM experts with different personas (Analyst, Creative, Critic, Synthesizer, Ethicist)
+- Multiple AI experts with different roles (Analyst, Creative, Critic, Synthesizer, Ethicist)
+- Microservices-based architecture for scalability and flexibility
+- Multi-API support: Seamless integration with OpenAI and Anthropic Claude APIs
 - Turn-based discussion system with moderated conversation flow
 - Heuristics and principles for idea evaluation and discussion guidance
 - Reflective learning to improve principles over time
 - Dynamic expert pool evolution based on discussion performance
 - Summarized output generation for concise results
-- Web-based interface for easy interaction
+- Web-based interface for easy interaction and experiment configuration
 - Robust error handling and logging system
-- Version control for principles and heuristics
-- Experimental control panel for fine-tuning and observing system behavior (in progress)
-- Real-time monitoring and visualization of discussions and system performance (in progress)
-- Comparative analysis tools for different experimental configurations (in progress)
+- Version control for principles, heuristics, and expert configurations
+- Experimental control panel for fine-tuning and observing system behavior
+- Real-time monitoring and visualization of discussions and system performance
+- Comparative analysis tools for different experimental configurations
+- A/B testing functionality to compare different AI models and configurations
+- Comprehensive experiment runner for behavioral-psychological tests
 
-## Recent Updates
+## Core Components
 
-- Completed full migration to support Claude API alongside OpenAI API
-- Implemented seamless switching between OpenAI and Claude APIs in the main application
-- Enhanced LLMPool and APIClient to fully support multiple API providers
-- Updated configuration system to handle both OpenAI and Anthropic API settings
-- Improved error handling and logging for both APIs
-- Enhanced documentation and inline comments for better code readability
-- Updated all integration tests to accommodate multi-API support
-- Implemented XML tag structuring for improved prompt engineering with Claude API
-- Enhanced A/B testing functionality to compare OpenAI and Claude API performance
-- Updated main application interface to allow users to choose between APIs or run A/B tests
-
-## Current Features
-
-- Multi-API support: Seamlessly use OpenAI or Claude API for discussions
-- A/B testing: Compare performance between OpenAI and Claude APIs
-- Streaming response generation for both APIs
-- Robust error handling and logging system for multi-API support
-- Configurable LLM pool with expert management
-- Principle-based evaluation and reflection system
-- Version control for principles and heuristics
-
-## Upcoming Changes
-
-- Enhance performance analysis tools for multi-API comparisons
-- Develop an advanced experimental control panel for managing multiple API configurations
-- Implement a system for LLMs to generate improvement suggestions based on A/B test results
-- Create visualization tools for comparing API performances
-- Develop an advanced versioning system for LLM pool configurations across different APIs
-- Implement adaptive API selection based on performance metrics and task requirements
+1. Agent Abstraction: Fundamental unit representing an AI entity
+2. Reasoning Engine: Orchestrates collaborative reasoning process
+3. Knowledge Base: Graph database (Neo4j) for storing concepts, relationships, and versioned configurations
+4. Ethics Framework: Ensures adherence to predefined ethical guidelines
+5. User Interface: Real-time, interactive web interface
+6. Experiment Runner: Facilitates complex behavioral-psychological experiments
 
 ## Project Structure
 
 ```
 src/
-├── config/
-├── ethics/
-├── heuristics/
-├── input_processing/
+├── agent/
+├── reasoning_engine/
+├── knowledge_base/
+├── ethics_framework/
+├── ui/
+├── experiment_runner/
 ├── llm_pool/
 ├── moderator/
-├── output_generation/
 ├── principles_evolution/
 ├── utils/
-├── web/
 ├── data_models/
 ├── database/
 ├── performance_analysis/
@@ -77,13 +58,13 @@ docs/
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/multi-llm-think-tank.git
-   cd multi-llm-think-tank
+   git clone https://github.com/yourusername/collaborative-ai-reasoning.git
+   cd collaborative-ai-reasoning
    ```
 
 2. Install Docker and Docker Compose on your system.
 
-3. Build and run the Docker container:
+3. Build and run the Docker containers:
    ```
    docker-compose up --build
    ```
@@ -91,6 +72,7 @@ docs/
 4. Set up environment variables:
    Create a `.env` file in the project root and add your API keys:
    ```
+   OPENAI_API_KEY=your_openai_api_key_here
    ANTHROPIC_API_KEY=your_anthropic_api_key_here
    ```
 
@@ -98,14 +80,16 @@ docs/
    - Open the project folder in VS Code
    - When prompted, choose "Reopen in Container" or use the command palette to select "Remote-Containers: Reopen in Container"
 
-6. The application should now be running and accessible at `http://localhost:5000`
+6. The application should now be running and accessible at `http://localhost:8000`
 
 ## Usage
 
-1. Open your web browser and navigate to `http://localhost:5000`.
-2. Enter your question or topic in the provided form.
-3. Submit the form to start the think tank simulation.
-4. Review the generated discussion and final output.
+1. Open your web browser and navigate to `http://localhost:8000`.
+2. Use the web interface to:
+   - Start a new discussion or experiment
+   - Configure AI experts and reasoning parameters
+   - Monitor ongoing discussions and experiments
+   - Analyze results and compare different configurations
 
 ## Testing
 
@@ -115,23 +99,17 @@ To run the unit and integration test suite:
 pytest
 ```
 
-Note: We do not perform front-end testing. Our testing strategy focuses on unit and integration tests to ensure the core functionality of the system.
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, the process for submitting pull requests, and coding standards.
 
 ## Documentation
 
-For more detailed information about the project's components and architecture, please refer to the `docs/` directory. This includes a summary of the Claude API documentation (`claude_api_summary.md`) for quick reference when working with the API.
+For more detailed information about the project's components and architecture, please refer to the `docs/` directory.
 
-## Error Handling and Logging
+## Deployment
 
-The project now includes a robust error handling system with custom exceptions. Logs are automatically rotated to prevent excessive file sizes. Check the `logs/` directory for detailed application logs.
-
-## Version Control for Principles and Heuristics
-
-The system now includes version control for principles and heuristics, allowing for tracking of changes over time. This feature enhances the system's ability to learn and adapt.
+This project supports deployment on Dokku. For detailed instructions, see [docs/dokku_deployment.md](docs/dokku_deployment.md).
 
 ## License
 
@@ -139,5 +117,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- OpenAI for providing the GPT models used in this project
+- OpenAI and Anthropic for providing the AI models used in this project
 - The open-source community for the various libraries and tools used in this project
