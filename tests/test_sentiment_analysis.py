@@ -33,7 +33,7 @@ def test_sentiment_analysis(ab_test_runner, mocker, caplog):
     mocker.patch.object(ab_test_runner, 'run_ab_test', return_value=mock_results)
 
     # Mock the calculate_sentiment_scores function
-    mocker.patch('src.utils.metrics.calculate_sentiment_scores', return_value=[0.5, -0.2])
+    mocker.patch('src.utils.metrics.calculate_sentiment_scores', return_value=[0.5, 0.5])
 
     # Mock the calculate_response_metrics function
     mocker.patch('src.utils.metrics.calculate_response_metrics', return_value={})
