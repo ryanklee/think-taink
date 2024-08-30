@@ -15,7 +15,7 @@ def test_integrity_checker(caplog):
     checker = IntegrityChecker()
 
     # Create valid documents
-    axiom = Axiom('@AXIOM-001', 'Test axiom', ['@REQ-001'])
+    axiom = Axiom({'id': '@AXIOM-001', 'description': 'Test axiom', 'linked_requirements': ['@REQ-001']})
     requirement = Requirement('@REQ-001', 'Test requirement', ['@PROB-001'], ['@TEST-001'])
     problem_statement = ProblemStatement('@PROB-001', 'Test problem', ['@RES-001'], ['@REQ-001'])
 
@@ -54,7 +54,7 @@ def test_integrity_checker_with_invalid_documents(caplog):
     checker = IntegrityChecker()
 
     # Create invalid documents
-    invalid_axiom = Axiom('@AXIOM-001', 'Invalid axiom', [])
+    invalid_axiom = Axiom({'id': '@AXIOM-001', 'description': 'Invalid axiom', 'linked_requirements': []})
     invalid_requirement = Requirement('@REQ-001', 'Invalid requirement', [], [])
     invalid_problem_statement = ProblemStatement('@PROB-001', 'Invalid problem', [], [])
 
@@ -80,9 +80,9 @@ def test_generate_full_report():
     checker = IntegrityChecker()
 
     # Create sample documents
-    axiom = Axiom('@AXIOM-001', 'Test axiom', ['@REQ-001'])
-    requirement = Requirement('@REQ-001', 'Test requirement', ['@PROB-001'], ['@TEST-001'])
-    problem_statement = ProblemStatement('@PROB-001', 'Test problem', ['@RES-001'], ['@REQ-001'])
+    axiom = Axiom({'id': '@AXIOM-001', 'description': 'Test axiom', 'linked_requirements': ['@REQ-001']})
+    requirement = Requirement({'id': '@REQ-001', 'description': 'Test requirement', 'linked_problem_statements': ['@PROB-001'], 'linked_test_cases': ['@TEST-001']})
+    problem_statement = ProblemStatement({'id': '@PROB-001', 'description': 'Test problem', 'linked_research_items': ['@RES-001'], 'linked_requirements': ['@REQ-001']})
 
     checker.add_document(axiom)
     checker.add_document(requirement)
