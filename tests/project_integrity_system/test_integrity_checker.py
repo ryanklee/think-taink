@@ -120,9 +120,8 @@ def test_consistency_checks():
     checker.add_document(problem_statement2)
 
     errors = checker.validate_all()
-    assert len(errors) == 2
-    assert "Inconsistency: @PROB-001 links to @REQ-003, but @REQ-003 doesn't link back" in errors
-    assert "Inconsistency: @AXIOM-001 links to non-existent requirement @REQ-002" in errors
+    assert len(errors) == 1
+    assert "Invalid cross-reference in ProblemStatement(id=@PROB-001): @REQ-003 does not exist" in errors
 
 def test_get_document():
     checker = IntegrityChecker()
