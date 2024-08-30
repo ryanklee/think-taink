@@ -65,15 +65,23 @@ Gaps/Inconsistencies:
 
 ## 5. Long-term Adaptation and Learning in AI Agents
 
-Problem Statement: Developing AI agents capable of long-term adaptation and learning across various domains and tasks remains a significant challenge, particularly in maintaining consistent performance while acquiring new skills.
+Problem Statement: Developing AI agents capable of long-term adaptation and learning across various domains and tasks remains a significant challenge, particularly in maintaining consistent performance while acquiring new skills and adapting to complex, dynamic environments.
 
 References:
 - [DOC001] Domain Model and Research Summary
 - [DOC003] Research Needs
+- [REF001] "Innate-Values-driven Reinforcement Learning for Cooperative Multi-Agent Systems" (2024)
+- [REF002] "Forecasting Evolution of Clusters in Game Agents with Hebbian Learning" (2022)
+- [REF003] "Optimizing Long-Term Efficiency and Fairness in Ride-Hailing via Joint Order Dispatching and Driver Repositioning" (2022)
+- [REF004] "Metareasoning for multi-criteria decision making using complex information sources" (2022)
+- [REF005] "Forecasting Evolution of Clusters in StarCraft II with Hebbian Learning" (2022)
 
 Gaps/Inconsistencies:
-- Lack of specific metrics for measuring long-term learning and adaptation in our system
-- Need for more detailed strategies on balancing stability and plasticity in AI agent learning
+- Need for implementation of hierarchical compound intrinsic value reinforcement learning in our multi-agent system
+- Lack of specific strategies for integrating Hebbian learning techniques in our AI agents for long-term adaptation
+- Need for development of metareasoning frameworks to enhance decision-making in uncertain and complex environments
+- Lack of specific metrics for measuring long-term learning and adaptation in dynamic, multi-agent scenarios
+- Need for more detailed strategies on balancing stability and plasticity in AI agent learning across diverse domains
 
 ## 6. Advanced Natural Language Processing for AI Communication
 

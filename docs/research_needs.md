@@ -38,9 +38,15 @@ This document outlines the additional resources and documentation needed to addr
      - https://www.semanticscholar.org/paper/75b2b52d2b95bffbff6de9f852db8b810254db84 - "From Bias to Fairness: A Review of Ethical Considerations and Mitigation Strategies in Artificial Intelligence" (2023)
      - https://arxiv.org/abs/2401.10397 - "Analyzing and Mitigating Bias for Vulnerable Classes: Towards Balanced Representation in Dataset" (2024)
 
-5. [ ] Long-term adaptation and learning models for AI agents
+5. [x] Long-term adaptation and learning models for AI agents
    - Purpose: Address Problem Statement 5 (Long-term Adaptation and Learning in AI Agents)
    - Focus: Strategies for maintaining consistent performance while acquiring new skills across various domains
+   - Resources:
+     - https://arxiv.org/abs/2401.05572 - "Innate-Values-driven Reinforcement Learning for Cooperative Multi-Agent Systems" (2024)
+     - https://arxiv.org/abs/2209.06904 - "Forecasting Evolution of Clusters in Game Agents with Hebbian Learning" (2022)
+     - https://www.semanticscholar.org/paper/b2eba22db348cbae75e9d43360b5a47d0cf86535 - "Optimizing Long-Term Efficiency and Fairness in Ride-Hailing via Joint Order Dispatching and Driver Repositioning" (2022)
+     - https://www.semanticscholar.org/paper/61c9476b54472c0253ba8c74b5bd4cd9524a980d - "Metareasoning for multi-criteria decision making using complex information sources" (2022)
+     - https://www.semanticscholar.org/paper/ca71f33a3d5e15882330b2b9ba0c92eaa453b5e2 - "Forecasting Evolution of Clusters in StarCraft II with Hebbian Learning" (2022)
 
 6. [ ] Integration techniques for large language models in multi-agent systems
    - Purpose: Address Problem Statement 6 (Advanced Natural Language Processing for AI Communication)
