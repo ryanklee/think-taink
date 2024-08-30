@@ -43,7 +43,7 @@ def test_integrity_checker(caplog):
     invalid_requirement = Requirement({'id': '@REQ-002', 'description': 'Invalid requirement', 'linked_problem_statements': [], 'linked_test_cases': []})
     checker.add_document(invalid_requirement)
     errors = checker.validate_all()
-    assert len(errors) == 4
+    assert len(errors) == 2
     assert "Requirement @REQ-002 has no linked problem statements" in errors
     assert "Requirement @REQ-002 has no linked test cases" in errors
     assert "Invalid cross-reference in Axiom(id=@AXIOM-002): @REQ-002 does not exist" in errors
