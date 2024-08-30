@@ -22,7 +22,7 @@ class Axiom(BaseDocument):
     def get_document_type(self) -> str:
         return "Axiom"
 from .axiom import Axiom
-from project_integrity_system.document_types.requirement import Requirement
+from .requirement import Requirement
 from .problem_statement import ProblemStatement
 
 __all__ = ['Axiom', 'Requirement', 'ProblemStatement']
