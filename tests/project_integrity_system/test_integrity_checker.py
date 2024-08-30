@@ -41,9 +41,10 @@ def test_integrity_checker(caplog):
     invalid_requirement = Requirement({'id': '@REQ-002', 'description': 'Invalid requirement', 'linked_problem_statements': [], 'linked_test_cases': []})
     checker.add_document(invalid_requirement)
     errors = checker.validate_all()
-    assert len(errors) == 2
+    assert len(errors) == 3
     assert "Requirement @REQ-002 has no linked problem statements" in errors
     assert "Requirement @REQ-002 has no linked test cases" in errors
+    assert "Inconsistency: @AXIOM-002 links to non-existent requirement @REQ-002" in errors
     for error in errors:
         assert error in caplog.text
 
@@ -101,3 +102,38 @@ def test_generate_full_report():
     assert "Validation Report" in full_report
     assert "Total Errors: 0" in full_report
     assert "No errors found." in full_report
+
+def test_consistency_checks():
+    checker = IntegrityChecker()
+
+    # Create documents with consistency issues
+    axiom = Axiom({'id': '@AXIOM-001', 'description': 'Test axiom', 'linked_requirements': ['@REQ-001', '@REQ-002']})
+    requirement1 = Requirement({'id': '@REQ-001', 'description': 'Test requirement 1', 'linked_problem_statements': ['@PROB-001'], 'linked_test_cases': ['@TEST-001']})
+    requirement2 = Requirement({'id': '@REQ-002', 'description': 'Test requirement 2', 'linked_problem_statements': ['@PROB-002'], 'linked_test_cases': ['@TEST-002']})
+    problem_statement1 = ProblemStatement({'id': '@PROB-001', 'description': 'Test problem 1', 'linked_research_items': ['@RES-001'], 'linked_requirements': ['@REQ-001', '@REQ-003']})
+    problem_statement2 = ProblemStatement({'id': '@PROB-002', 'description': 'Test problem 2', 'linked_research_items': ['@RES-002'], 'linked_requirements': ['@REQ-002']})
+
+    checker.add_document(axiom)
+    checker.add_document(requirement1)
+    checker.add_document(requirement2)
+    checker.add_document(problem_statement1)
+    checker.add_document(problem_statement2)
+
+    errors = checker.validate_all()
+    assert len(errors) == 2
+    assert "Inconsistency: @PROB-001 links to @REQ-003, but @REQ-003 doesn't link back" in errors
+    assert "Inconsistency: @AXIOM-001 links to non-existent requirement @REQ-002" in errors
+
+def test_get_document():
+    checker = IntegrityChecker()
+
+    axiom = Axiom({'id': '@AXIOM-001', 'description': 'Test axiom', 'linked_requirements': ['@REQ-001']})
+    checker.add_document(axiom)
+
+    retrieved_axiom = checker.get_document('@AXIOM-001')
+    assert retrieved_axiom == axiom
+    assert retrieved_axiom.id == '@AXIOM-001'
+    assert retrieved_axiom.description == 'Test axiom'
+
+    non_existent_doc = checker.get_document('@NON-EXISTENT')
+    assert non_existent_doc is None

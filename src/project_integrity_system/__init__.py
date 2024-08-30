@@ -4,3 +4,6 @@ from .document_types.problem_statement import ProblemStatement
 from .integrity_checker import IntegrityChecker
 
 __all__ = ['Axiom', 'Requirement', 'ProblemStatement', 'IntegrityChecker']
+
+# Add version information
+__version__ = '0.2.0'

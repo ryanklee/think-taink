@@ -1,5 +1,5 @@
 import logging
-from typing import List, Dict
+from typing import List, Dict, Optional
 from .document_types.base_document import BaseDocument as Document
 from .document_types.axiom import Axiom
 from .document_types.requirement import Requirement
@@ -19,6 +19,7 @@ class IntegrityChecker:
         errors = []
         errors.extend(self._check_individual_documents())
         errors.extend(self._check_cross_references())
+        errors.extend(self._check_consistency())
         self.logger.info(f"Validation complete. Found {len(errors)} errors.")
         return sorted(list(set(errors)))  # Remove duplicates and sort for consistent output
 
@@ -44,6 +45,42 @@ class IntegrityChecker:
                     errors.append(error_msg)
                 else:
                     self.logger.debug(f"Valid cross-reference in {doc.get_document_type()}(id={doc.id}): {linked_id}")
+        return errors
+
+    def _check_consistency(self) -> List[str]:
+        self.logger.info("Checking document consistency")
+        errors = []
+        for doc in self.documents.values():
+            if isinstance(doc, Requirement):
+                errors.extend(self._check_requirement_consistency(doc))
+            elif isinstance(doc, ProblemStatement):
+                errors.extend(self._check_problem_statement_consistency(doc))
+            elif isinstance(doc, Axiom):
+                errors.extend(self._check_axiom_consistency(doc))
+        return errors
+
+    def _check_requirement_consistency(self, req: Requirement) -> List[str]:
+        errors = []
+        for prob_id in req.linked_problem_statements:
+            prob = self.documents.get(prob_id)
+            if prob and req.id not in prob.linked_requirements:
+                errors.append(f"Inconsistency: {req.id} links to {prob_id}, but {prob_id} doesn't link back")
+        return errors
+
+    def _check_problem_statement_consistency(self, prob: ProblemStatement) -> List[str]:
+        errors = []
+        for req_id in prob.linked_requirements:
+            req = self.documents.get(req_id)
+            if req and prob.id not in req.linked_problem_statements:
+                errors.append(f"Inconsistency: {prob.id} links to {req_id}, but {req_id} doesn't link back")
+        return errors
+
+    def _check_axiom_consistency(self, axiom: Axiom) -> List[str]:
+        errors = []
+        for req_id in axiom.linked_requirements:
+            req = self.documents.get(req_id)
+            if not req:
+                errors.append(f"Inconsistency: {axiom.id} links to non-existent requirement {req_id}")
         return errors
 
     def generate_document_summary(self) -> str:
@@ -94,3 +131,6 @@ class IntegrityChecker:
 
         full_report = f"{document_summary}\n{validation_report}"
         return full_report
+
+    def get_document(self, doc_id: str) -> Optional[Document]:
+        return self.documents.get(doc_id)
