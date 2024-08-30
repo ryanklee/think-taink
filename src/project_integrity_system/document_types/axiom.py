@@ -66,7 +66,7 @@ class Axiom(BaseDocument):
         return "Axiom"
 from .base_document import BaseDocument
 from .axiom import Axiom
-from .requirement import Requirement
+from typing import List
 from .problem_statement import ProblemStatement
 
 __all__ = ['BaseDocument', 'Axiom', 'Requirement', 'ProblemStatement']
