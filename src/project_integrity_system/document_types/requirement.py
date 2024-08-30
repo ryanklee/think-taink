@@ -23,3 +23,10 @@ class Requirement(BaseDocument):
 
     def get_document_type(self) -> str:
         return "Requirement"
+
+    def validate(self):
+        super().validate()
+        if not self.linked_problem_statements:
+            raise ValueError("Requirement must have at least one linked problem statement")
+        if not self.linked_test_cases:
+            raise ValueError("Requirement must have at least one linked test case")

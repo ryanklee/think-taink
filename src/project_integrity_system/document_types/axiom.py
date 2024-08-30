@@ -42,6 +42,11 @@ class Axiom(BaseDocument):
 
     def get_document_type(self) -> str:
         return "Axiom"
+
+    def validate(self):
+        super().validate()
+        if not self.linked_requirements:
+            raise ValueError("Axiom must have at least one linked requirement")
 from .base_document import BaseDocument
 from typing import List
 

@@ -25,6 +25,10 @@ class BaseDocument(ABC):
     @abstractmethod
     def get_document_type(self) -> str:
         pass
+
+    @abstractmethod
+    def get_linked_ids(self) -> List[str]:
+        pass
 from .base_document import BaseDocument
 from typing import List
 
