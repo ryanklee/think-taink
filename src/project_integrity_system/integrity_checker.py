@@ -53,14 +53,21 @@ class IntegrityChecker:
                 valid_links = [linked_id for linked_id in doc.get_linked_ids() if linked_id in self.documents]
                 if not valid_links:
                     errors.append(f"Validation error in {doc.id}: Axiom must have at least one valid linked requirement")
-                for linked_id in doc.get_linked_ids():
-                    if linked_id.startswith('@REQ-') and linked_id not in self.documents:
-                        errors.append(f"Invalid cross-reference in {doc.id}: {linked_id} does not exist")
 
         return errors
 
+    def _check_cross_references(self) -> List[str]:
+        errors = []
+        for doc in self.documents.values():
+            for linked_id in doc.get_linked_ids():
+                if linked_id.startswith('@TEST-') or linked_id.startswith('@RES-'):
+                    continue  # Skip validation for test cases and research items
+                if linked_id not in self.documents:
+                    errors.append(f"Invalid cross-reference in {doc.id}: {linked_id} does not exist")
+        return errors
+
     def validate_all(self) -> List[str]:
-        errors = set()
-        errors.update(self._check_linking_rules())
-        errors.update(self._check_cross_references())
-        return list(errors)
+        errors = []
+        errors.extend(self._check_linking_rules())
+        errors.extend(self._check_cross_references())
+        return errors
