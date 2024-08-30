@@ -436,3 +436,91 @@ class Requirement(BaseDocument):
 
     def get_document_type(self) -> str:
         return "Requirement"
+from abc import ABC, abstractmethod
+from typing import List, Dict
+
+class Document(ABC):
+    def __init__(self, id: str, description: str):
+        self.id = id
+        self.description = description
+
+    @abstractmethod
+    def validate(self) -> List[str]:
+        pass
+
+    @abstractmethod
+    def get_linked_ids(self) -> List[str]:
+        pass
+
+    @abstractmethod
+    def get_document_type(self) -> str:
+        pass
+
+class Axiom(Document):
+    def __init__(self, id: str, description: str, linked_requirements: List[str]):
+        super().__init__(id, description)
+        self.linked_requirements = linked_requirements
+
+    def validate(self) -> List[str]:
+        errors = []
+        if not self.id.startswith('@AXIOM-'):
+            errors.append(f"Axiom ID must start with '@AXIOM-': {self.id}")
+        if not self.description:
+            errors.append(f"Axiom {self.id} must have a description")
+        if not self.linked_requirements:
+            errors.append(f"Axiom {self.id} must have at least one linked requirement")
+        return errors
+
+    def get_linked_ids(self) -> List[str]:
+        return self.linked_requirements
+
+    def get_document_type(self) -> str:
+        return "Axiom"
+
+class Requirement(Document):
+    def __init__(self, id: str, description: str, linked_problem_statements: List[str], linked_test_cases: List[str]):
+        super().__init__(id, description)
+        self.linked_problem_statements = linked_problem_statements
+        self.linked_test_cases = linked_test_cases
+
+    def validate(self) -> List[str]:
+        errors = []
+        if not self.id.startswith('@REQ-'):
+            errors.append(f"Requirement ID must start with '@REQ-': {self.id}")
+        if not self.description:
+            errors.append(f"Requirement {self.id} must have a description")
+        if not self.linked_problem_statements:
+            errors.append(f"Requirement {self.id} must have at least one linked problem statement")
+        if not self.linked_test_cases:
+            errors.append(f"Requirement {self.id} must have at least one linked test case")
+        return errors
+
+    def get_linked_ids(self) -> List[str]:
+        return self.linked_problem_statements + self.linked_test_cases
+
+    def get_document_type(self) -> str:
+        return "Requirement"
+
+class ProblemStatement(Document):
+    def __init__(self, id: str, description: str, linked_research_items: List[str], linked_requirements: List[str]):
+        super().__init__(id, description)
+        self.linked_research_items = linked_research_items
+        self.linked_requirements = linked_requirements
+
+    def validate(self) -> List[str]:
+        errors = []
+        if not self.id.startswith('@PROB-'):
+            errors.append(f"Problem Statement ID must start with '@PROB-': {self.id}")
+        if not self.description:
+            errors.append(f"Problem Statement {self.id} must have a description")
+        if not self.linked_research_items:
+            errors.append(f"Problem Statement {self.id} must have at least one linked research item")
+        if not self.linked_requirements:
+            errors.append(f"Problem Statement {self.id} must have at least one linked requirement")
+        return errors
+
+    def get_linked_ids(self) -> List[str]:
+        return self.linked_research_items + self.linked_requirements
+
+    def get_document_type(self) -> str:
+        return "ProblemStatement"
