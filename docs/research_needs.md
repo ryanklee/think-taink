@@ -58,9 +58,15 @@ This document outlines the additional resources and documentation needed to addr
    - Purpose: Address Problem Statement 7 (Privacy-Preserving AI in Experimental Settings)
    - Focus: Implementing robust privacy measures while maintaining data utility and experimental validity
 
-8. [ ] AI robustness and generalization strategies
+8. [x] AI robustness and generalization strategies
    - Purpose: Address Problem Statement 8 (AI Robustness and Generalization)
    - Focus: Techniques for developing AI agents that perform consistently across various scenarios and domains
+   - Resources:
+     - https://arxiv.org/abs/2207.05422 - "Improving Domain Generalization by Learning without Forgetting: Application in Retail Checkout" (2022)
+     - https://pubmed.ncbi.nlm.nih.gov/35263265/ - "A Multimodal AI System for Out-of-Distribution Generalization of Seizure Identification" (2022)
+     - https://www.semanticscholar.org/paper/cd7629053dec0018021b07fc1aca3d22b4754a69 - "Multi-Camera Multi-Vehicle Tracking with Domain Generalization and Contextual Constraints" (2022)
+     - https://www.semanticscholar.org/paper/310a06c774cfdef1f011a44920638ad52658c860 - "AI-Based Intrusion Detection Systems for In-Vehicle Networks: A Survey" (2022)
+     - https://www.semanticscholar.org/paper/d24e261a297492142a9224707c84f93954944ec4 - "Can AI See Bias in X-ray Images?" (2022)
 
 9. [ ] Reproducibility frameworks for complex AI experiments
    - Purpose: Address Problem Statement 9 (Reproducibility in AI Experiments)

@@ -119,15 +119,25 @@ Gaps/Inconsistencies:
 
 ## 8. AI Robustness and Generalization in Agent Entities
 
-Problem Statement: Developing AI agents (represented as entities in our domain model) that can perform consistently and adapt across various scenarios and domains, while maintaining robustness against adversarial inputs or environmental changes, is a complex challenge that affects the core of our Agent aggregate.
+Problem Statement: Developing AI agents (represented as entities in our domain model) that can perform consistently and adapt across various scenarios and domains, while maintaining robustness against adversarial inputs or environmental changes, is a complex challenge that affects the core of our Agent aggregate. This includes addressing domain generalization, out-of-distribution performance, and bias mitigation across diverse application areas.
 
 References:
 - [DOC001] Domain Model and Research Summary
 - [DOC003] Research Needs
+- [REF001] "Improving Domain Generalization by Learning without Forgetting: Application in Retail Checkout" (2022)
+- [REF002] "A Multimodal AI System for Out-of-Distribution Generalization of Seizure Identification" (2022)
+- [REF003] "Multi-Camera Multi-Vehicle Tracking with Domain Generalization and Contextual Constraints" (2022)
+- [REF004] "AI-Based Intrusion Detection Systems for In-Vehicle Networks: A Survey" (2022)
+- [REF005] "Can AI See Bias in X-ray Images?" (2022)
 
 Gaps/Inconsistencies:
 - Lack of specific metrics for measuring robustness and generalization in our Agent entity
 - Need for more detailed strategies on implementing adversarial training in multi-agent experiments within our Experiment aggregate
+- Lack of domain generalization techniques in our Agent entity for retail and medical applications
+- Need for incorporating multimodal AI approaches in our Agent entity to improve out-of-distribution performance
+- Lack of strategies for addressing bias in AI systems for medical imaging within our EthicsFramework domain service
+- Need for implementing domain generalization techniques in our ExperimentRunner service for multi-camera, multi-target tracking scenarios
+- Lack of robustness strategies for AI-based intrusion detection in our Agent entity, particularly for automotive applications
 
 ## 9. Reproducibility in AI Experiments as a System-Wide Concern
 
