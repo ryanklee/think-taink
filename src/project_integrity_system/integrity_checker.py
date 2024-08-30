@@ -60,6 +60,7 @@ class IntegrityChecker:
         return errors
 
     def validate_all(self) -> List[str]:
-        errors = self._check_linking_rules()
+        errors = []
+        errors.extend(self._check_linking_rules())
         errors.extend(self._check_cross_references())
-        return list(set(errors))  # Remove duplicate errors
+        return errors
