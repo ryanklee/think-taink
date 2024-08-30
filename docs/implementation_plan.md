@@ -4,29 +4,33 @@
 This document outlines the plan for refining the domain model and documentation for the AI Behavioral Experiment Testbed. No implementation work should be started until explicitly moving to an implementation phase. The focus is on conceptual development, documentation, and planning.
 
 ## 1. Domain Model Refinement
-- [ ] Review and refine Agent Abstraction concept
-- [ ] Enhance Trait Bundle Manager model based on psychological theories
-- [ ] Develop detailed model for Experiment Runner
-- [ ] Refine Ethics Framework model, incorporating IEEE and ACM guidelines
-- [ ] Conceptualize comprehensive Data Collection and Analysis Engine
-- [ ] Design Visualization and Reporting Module concept
-- [ ] Develop theoretical model for Meta-Analysis System
+- [ ] Review and refine Agent Abstraction concept, incorporating insights from virtual companionship design theory
+- [ ] Enhance Trait Bundle Manager model based on psychological theories and AI-specific traits
+- [ ] Develop detailed model for Experiment Runner, including responsible AI standards for testing
+- [ ] Refine Ethics Framework model, incorporating IEEE, ACM guidelines, and recent ethical considerations for AI trials
+- [ ] Conceptualize comprehensive Data Collection and Analysis Engine with privacy-preserving techniques
+- [ ] Design Visualization and Reporting Module concept with focus on explainability
+- [ ] Develop theoretical model for Meta-Analysis System, considering challenges in AI reproducibility
+- [ ] Integrate civil society engagement in AI development processes
 
 ## 2. Documentation Development
-- [ ] Create detailed documentation for Agent Abstraction
-- [ ] Document Trait Bundle Manager based on Five-Factor Model and AI-specific traits
-- [ ] Develop comprehensive guide for Experiment Design Language (EDL)
-- [ ] Create documentation for Ethics Framework in AI experimentation
-- [ ] Design documentation structure for Data Collection and Analysis Engine
-- [ ] Develop user guide for future Visualization and Reporting Module
-- [ ] Create conceptual documentation for Meta-Analysis System
+- [ ] Create detailed documentation for Agent Abstraction, including virtual companionship aspects
+- [ ] Document Trait Bundle Manager based on Five-Factor Model, AI-specific traits, and recent personality research
+- [ ] Develop comprehensive guide for Experiment Design Language (EDL), incorporating responsible AI standards
+- [ ] Create documentation for Ethics Framework in AI experimentation, addressing recent ethical challenges in AI research
+- [ ] Design documentation structure for Data Collection and Analysis Engine, emphasizing privacy and data protection
+- [ ] Develop user guide for future Visualization and Reporting Module, focusing on explainability and transparency
+- [ ] Create conceptual documentation for Meta-Analysis System, addressing reproducibility challenges in AI
+- [ ] Develop guidelines for integrating civil society input in AI development processes
 
 ## 3. Experimental Framework Planning
 - [x] Design formal language for specifying behavioral experiments (EDL)
-- [ ] Develop detailed specification for experiment protocol parser and validator
-- [ ] Create conceptual design for experiment execution engine
-- [ ] Plan interfaces for real-time experiment monitoring and intervention
-- [ ] Develop guidelines for ethical considerations in experiments
+- [ ] Develop detailed specification for experiment protocol parser and validator, incorporating responsible AI standards
+- [ ] Create conceptual design for experiment execution engine, considering ethical AI trial methodologies
+- [ ] Plan interfaces for real-time experiment monitoring and intervention, with focus on explainability
+- [ ] Develop comprehensive guidelines for ethical considerations in experiments, addressing recent challenges in AI research
+- [ ] Design mechanisms for integrating civil society input in experiment design and execution
+- [ ] Develop framework for assessing and mitigating potential biases in experimental designs
 
 ## 4. Behavioral Trait Bundle System Planning
 - [x] Define taxonomy of behavioral traits based on psychological research
@@ -53,14 +57,16 @@ This document outlines the plan for refining the domain model and documentation 
 ## 7. Ethics Framework Enhancement Planning
 - [x] Develop comprehensive ethical guidelines for AI behavioral experiments
 - [x] Design logging and auditing system for ethical considerations
-- [ ] Plan ethical check system for experiment designs
-- [ ] Conceptualize interfaces for human oversight of ethical concerns
-- [ ] Design automated ethical impact assessment tools
-- [ ] Plan establishment of an ethics committee and define its operational procedures
-- [ ] Design a public registry for experiments and their ethical considerations
-- [ ] Develop conceptual protocols for ongoing ethical monitoring during experiments
-- [ ] Create guidelines for ethical data handling and privacy protection
-- [ ] Plan procedures for regular ethical audits and continuous improvement
+- [ ] Plan ethical check system for experiment designs, incorporating recent AI ethics research
+- [ ] Conceptualize interfaces for human oversight of ethical concerns, including civil society engagement
+- [ ] Design automated ethical impact assessment tools, addressing recent challenges in AI ethics
+- [ ] Plan establishment of an ethics committee and define its operational procedures, considering recent ethical frameworks
+- [ ] Design a public registry for experiments and their ethical considerations, promoting transparency
+- [ ] Develop conceptual protocols for ongoing ethical monitoring during experiments, including AI trial-specific considerations
+- [ ] Create guidelines for ethical data handling and privacy protection, incorporating recent data protection research
+- [ ] Plan procedures for regular ethical audits and continuous improvement, addressing evolving ethical standards in AI
+- [ ] Develop framework for assessing and mitigating biases in AI systems and experimental designs
+- [ ] Create guidelines for responsible AI development and deployment in experimental contexts
 
 ## 8. Meta-Analysis Capabilities Planning
 - [ ] Design data structures for storing and comparing results across experiments
