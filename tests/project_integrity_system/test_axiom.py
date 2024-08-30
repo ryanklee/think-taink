@@ -36,8 +36,11 @@ def test_requirement():
     assert req.get_document_type() == "Requirement"
     req.validate()  # Should not raise an exception
 
-    with pytest.raises(ValueError):
-        Requirement({'id': '@REQ-001', 'description': 'Test requirement', 'linked_problem_statements': []}).validate()
+    invalid_req = Requirement({'id': '@REQ-001', 'description': 'Test requirement', 'linked_problem_statements': [], 'linked_test_cases': []})
+    errors = invalid_req.validate()
+    assert len(errors) > 0
+    assert any("has no linked problem statements" in error for error in errors)
+    assert any("has no linked test cases" in error for error in errors)
 
 def test_problem_statement():
     data = {
@@ -55,8 +58,11 @@ def test_problem_statement():
     assert prob.get_document_type() == "ProblemStatement"
     prob.validate()  # Should not raise an exception
 
-    with pytest.raises(ValueError):
-        ProblemStatement({'id': '@PROB-001', 'description': 'Test problem', 'linked_research_items': []}).validate()
+    invalid_prob = ProblemStatement({'id': '@PROB-001', 'description': 'Test problem', 'linked_research_items': [], 'linked_requirements': []})
+    errors = invalid_prob.validate()
+    assert len(errors) > 0
+    assert any("has no linked research items" in error for error in errors)
+    assert any("has no linked requirements" in error for error in errors)
 
 def test_from_yaml():
     yaml_string = """

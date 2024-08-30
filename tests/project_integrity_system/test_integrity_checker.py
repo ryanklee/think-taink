@@ -41,10 +41,9 @@ def test_integrity_checker(caplog):
     invalid_requirement = Requirement({'id': '@REQ-002', 'description': 'Invalid requirement', 'linked_problem_statements': [], 'linked_test_cases': []})
     checker.add_document(invalid_requirement)
     errors = checker.validate_all()
-    assert len(errors) == 3
-    assert "Requirement @REQ-002 must have at least one linked problem statement" in errors
-    assert "Requirement @REQ-002 must have at least one linked test case" in errors
-    assert "Invalid cross-reference in Axiom(id=@AXIOM-002): @REQ-002 does not exist" not in errors
+    assert len(errors) == 2
+    assert "Requirement @REQ-002 has no linked problem statements" in errors
+    assert "Requirement @REQ-002 has no linked test cases" in errors
     for error in errors:
         assert error in caplog.text
 
@@ -63,16 +62,15 @@ def test_integrity_checker_with_invalid_documents(caplog):
     checker.add_document(invalid_problem_statement)
 
     errors = checker.validate_all()
-    assert len(errors) == 6
+    assert len(errors) == 5
     expected_errors = [
-        "Axiom @AXIOM-001 must have at least one linked requirement",
-        "Requirement @REQ-001 must have at least one linked problem statement",
-        "Requirement @REQ-001 must have at least one linked test case",
-        "Problem Statement @PROB-001 must have at least one linked research item",
-        "Problem Statement @PROB-001 must have at least one linked requirement"
+        "Axiom @AXIOM-001 has no linked requirements",
+        "Requirement @REQ-001 has no linked problem statements",
+        "Requirement @REQ-001 has no linked test cases",
+        "Problem Statement @PROB-001 has no linked research items",
+        "Problem Statement @PROB-001 has no linked requirements"
     ]
-    for expected_error in expected_errors:
-        assert any(expected_error in error for error in errors), f"Expected error not found: {expected_error}"
+    assert set(errors) == set(expected_errors)
     for error in errors:
         assert error in caplog.text
 
