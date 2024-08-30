@@ -344,6 +344,10 @@ This UML class diagram represents the core domain entities and their relationshi
 - Designing scalable autonomous separation assurance systems using heterogeneous multi-agent reinforcement learning
 - Exploring socially-attentive policy optimization in multi-agent self-driving systems
 - Investigating decentralized scheduling management for controllable loads in power grids using blockchain technology
+- Building proactive cooperative agents using large language models for enhanced multi-agent collaboration
+- Simulating complex historical scenarios using large language model-based multi-agent systems
+- Developing knowledge-driven multi-agent frameworks for specialized domains like autonomous driving
+- Investigating techniques for propagating intentions and reasoning in multi-agent coordination using large language models
 
 ### 4.3 Ethical AI and Decision Making
 - Implementing and evaluating various ethical frameworks in AI systems

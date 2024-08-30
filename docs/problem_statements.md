@@ -182,6 +182,10 @@ References:
 - [REF003] "On the Nature of Information: How FAIR Digital Objects are Building-up Semantic Space" (2022)
 - [REF004] "A Socio-Cognitive Perspective on the Factors Affecting Malaysian Business Students' Learning when Spoken in English in a Second-Language Classroom" (2022)
 - [REF005] "Scale-Free Collaborative Protocol Design for Output Synchronization of Heterogeneous Multi-Agent Systems With Nonuniform Communication Delays" (2022)
+- [REF006] "ProAgent: Building Proactive Cooperative Agents with Large Language Models" (2023)
+- [REF007] "War and Peace (WarAgent): Large Language Model-based Multi-Agent Simulation of World Wars" (2023)
+- [REF008] "KoMA: Knowledge-driven Multi-agent Framework for Autonomous Driving with Large Language Models" (2024)
+- [REF009] "Towards Collaborative Intelligence: Propagating Intentions and Reasoning for Multi-Agent Coordination with Large Language Models" (2024)
 
 Gaps/Inconsistencies:
 - Lack of specific plans for integrating large language models with our TraitBundle value object system
@@ -193,6 +197,10 @@ Gaps/Inconsistencies:
 - Lack of a framework for understanding and representing semantic space in our KnowledgeBase to support agent individuality in language-based interactions
 - Need for adapting ecological interaction models to language-based interactions in our multi-agent system
 - Lack of scale-free design principles in our ExperimentRunner for managing complex language-based interactions across heterogeneous agents
+- Need for implementing proactive cooperative behaviors in our Agent entities using large language models
+- Lack of frameworks for simulating complex historical scenarios using LLM-based multi-agent systems in our Experiment aggregate
+- Need for integrating knowledge-driven approaches in our multi-agent framework, particularly for specialized domains like autonomous driving
+- Lack of mechanisms for propagating intentions and reasoning across agents using large language models in our ReasoningEngine service
 
 ## 7. Privacy-Preserving AI in Experimental Settings as a Cross-Cutting Concern
 
