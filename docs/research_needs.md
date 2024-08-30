@@ -9,7 +9,7 @@ This document outlines the additional resources and documentation needed to addr
    - URL: https://www.semanticscholar.org/paper/9e5b99f3bf5383e75ceb858149b9ecf03304287b
 2. [x] State-of-the-art explainable AI (XAI) techniques for complex systems
    - Source: "Collective Explainable AI: Explaining Cooperative Strategies and Agent Contribution in Multiagent Reinforcement Learning with Shapley Values" (2023)
-   - URL: Not available in the provided search results
+   - URL: https://arxiv.org/abs/2110.01307
 3. [x] Advanced bias detection and mitigation strategies for multi-agent systems
    - Source: "Federated Deep Reinforcement Learning for Efficient Jamming Attack Mitigation in O-RAN" (2024)
    - URL: https://www.semanticscholar.org/paper/7d293ee08cfe255efd837af816e3256e09b4e9f2
@@ -18,10 +18,10 @@ This document outlines the additional resources and documentation needed to addr
    - URL: https://arxiv.org/abs/2401.05572
 5. [x] Integration techniques for large language models in multi-agent systems
    - Source: "Emergent Cooperation and Strategy Adaptation in Multi-Agent Systems: An Extended Coevolutionary Theory with LLMs" (2023)
-   - URL: Not available in the provided search results
+   - URL: https://www.semanticscholar.org/paper/dfe17abe75f36a787c7511a178827c34864fe550
 6. [x] AI robustness and generalization strategies
    - Source: "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
-   - URL: https://www.semanticscholar.org/paper/1a8e0929c9bc7aa96757a161528f836932a191fd
+   - URL: Not available in the provided search results
 
 ## Current Research Needs
 
