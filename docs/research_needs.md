@@ -47,6 +47,11 @@ This document outlines the additional resources and documentation needed to refi
      - https://arxiv.org/abs/2110.06984 - "Simulating Cognitive Processes in AI Agents: A Framework"
      - https://www.semanticscholar.org/paper/3041b15b1f2f08426585440eb52d2ea3156287bb - "Measuring AI Behavior: Techniques and Metrics"
      - https://www.semanticscholar.org/paper/5879ea12e106e1c243d78e337144e1bc09e21213 - "Experimental Design for AI Systems: A Comprehensive Guide"
+     - https://pubmed.ncbi.nlm.nih.gov/33990429/ - "Randomised controlled trials in medical AI: ethical considerations"
+     - https://www.semanticscholar.org/paper/3722bc6359fabb5268882deaa0c557ff57faccb8 - "Applying Machine Learning in Personality-based Persuasion Marketing"
+     - https://pubmed.ncbi.nlm.nih.gov/35372779/ - "Key considerations for the use of artificial intelligence in healthcare and clinical research"
+     - https://www.semanticscholar.org/paper/56c6d0df1d8742eeb9597d3b6bc7d8631cb98515 - "Governance of Responsible AI: From Ethical Guidelines to Cooperative Policies"
+     - https://www.semanticscholar.org/paper/0fc069372f140041c829e432d5b8bd1e8686138c - "Privacy-Preserving and Explainable AI for Cardiovascular Imaging"
 
    Key takeaways:
    - Importance of standardized protocols for AI experiments
@@ -56,6 +61,11 @@ This document outlines the additional resources and documentation needed to refi
    - Advanced metrics for measuring AI behavior and performance
    - Frameworks for designing complex multi-agent experiments
    - Best practices for data collection and analysis in AI experiments
+   - Ethical frameworks for AI experimentation, including challenges specific to AI trials
+   - Insights on modeling AI agent personalities and interactions
+   - Practical implications of AI implementation, including ethical concerns and regulatory considerations
+   - Integration of civil society in AI development for responsible AI governance
+   - Addressing challenges in AI adoption, including data access and explainability for reproducibility
 
 ## Notes
 
