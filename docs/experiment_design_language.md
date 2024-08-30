@@ -135,6 +135,9 @@ reproducibility:
 18. **Decentralized Decision-Making**: Enables specification of decentralized decision-making models for individual agents and the collective.
 19. **Cooperative Control Strategies**: Incorporates cooperative control mechanisms inspired by swarm robotics principles.
 20. **Latency-Aware Optimization**: Allows for defining latency constraints and optimization strategies in multi-agent interactions.
+21. **Emergent Language-Based Coordination**: Supports the specification and analysis of emergent language-based coordination protocols in deep multi-agent systems.
+22. **Self-Adaptive Mechanisms**: Enables the definition of self-adaptive behaviors in swarm systems for improved cooperation and decision-making.
+23. **Strategy Adaptation Modeling**: Provides tools for modeling and analyzing the emergence and adaptation of cooperative strategies in multi-agent systems.
 
 ## Implementation
 

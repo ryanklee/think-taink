@@ -252,6 +252,10 @@ This UML class diagram represents the core domain entities and their relationshi
 - Balancing collective exploration and exploitation in multi-agent and multi-robot systems
 - Optimizing latency-aware multi-joint placement and routing using swarm intelligence
 - Developing decentralized decision-making models for multi-agent systems
+- Implementing emergent language-based coordination protocols in deep multi-agent systems
+- Studying the impact of swarm intelligence on decentralized decision-making in multi-agent environments
+- Exploring self-adaptive mechanisms in swarm systems for improved cooperation and decision-making
+- Investigating the emergence of cooperative strategies and their adaptation in multi-agent systems using coevolutionary theory with LLMs
 
 ### 4.3 Ethical AI and Decision Making
 - Implementing and evaluating various ethical frameworks in AI systems
