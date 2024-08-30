@@ -60,6 +60,11 @@ This document outlines the plan for refining the domain model and documentation 
 - [ ] Design metareasoning frameworks for enhancing artificial reasoning in complex decision-making environments as part of the ReasoningEngine Domain Service
 - [ ] Integrate Hebbian learning techniques for predicting and adapting to evolving agent behaviors within the Agent Aggregate Root
 - [ ] Develop strategies for optimizing long-term efficiency and fairness in multi-agent systems as part of the ExperimentRunner Service
+- [ ] Implement adaptive curriculum learning and novel self-play strategies for balancing individual and collective learning in complex environments within the ExperimentRunner Service
+- [ ] Integrate coevolutionary dynamics and LLM-based strategy recommendations for modeling strategic interactions among heterogeneous agents in the ReasoningEngine Domain Service
+- [ ] Develop multi-agent deep reinforcement learning methods for adaptive control strategies in dynamic environments like power systems within the Agent Aggregate Root
+- [ ] Explore the potential of photonic neuromorphic architectures for lifelong learning to maintain performance while acquiring new skills in AI agents within the Agent Aggregate Root
+- [ ] Investigate and implement coordination and machine learning techniques specific to multi-robot systems for balancing individual and collective learning in dynamic scenarios within the ExperimentRunner Service
 
 ## 5. Data Management and Analysis Planning
 - [ ] Design comprehensive data model for capturing agent behaviors and interactions within the Experiment Aggregate, incorporating recent advancements in AI behavior analysis
