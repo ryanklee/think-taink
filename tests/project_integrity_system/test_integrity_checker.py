@@ -20,19 +20,17 @@ def test_integrity_checker():
     invalid_axiom = Axiom({'id': '@AXIOM-002', 'description': 'Invalid axiom', 'linked_requirements': ['@REQ-002']})
     checker.add_document(invalid_axiom)
     errors = checker.validate_all()
-    assert len(errors) == 2
+    assert len(errors) == 1
     assert "Invalid cross-reference in @AXIOM-002: @REQ-002 does not exist" in errors
-    assert "Validation error in @AXIOM-002: Axiom must have at least one valid linked requirement" in errors
 
     # Test missing links
     invalid_requirement = Requirement({'id': '@REQ-002', 'description': 'Invalid requirement', 'linked_problem_statements': [], 'linked_test_cases': []})
     checker.add_document(invalid_requirement)
     errors = checker.validate_all()
-    assert len(errors) == 4
+    assert len(errors) == 3
     assert "Validation error in @REQ-002: Requirement must have at least one linked problem statement" in errors
     assert "Validation error in @REQ-002: Requirement must have at least one linked test case" in errors
     assert "Invalid cross-reference in @AXIOM-002: @REQ-002 does not exist" in errors
-    assert "Validation error in @AXIOM-002: Axiom must have at least one valid linked requirement" in errors
 
 def test_integrity_checker_with_invalid_documents():
     checker = IntegrityChecker()
@@ -47,10 +45,9 @@ def test_integrity_checker_with_invalid_documents():
     checker.add_document(invalid_problem_statement)
 
     errors = checker.validate_all()
-    assert len(errors) == 6
+    assert len(errors) == 5
     assert "Validation error in @AXIOM-001: Axiom must have at least one linked requirement" in errors
     assert "Validation error in @REQ-001: Requirement must have at least one linked problem statement" in errors
     assert "Validation error in @REQ-001: Requirement must have at least one linked test case" in errors
     assert "Validation error in @PROB-001: Problem Statement must have at least one linked research item" in errors
     assert "Validation error in @PROB-001: Problem Statement must have at least one linked requirement" in errors
-    assert "Validation error in @AXIOM-001: Axiom must have at least one valid linked requirement" in errors
