@@ -15,7 +15,7 @@ class Axiom(BaseDocument):
         if not self.linked_requirements:
             raise ValueError("Axiom must have at least one linked requirement")
 
-    def get_linked_ids(self) -> List[str]:
+    def get_linked_requirements(self) -> List[str]:
         return self.linked_requirements
 
     def get_document_type(self) -> str:
