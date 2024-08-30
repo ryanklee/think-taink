@@ -7,9 +7,6 @@ __all__ = ['Axiom', 'Requirement', 'ProblemStatement', 'IntegrityChecker']
 
 # Add version information
 __version__ = '0.3.4'
-
-# Import cli module separately to avoid circular imports
-from . import cli
 import argparse
 import sys
 from typing import List
