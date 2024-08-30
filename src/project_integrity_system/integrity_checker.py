@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Set
 from .document_types import BaseDocument, Axiom, Requirement, ProblemStatement
 
 class IntegrityChecker:
