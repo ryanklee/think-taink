@@ -70,6 +70,18 @@ Problem Statement: Current methods for detecting and mitigating biases in AI sys
 References:
 - [DOC001] Domain Model and Research Summary
 - [DOC003] Research Needs
+- [REF001] "From Bias to Fairness: A Review of Ethical Considerations and Mitigation Strategies in Artificial Intelligence" (2023)
+- [REF002] "Analyzing and Mitigating Bias for Vulnerable Classes: Towards Balanced Representation in Dataset" (2024)
+- [REF003] "Discussing ethical considerations and solutions for ensuring fairness in AI-driven financial services" (2024)
+- [REF004] "Ethical and Legal Implications of AI on Business and Employment: Privacy, Bias, and Accountability" (2024)
+- [REF005] "Revolutionizing Medical Practice: The Impact of Artificial Intelligence (AI) on Healthcare" (2024)
+
+Gaps/Inconsistencies:
+- Need for integration of federated learning techniques in our multi-agent system for bias mitigation, possibly as a new domain service
+- Lack of specific strategies for addressing biases in AI-driven financial services within our EthicsFramework service
+- Need for comprehensive ethical and legal framework addressing privacy, bias, and accountability in AI deployment, possibly requiring new value objects or entities
+- Lack of specific techniques for analyzing and mitigating biases for vulnerable classes in our datasets and models, potentially affecting our Agent and Experiment aggregates
+- Need for adaptation of bias mitigation strategies from specialized domains (e.g., autonomous driving) to our multi-agent system, possibly requiring updates to our ReasoningEngine service
 - [REF001] "Federated Deep Reinforcement Learning for Efficient Jamming Attack Mitigation in O-RAN" (2024)
 - [REF002] "Discussing ethical considerations and solutions for ensuring fairness in AI-driven financial services" (2024)
 - [REF003] "Ethical and Legal Implications of AI on Business and Employment: Privacy, Bias, and Accountability" (2024)
