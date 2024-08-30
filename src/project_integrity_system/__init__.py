@@ -211,7 +211,7 @@ def load_documents(file_paths: List[str]) -> List[dict]:
     documents = []
     for file_path in file_paths:
         with open(file_path, 'r') as file:
-            yaml_content = file.read()
+            yaml_content = file.read().strip()
             if yaml_content.startswith('@AXIOM-'):
                 documents.append(Axiom.from_yaml(yaml_content))
             elif yaml_content.startswith('@REQ-'):
@@ -219,33 +219,38 @@ def load_documents(file_paths: List[str]) -> List[dict]:
             elif yaml_content.startswith('@PROB-'):
                 documents.append(ProblemStatement.from_yaml(yaml_content))
             else:
-                raise ValueError(f"Unknown document type in file: {file_path}")
+                print(f"Warning: Unknown document type in file: {file_path}")
+                print(f"Content: {yaml_content[:50]}...")  # Print first 50 characters for debugging
     return documents
 
 def run_cli(args: List[str]) -> None:
     parsed_args = parse_arguments(args)
     
     checker = IntegrityChecker()
-    documents = load_documents(parsed_args.input)
-    for doc in documents:
-        checker.add_document(doc)
+    try:
+        documents = load_documents(parsed_args.input)
+        for doc in documents:
+            if doc is not None:
+                checker.add_document(doc)
 
-    if parsed_args.command == 'validate':
-        errors = checker.validate_all()
-        if errors:
-            print("Validation errors:")
-            for error in errors:
-                print(f"- {error}")
-        else:
-            print("No validation errors found.")
-    elif parsed_args.command == 'report':
-        report = checker.generate_full_report()
-        if parsed_args.output:
-            with open(parsed_args.output, 'w') as f:
-                f.write(report)
-            print(f"Report written to {parsed_args.output}")
-        else:
-            print(report)
+        if parsed_args.command == 'validate':
+            errors = checker.validate_all()
+            if errors:
+                print("Validation errors:")
+                for error in errors:
+                    print(f"- {error}")
+            else:
+                print("No validation errors found.")
+        elif parsed_args.command == 'report':
+            report = checker.generate_full_report()
+            if parsed_args.output:
+                with open(parsed_args.output, 'w') as f:
+                    f.write(report)
+                print(f"Report written to {parsed_args.output}")
+            else:
+                print(report)
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
 
 def main():
     run_cli(sys.argv[1:])
