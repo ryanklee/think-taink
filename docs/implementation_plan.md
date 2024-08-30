@@ -38,6 +38,10 @@ This document outlines the plan for refining the domain model and documentation 
 - [ ] Design protocols for emergent language-based coordination in deep multi-agent systems as part of the Agent Aggregate Root
 - [ ] Develop strategies for implementing containment control in multi-agent experimental scenarios within the Experiment Aggregate
 - [ ] Plan for integration of coevolutionary theory with LLMs in multi-agent cooperation experiments as part of the ReasoningEngine Domain Service
+- [ ] Incorporate swarm intelligence principles for decentralized decision-making in multi-agent experiments within the Experiment Aggregate
+- [ ] Design protocols for emergent language-based coordination in deep multi-agent systems as part of the Agent Aggregate Root
+- [ ] Develop strategies for implementing containment control in multi-agent experimental scenarios within the Experiment Aggregate
+- [ ] Plan for integration of coevolutionary theory with LLMs in multi-agent cooperation experiments as part of the ReasoningEngine Domain Service
 
 ## 4. Behavioral Trait Bundle System Planning
 - [x] Define taxonomy of behavioral traits based on psychological research and recent advancements in AI-specific traits for the TraitBundle Value Object

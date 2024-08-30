@@ -24,8 +24,16 @@ Our work is informed by cutting-edge research in AI and psychology, including:
 - Trait theories in psychology [4][5]
 - Ethical considerations in AI research [6][7]
 - Domain-Driven Design in complex systems [8][9]
+- Advanced multi-agent interaction models [10][11][12]
+- Swarm intelligence and emergent behaviors [13][14]
 
 We leverage established AI research platforms and domain-specific languages to ensure robustness and reproducibility in our experiments.
+
+[10] Emergent Language-Based Coordination In Deep Multi-Agent Systems (2022)
+[11] A Survey on Large-Population Systems and Scalable Multi-Agent Reinforcement Learning (2022)
+[12] Swarm Intelligence Decentralized Decision Making In Multi-Agent System (2023)
+[13] Emergence of Hierarchical Reference Systems in Multi-agent Communication (2022)
+[14] A review: Swarm Robotics: Cooperative Control in Multi-Agent Systems (2022)
 
 ## Features
 

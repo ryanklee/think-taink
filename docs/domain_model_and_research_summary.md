@@ -249,6 +249,11 @@ This UML class diagram represents the core domain entities and their relationshi
 - Exploring containment control strategies in multi-agent systems
 - Investigating the role of emergent language in deep multi-agent coordination
 - Applying coevolutionary theory with LLMs for emergent cooperation and strategy adaptation
+- Studying the emergence of complex behaviors in large-scale multi-agent simulations
+- Implementing swarm robotics principles for cooperative control in multi-agent systems
+- Exploring containment control strategies in multi-agent systems
+- Investigating the role of emergent language in deep multi-agent coordination
+- Applying coevolutionary theory with LLMs for emergent cooperation and strategy adaptation
 
 ### 4.3 Ethical AI and Decision Making
 - Implementing and evaluating various ethical frameworks in AI systems
