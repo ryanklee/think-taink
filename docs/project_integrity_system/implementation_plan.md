@@ -64,16 +64,18 @@
     12.3. Develop a troubleshooting guide with common error scenarios and their resolutions.
 
 13. Pytest Integration
-    13.1. Set up pytest infrastructure within the project.
+    13.1. Integrate Project Integrity System tests into the main project's pytest infrastructure.
     13.2. Create initial test files for each aspect of integrity checks (document structure, cross-referencing, validation rules, etc.).
     13.3. Implement pytest fixtures for efficient test data management.
     13.4. Develop parameterized tests for comprehensive rule coverage.
+    13.5. Ensure Project Integrity System tests can be run as part of the main project's test suite.
 
 14. Testing and Quality Assurance
     14.1. Conduct thorough system testing with various project configurations using pytest.
     14.2. Perform code reviews and address any identified issues.
     14.3. Ensure test coverage meets or exceeds 90% for all components.
-    14.4. Set up continuous integration to run pytest checks automatically.
+    14.4. Set up continuous integration to run all tests, including Project Integrity System tests, automatically.
+    14.5. Verify that Project Integrity System tests are correctly executed within the main project's test suite.
 
 15. Deployment Preparation
     15.1. Create a distribution package for the Project Integrity System.
