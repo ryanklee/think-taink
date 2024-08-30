@@ -12,6 +12,7 @@ class IntegrityChecker:
         errors = set()
         errors.update(self._check_individual_documents())
         errors.update(self._check_linking_rules())
+        errors.update(self._check_cross_references())
         return sorted(list(errors))  # Sort the errors for consistent output
 
     def _check_individual_documents(self) -> Set[str]:
@@ -47,14 +48,9 @@ class IntegrityChecker:
                 if not any(linked_id.startswith('@TEST-') for linked_id in doc.get_linked_ids()):
                     errors.add(f"Validation error in {doc.id}: Requirement must have at least one linked test case")
             elif isinstance(doc, Axiom):
-                valid_links = [linked_id for linked_id in doc.get_linked_ids() if linked_id in self.documents]
-                if not valid_links:
-                    errors.add(f"Validation error in {doc.id}: Axiom must have at least one valid linked requirement")
-        
-        # Add cross-reference check
-        for doc in self.documents.values():
-            for linked_id in doc.get_linked_ids():
-                if linked_id.startswith('@TEST-') or linked_id.startswith('@RES-'):
+                if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
+                    errors.add(f"Validation error in {doc.id}: Axiom must have at least one linked requirement")
+        return errors
                     continue  # Skip validation for test cases and research items
                 if linked_id not in self.documents:
                     errors.add(f"Invalid cross-reference in {doc.id}: {linked_id} does not exist")
