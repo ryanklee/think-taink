@@ -7,7 +7,7 @@ class BaseDocument(ABC):
     def __init__(self, data: Dict):
         self.data = data
         self.id = data.get('id')
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
 
     @classmethod
     def from_yaml(cls, yaml_string: str):
@@ -18,7 +18,6 @@ class BaseDocument(ABC):
             logging.error(f"Error parsing YAML: {e}")
             raise ValueError(f"Invalid YAML format: {e}")
 
-    @abstractmethod
     def validate(self):
         if not self.id:
             self.logger.error(f"{self.get_document_type()} is missing an ID")
@@ -34,6 +33,9 @@ class BaseDocument(ABC):
     @abstractmethod
     def get_document_type(self) -> str:
         pass
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(id={self.id})"
 from .base_document import BaseDocument
 from typing import List
 

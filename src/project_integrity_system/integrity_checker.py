@@ -8,7 +8,7 @@ class IntegrityChecker:
         self.logger = logging.getLogger(__name__)
 
     def add_document(self, document: BaseDocument):
-        self.logger.info(f"Adding document: {document.id}")
+        self.logger.info(f"Adding document: {document}")
         self.documents[document.id] = document
 
     def validate_all(self) -> List[str]:
@@ -26,9 +26,9 @@ class IntegrityChecker:
         for doc in self.documents.values():
             try:
                 doc.validate()
-                self.logger.debug(f"Document {doc.id} passed individual validation")
+                self.logger.debug(f"Document {doc} passed individual validation")
             except ValueError as e:
-                error_msg = f"Validation error in {doc.id}: {str(e)}"
+                error_msg = f"Validation error in {doc}: {str(e)}"
                 self.logger.error(error_msg)
                 errors.append(error_msg)
         return errors
@@ -39,14 +39,14 @@ class IntegrityChecker:
         for doc in self.documents.values():
             for linked_id in doc.get_linked_ids():
                 if linked_id.startswith('@TEST-') or linked_id.startswith('@RES-'):
-                    self.logger.debug(f"Skipping validation for {linked_id} in {doc.id}")
+                    self.logger.debug(f"Skipping validation for {linked_id} in {doc}")
                     continue  # Skip validation for test cases and research items
                 if linked_id not in self.documents:
-                    error_msg = f"Invalid cross-reference in {doc.id}: {linked_id} does not exist"
+                    error_msg = f"Invalid cross-reference in {doc}: {linked_id} does not exist"
                     self.logger.error(error_msg)
                     errors.append(error_msg)
                 else:
-                    self.logger.debug(f"Valid cross-reference in {doc.id}: {linked_id}")
+                    self.logger.debug(f"Valid cross-reference in {doc}: {linked_id}")
         return errors
 
     def _check_linking_rules(self) -> List[str]:
@@ -63,51 +63,78 @@ class IntegrityChecker:
 
     def _check_problem_statement_links(self, doc: ProblemStatement, errors: List[str]):
         if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
-            error_msg = f"Validation error in {doc.id}: Problem Statement must have at least one linked requirement"
+            error_msg = f"Validation error in {doc}: Problem Statement must have at least one linked requirement"
             self.logger.error(error_msg)
             errors.append(error_msg)
         if not any(linked_id.startswith('@RES-') for linked_id in doc.get_linked_ids()):
-            error_msg = f"Validation error in {doc.id}: Problem Statement must have at least one linked research item"
+            error_msg = f"Validation error in {doc}: Problem Statement must have at least one linked research item"
             self.logger.error(error_msg)
             errors.append(error_msg)
 
     def _check_requirement_links(self, doc: Requirement, errors: List[str]):
         if not any(linked_id.startswith('@PROB-') for linked_id in doc.get_linked_ids()):
-            error_msg = f"Validation error in {doc.id}: Requirement must have at least one linked problem statement"
+            error_msg = f"Validation error in {doc}: Requirement must have at least one linked problem statement"
             self.logger.error(error_msg)
             errors.append(error_msg)
         if not any(linked_id.startswith('@TEST-') for linked_id in doc.get_linked_ids()):
-            error_msg = f"Validation error in {doc.id}: Requirement must have at least one linked test case"
+            error_msg = f"Validation error in {doc}: Requirement must have at least one linked test case"
             self.logger.error(error_msg)
             errors.append(error_msg)
 
     def _check_axiom_links(self, doc: Axiom, errors: List[str]):
         if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
-            error_msg = f"Validation error in {doc.id}: Axiom must have at least one linked requirement"
+            error_msg = f"Validation error in {doc}: Axiom must have at least one linked requirement"
             self.logger.error(error_msg)
             errors.append(error_msg)
 
-    def _check_individual_documents(self) -> Set[str]:
-        errors = set()
-        for doc in self.documents.values():
-            try:
-                doc.validate()
-            except ValueError as e:
-                errors.add(f"Validation error in {doc.id}: {str(e)}")
-        return errors
+    def generate_document_summary(self, documents: List[BaseDocument]) -> str:
+        summary = "Project Document Summary\n"
+        
+        # Count the number of documents
+        total_documents = len(documents)
+        summary += f"Total Documents: {total_documents}\n\n"
+        
+        # Categorize the documents by type
+        document_types = {}
+        for doc in documents:
+            doc_type = doc.get_document_type()
+            if doc_type not in document_types:
+                document_types[doc_type] = []
+            document_types[doc_type].append(doc)
+        
+        # Add the document type breakdown to the summary
+        summary += "Document Type Breakdown:\n"
+        for doc_type, docs in document_types.items():
+            summary += f"- {doc_type}s: {len(docs)}\n"
+        summary += "\n"
+        
+        # Add the list of document IDs and descriptions for each type
+        summary += "Document Details:\n"
+        for doc_type, docs in document_types.items():
+            if docs:
+                summary += f"{doc_type}s:\n"
+                for doc in docs:
+                    summary += f"- {doc.id}: {doc.data.get('description', 'No description')}\n"
+                summary += "\n"
+        
+        return summary
 
-    def _check_cross_references(self) -> List[str]:
-        errors = []
-        for doc in self.documents.values():
-            for linked_id in doc.get_linked_ids():
-                if linked_id.startswith('@TEST-') or linked_id.startswith('@RES-'):
-                    continue  # Skip validation for test cases and research items
-                if linked_id not in self.documents:
-                    errors.append(f"Invalid cross-reference in {doc.id}: {linked_id} does not exist")
-        return errors
+    def generate_validation_report(self, errors: List[str]) -> str:
+        report = "Validation Report\n"
+        report += f"Total Errors: {len(errors)}\n\n"
 
-    def validate_all(self) -> List[str]:
-        errors = set()
-        errors.update(self._check_linking_rules())
-        errors.update(self._check_cross_references())
-        return list(errors)
+        if errors:
+            report += "Errors:\n"
+            for error in errors:
+                report += f"- {error}\n"
+        else:
+            report += "No errors found.\n"
+
+        return report
+
+    def generate_full_report(self, documents: List[BaseDocument], errors: List[str]) -> str:
+        document_summary = self.generate_document_summary(documents)
+        validation_report = self.generate_validation_report(errors)
+
+        full_report = f"{document_summary}\n{validation_report}"
+        return full_report
