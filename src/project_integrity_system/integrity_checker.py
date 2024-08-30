@@ -12,7 +12,7 @@ class IntegrityChecker:
         errors = set()
         errors.update(self._check_individual_documents())
         errors.update(self._check_linking_rules())
-        return list(errors)
+        return sorted(list(errors))  # Sort the errors for consistent output
 
     def _check_individual_documents(self) -> Set[str]:
         errors = set()
@@ -59,6 +59,15 @@ class IntegrityChecker:
                 if linked_id not in self.documents:
                     errors.add(f"Invalid cross-reference in {doc.id}: {linked_id} does not exist")
         
+        return errors
+
+    def _check_individual_documents(self) -> Set[str]:
+        errors = set()
+        for doc in self.documents.values():
+            try:
+                doc.validate()
+            except ValueError as e:
+                errors.add(f"Validation error in {doc.id}: {str(e)}")
         return errors
 
     def _check_cross_references(self) -> List[str]:
