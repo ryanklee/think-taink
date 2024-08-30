@@ -52,7 +52,7 @@ This document outlines the additional resources and documentation needed to addr
 
 5. [x] Long-term adaptation and learning models for AI agents
    - Purpose: Address Problem Statement 5 (Long-term Adaptation and Learning in AI Agents)
-   - Focus: Strategies for maintaining consistent performance while acquiring new skills across various domains
+   - Focus: Strategies for maintaining consistent performance while acquiring new skills across various domains, and balancing individual learning with collective intelligence emergence
    - Resources:
      - https://arxiv.org/abs/2401.05572 - "Innate-Values-driven Reinforcement Learning for Cooperative Multi-Agent Systems" (2024)
      - https://arxiv.org/abs/2209.06904 - "Forecasting Evolution of Clusters in Game Agents with Hebbian Learning" (2022)
@@ -63,6 +63,11 @@ This document outlines the additional resources and documentation needed to addr
      - https://www.semanticscholar.org/paper/c206994f9f8a9e0a1fee468b91f12c38b36e51e8 - "Multi-Agent Deep Reinforcement Learning-Empowered Channel Allocation in Vehicular Networks" (2022)
      - https://www.semanticscholar.org/paper/a8e11cf715c4a1994c076533c831a5046f67a8f5 - "Multi-agent and Reinforcement Learning Schemes for Demand Response Estimation in Distributed Microgrids" (2023)
      - https://arxiv.org/abs/2206.15378 - "Mastering the game of Stratego with model-free multiagent reinforcement learning" (2022)
+     - https://arxiv.org/abs/2211.00801 - "Multi-Agent Reinforcement Learning for Adaptive Mesh Refinement" (2022)
+     - https://arxiv.org/abs/2201.11994 - "FCMNet: Full Communication Memory Net for Team-Level Cooperation in Multi-Agent Systems" (2022)
+     - https://arxiv.org/abs/2207.05886 - "Reward-Sharing Relational Networks in Multi-Agent Reinforcement Learning as a Framework for Emergent Behavior" (2022)
+     - https://arxiv.org/abs/2210.06012 - "Phantom - A RL-driven Multi-Agent Framework to Model Complex Systems" (2022)
+     - https://pubmed.ncbi.nlm.nih.gov/35044922/ - "Adaptive Bipartite Event-Triggered Time-Varying Output Formation Tracking of Heterogeneous Linear Multi-Agent Systems Under Signed Directed Graph" (2022)
 
    Remaining research needs:
    - Develop specific implementation strategies for hierarchical cooperative task allocation in our multi-agent system
@@ -71,6 +76,11 @@ This document outlines the additional resources and documentation needed to addr
    - Investigate the applicability of advanced model-free multiagent reinforcement learning techniques for complex strategic decision-making in our AI agents
    - Develop metrics and evaluation methods for assessing long-term learning and adaptation in dynamic, multi-agent scenarios
    - Create strategies for balancing stability and plasticity in AI agent learning across diverse domains
+   - Implement adaptive mesh refinement techniques using multi-agent reinforcement learning for dynamic environment modeling in our Experiment aggregate
+   - Develop full communication memory networks for enhanced team-level cooperation in our Agent entities
+   - Design and implement reward-sharing relational networks to promote emergent behaviors in our multi-agent system
+   - Create a framework for modeling complex multi-agent systems with emergent collective behaviors within our Experiment aggregate
+   - Investigate the application of adaptive bipartite event-triggered control strategies for heterogeneous multi-agent systems in our ExperimentRunner service
 
 6. [x] Integration techniques for large language models in multi-agent systems
    - Purpose: Address Problem Statement 6 (Advanced Natural Language Processing for AI Communication)

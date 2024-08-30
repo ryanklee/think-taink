@@ -97,7 +97,7 @@ Gaps/Inconsistencies:
 
 ## 5. Long-term Adaptation and Learning in AI Agents as Evolving Entities
 
-Problem Statement: Developing AI agents (represented as entities in our domain model) capable of long-term adaptation and learning across various domains and tasks remains a significant challenge, particularly in maintaining consistent performance while acquiring new skills and adapting to complex, dynamic environments.
+Problem Statement: Developing AI agents (represented as entities in our domain model) capable of long-term adaptation and learning across various domains and tasks remains a significant challenge, particularly in maintaining consistent performance while acquiring new skills and adapting to complex, dynamic environments. This challenge extends to balancing individual agent learning with the emergence of collective intelligence in multi-agent systems.
 
 References:
 - [DOC001] Domain Model and Research Summary
@@ -111,6 +111,11 @@ References:
 - [REF007] "Multi-Agent Deep Reinforcement Learning-Empowered Channel Allocation in Vehicular Networks" (2022)
 - [REF008] "Multi-agent and Reinforcement Learning Schemes for Demand Response Estimation in Distributed Microgrids" (2023)
 - [REF009] "Mastering the game of Stratego with model-free multiagent reinforcement learning" (2022)
+- [REF010] "Multi-Agent Reinforcement Learning for Adaptive Mesh Refinement" (2022)
+- [REF011] "FCMNet: Full Communication Memory Net for Team-Level Cooperation in Multi-Agent Systems" (2022)
+- [REF012] "Reward-Sharing Relational Networks in Multi-Agent Reinforcement Learning as a Framework for Emergent Behavior" (2022)
+- [REF013] "Phantom - A RL-driven Multi-Agent Framework to Model Complex Systems" (2022)
+- [REF014] "Adaptive Bipartite Event-Triggered Time-Varying Output Formation Tracking of Heterogeneous Linear Multi-Agent Systems Under Signed Directed Graph" (2022)
 
 Gaps/Inconsistencies:
 - Need for implementation of hierarchical compound intrinsic value reinforcement learning in our Agent entity
@@ -122,6 +127,10 @@ Gaps/Inconsistencies:
 - Need for integration of LSTM-based deep reinforcement learning techniques for dynamic resource allocation in specialized domains, possibly affecting our Agent entity and ReasoningEngine service
 - Lack of specific strategies for multi-agent coordination control in distributed systems, potentially requiring updates to our ExperimentRunner and ReasoningEngine services
 - Need for implementation of advanced model-free multiagent reinforcement learning techniques for complex strategic decision-making, possibly affecting our Agent entity and ReasoningEngine service
+- Lack of adaptive mesh refinement techniques for dynamic environment modeling in our Experiment aggregate
+- Need for implementation of full communication memory networks for team-level cooperation, potentially affecting our Agent entity and communication protocols
+- Lack of reward-sharing mechanisms based on relational networks to promote emergent behaviors in our multi-agent system
+- Need for integration of adaptive bipartite event-triggered control strategies for heterogeneous multi-agent systems in dynamic environments
 
 ## 6. Advanced Natural Language Processing for AI Communication as a Domain Service
 
