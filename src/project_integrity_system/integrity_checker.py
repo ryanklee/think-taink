@@ -35,12 +35,12 @@ class IntegrityChecker:
         errors = []
         for doc in self.documents.values():
             if isinstance(doc, ProblemStatement):
-                if not any(isinstance(self.documents.get(linked_id), Requirement) for linked_id in doc.get_linked_ids()):
+                if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Problem Statement {doc.id} must be linked to at least one Requirement")
             elif isinstance(doc, Requirement):
-                if not any(isinstance(self.documents.get(linked_id), ProblemStatement) for linked_id in doc.get_linked_ids()):
+                if not any(linked_id.startswith('@PROB-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Requirement {doc.id} must be linked to at least one Problem Statement")
             elif isinstance(doc, Axiom):
-                if not any(isinstance(self.documents.get(linked_id), Requirement) for linked_id in doc.get_linked_ids()):
+                if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Axiom {doc.id} must be linked to at least one Requirement")
         return errors
