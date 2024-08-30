@@ -1,7 +1,5 @@
 import pytest
-from src.project_integrity_system.document_types.axiom import Axiom
-from src.project_integrity_system.document_types.requirement import Requirement
-from src.project_integrity_system.document_types.problem_statement import ProblemStatement
+from src.project_integrity_system.document_types import Axiom, Requirement, ProblemStatement
 
 def test_axiom():
     data = {
