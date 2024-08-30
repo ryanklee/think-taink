@@ -37,9 +37,13 @@ class IntegrityChecker:
             if isinstance(doc, ProblemStatement):
                 if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Problem Statement {doc.id} must be linked to at least one Requirement")
+                if not any(linked_id.startswith('@RES-') for linked_id in doc.get_linked_ids()):
+                    errors.append(f"Problem Statement {doc.id} must have at least one linked research item")
             elif isinstance(doc, Requirement):
                 if not any(linked_id.startswith('@PROB-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Requirement {doc.id} must be linked to at least one Problem Statement")
+                if not any(linked_id.startswith('@TEST-') for linked_id in doc.get_linked_ids()):
+                    errors.append(f"Requirement {doc.id} must have at least one linked test case")
             elif isinstance(doc, Axiom):
                 if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Axiom {doc.id} must be linked to at least one Requirement")

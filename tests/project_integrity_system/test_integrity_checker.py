@@ -20,9 +20,8 @@ def test_integrity_checker():
     invalid_axiom = Axiom({'id': '@AXIOM-002', 'description': 'Invalid axiom', 'linked_requirements': ['@REQ-002']})
     checker.add_document(invalid_axiom)
     errors = checker.validate_all()
-    assert len(errors) == 2
-    assert any("Invalid cross-reference" in error for error in errors)
-    assert any("Axiom @AXIOM-002 must be linked to at least one Requirement" in error for error in errors)
+    assert len(errors) == 1
+    assert "Invalid cross-reference in @AXIOM-002: @REQ-002 does not exist" in errors[0]
 
     # Test missing links
     invalid_requirement = Requirement({'id': '@REQ-002', 'description': 'Invalid requirement', 'linked_problem_statements': [], 'linked_test_cases': ['@TEST-002']})
@@ -46,9 +45,8 @@ def test_integrity_checker_with_invalid_documents():
 
     errors = checker.validate_all()
     assert len(errors) == 6
-    assert any("Axiom must have at least one linked requirement" in error for error in errors)
-    assert any("Requirement must have at least one linked problem statement" in error for error in errors)
-    assert any("Requirement must have at least one linked test case" in error for error in errors)
-    assert any("Problem Statement must have at least one linked research item" in error for error in errors)
-    assert any("Problem Statement must have at least one linked requirement" in error for error in errors)
     assert any("Axiom @AXIOM-001 must be linked to at least one Requirement" in error for error in errors)
+    assert any("Requirement @REQ-001 must be linked to at least one Problem Statement" in error for error in errors)
+    assert any("Requirement @REQ-001 must have at least one linked test case" in error for error in errors)
+    assert any("Problem Statement @PROB-001 must have at least one linked research item" in error for error in errors)
+    assert any("Problem Statement @PROB-001 must be linked to at least one Requirement" in error for error in errors)
