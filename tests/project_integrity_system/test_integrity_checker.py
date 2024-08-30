@@ -22,7 +22,7 @@ def test_integrity_checker():
     errors = checker.validate_all()
     assert len(errors) == 2
     assert any("Invalid cross-reference in @AXIOM-002: @REQ-002 does not exist" in error for error in errors)
-    assert any("Validation error in @AXIOM-002: Axiom must have at least one linked requirement" in error for error in errors)
+    assert any("Validation error in @AXIOM-002: Axiom must have at least one valid linked requirement" in error for error in errors)
 
     # Test missing links
     invalid_requirement = Requirement({'id': '@REQ-002', 'description': 'Invalid requirement', 'linked_problem_statements': [], 'linked_test_cases': []})

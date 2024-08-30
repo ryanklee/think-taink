@@ -50,8 +50,9 @@ class IntegrityChecker:
                 if not any(linked_id.startswith('@TEST-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Validation error in {doc.id}: Requirement must have at least one linked test case")
             elif isinstance(doc, Axiom):
-                if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
-                    errors.append(f"Validation error in {doc.id}: Axiom must have at least one linked requirement")
+                valid_links = [linked_id for linked_id in doc.get_linked_ids() if linked_id in self.documents]
+                if not valid_links:
+                    errors.append(f"Validation error in {doc.id}: Axiom must have at least one valid linked requirement")
                 for linked_id in doc.get_linked_ids():
                     if linked_id.startswith('@REQ-') and linked_id not in self.documents:
                         errors.append(f"Invalid cross-reference in {doc.id}: {linked_id} does not exist")
