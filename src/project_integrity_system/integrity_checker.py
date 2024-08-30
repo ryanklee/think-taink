@@ -51,9 +51,6 @@ class IntegrityChecker:
                 if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Validation error in {doc.id}: Axiom must have at least one linked requirement")
         return errors
-                if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
-                    errors.add(f"Validation error in {doc.id}: Axiom must have at least one linked requirement")
-        return errors
 
     def _check_cross_references(self) -> Set[str]:
         errors = set()
