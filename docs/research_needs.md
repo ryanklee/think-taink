@@ -68,6 +68,11 @@ This document outlines the additional resources and documentation needed to addr
      - https://arxiv.org/abs/2207.05886 - "Reward-Sharing Relational Networks in Multi-Agent Reinforcement Learning as a Framework for Emergent Behavior" (2022)
      - https://arxiv.org/abs/2210.06012 - "Phantom - A RL-driven Multi-Agent Framework to Model Complex Systems" (2022)
      - https://pubmed.ncbi.nlm.nih.gov/35044922/ - "Adaptive Bipartite Event-Triggered Time-Varying Output Formation Tracking of Heterogeneous Linear Multi-Agent Systems Under Signed Directed Graph" (2022)
+     - https://arxiv.org/abs/2302.07515 - "TiZero: A multi-agent system for playing 11 vs. 11 football" (2023)
+     - https://www.semanticscholar.org/paper/dfe17abe75f36a787c7511a178827c34864fe550 - "Emergent Cooperation and Strategy Adaptation in Multi-Agent Systems: An Extended Coevolutionary Theory with LLMs" (2023)
+     - https://www.semanticscholar.org/paper/b5a619af8acd9ac94fc33959f135265b837f7793 - "Multi-agent deep reinforcement learning method for load frequency control in power systems" (2023)
+     - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10894876/ - "Photonic neuromorphic architecture for lifelong learning" (2024)
+     - https://arxiv.org/abs/2312.16273 - "Coordination and machine learning in multi-robot systems" (2023)
 
    Remaining research needs:
    - Develop specific implementation strategies for hierarchical cooperative task allocation in our multi-agent system
@@ -81,6 +86,11 @@ This document outlines the additional resources and documentation needed to addr
    - Design and implement reward-sharing relational networks to promote emergent behaviors in our multi-agent system
    - Create a framework for modeling complex multi-agent systems with emergent collective behaviors within our Experiment aggregate
    - Investigate the application of adaptive bipartite event-triggered control strategies for heterogeneous multi-agent systems in our ExperimentRunner service
+   - Implement adaptive curriculum learning and novel self-play strategies for balancing individual and collective learning in complex environments
+   - Integrate coevolutionary dynamics and LLM-based strategy recommendations for modeling strategic interactions among heterogeneous agents
+   - Develop multi-agent deep reinforcement learning methods for adaptive control strategies in dynamic environments like power systems
+   - Explore the potential of photonic neuromorphic architectures for lifelong learning to maintain performance while acquiring new skills in AI agents
+   - Investigate and implement coordination and machine learning techniques specific to multi-robot systems for balancing individual and collective learning in dynamic scenarios
 
 6. [x] Integration techniques for large language models in multi-agent systems
    - Purpose: Address Problem Statement 6 (Advanced Natural Language Processing for AI Communication)
