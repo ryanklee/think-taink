@@ -24,6 +24,7 @@ def test_integrity_checker(caplog):
     errors = checker.validate_all()
     assert errors == []
     assert "Validation complete. Found 0 errors." in caplog.text
+    assert "Starting validation of all documents" in caplog.text
 
     # Test invalid cross-reference
     invalid_axiom = Axiom({'id': '@AXIOM-002', 'description': 'Invalid axiom', 'linked_requirements': ['@REQ-002']})
