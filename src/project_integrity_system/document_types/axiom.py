@@ -1,5 +1,4 @@
 from project_integrity_system.document_types.base_document import BaseDocument
-from project_integrity_system.document_types.requirement import Requirement
 from typing import List
 
 class Axiom(BaseDocument):

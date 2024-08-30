@@ -25,7 +25,7 @@ class BaseDocument(ABC):
     @abstractmethod
     def get_document_type(self) -> str:
         pass
-from .base_document import BaseDocument
+from project_integrity_system.document_types.base_document import BaseDocument
 from typing import List
 
 class Requirement(BaseDocument):
@@ -50,6 +50,8 @@ class Requirement(BaseDocument):
 
     def get_document_type(self) -> str:
         return "Requirement"
+
+__all__ = ['Requirement']
 
 __all__ = ['Requirement']
 from .base_document import BaseDocument
