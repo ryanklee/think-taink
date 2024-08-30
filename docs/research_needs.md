@@ -5,11 +5,23 @@ This document outlines the additional resources and documentation needed to addr
 ## Needed Resources
 
 1. [x] Advanced multi-agent interaction models
+   - Source: "Emergent Language-Based Coordination In Deep Multi-Agent Systems" (2022)
+   - URL: https://www.semanticscholar.org/paper/9e5b99f3bf5383e75ceb858149b9ecf03304287b
 2. [x] State-of-the-art explainable AI (XAI) techniques for complex systems
+   - Source: "Collective Explainable AI: Explaining Cooperative Strategies and Agent Contribution in Multiagent Reinforcement Learning with Shapley Values" (2023)
+   - URL: Not available in the provided search results
 3. [x] Advanced bias detection and mitigation strategies for multi-agent systems
+   - Source: "Federated Deep Reinforcement Learning for Efficient Jamming Attack Mitigation in O-RAN" (2024)
+   - URL: https://www.semanticscholar.org/paper/7d293ee08cfe255efd837af816e3256e09b4e9f2
 4. [x] Long-term adaptation and learning models for AI agents
+   - Source: "Innate-Values-driven Reinforcement Learning for Cooperative Multi-Agent Systems" (2024)
+   - URL: https://arxiv.org/abs/2401.05572
 5. [x] Integration techniques for large language models in multi-agent systems
+   - Source: "Emergent Cooperation and Strategy Adaptation in Multi-Agent Systems: An Extended Coevolutionary Theory with LLMs" (2023)
+   - URL: Not available in the provided search results
 6. [x] AI robustness and generalization strategies
+   - Source: "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
+   - URL: https://www.semanticscholar.org/paper/1a8e0929c9bc7aa96757a161528f836932a191fd
 
 ## Current Research Needs
 
