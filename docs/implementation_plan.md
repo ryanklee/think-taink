@@ -10,8 +10,8 @@
 
 ## 2. Core Architecture
 - [ ] Refactor existing architecture to align with new experimental testbed focus
-  - [ ] Redesign Agent Abstraction to support behavioral trait bundles
-  - [ ] Develop Trait Bundle Manager based on Five-Factor Model and AI-specific traits
+  - [x] Redesign Agent Abstraction to support behavioral trait bundles
+  - [x] Develop Trait Bundle Manager based on Five-Factor Model and AI-specific traits
   - [ ] Refactor Experiment Runner for behavioral experiments
   - [ ] Enhance Ethics Framework for AI experimentation, incorporating IEEE and ACM guidelines
   - [ ] Develop comprehensive Data Collection and Analysis Engine
@@ -22,7 +22,7 @@
   - [ ] Create plugin loader and manager
 
 ## 3. Experimental Framework
-- [ ] Design formal language for specifying behavioral experiments (DSL)
+- [x] Design formal language for specifying behavioral experiments (EDL)
 - [ ] Implement experiment protocol parser and validator
 - [ ] Develop experiment execution engine
 - [ ] Create interfaces for real-time experiment monitoring and intervention

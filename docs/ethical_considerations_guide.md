@@ -16,23 +16,39 @@ This guide outlines the ethical principles, review processes, oversight mechanis
 8. **Fairness**: Strive for equitable treatment and outcomes across different groups and demographics.
 9. **Inclusivity**: Ensure diverse representation in experimental design and participation.
 10. **Sustainability**: Consider the long-term impacts of AI experiments on society and the environment.
+11. **Reproducibility**: Ensure that experiments can be replicated and verified by other researchers.
+12. **Informed Consent**: Obtain proper consent from human participants and consider the ethical implications of AI agent participation.
+13. **Bias Mitigation**: Actively work to identify and mitigate biases in experimental design, data, and AI models.
 
 ## Ethical Review Process
 
 1. **Pre-Experiment Review**:
    - All experiment proposals must be submitted for ethical review before implementation.
-   - A diverse ethics committee will evaluate each proposal based on the core ethical principles.
-   - Use standardized ethical assessment tools to evaluate potential risks and benefits.
+   - A diverse ethics committee, including AI ethicists, psychologists, and domain experts, will evaluate each proposal based on the core ethical principles.
+   - Use standardized ethical assessment tools to evaluate potential risks and benefits, including the IEEE Ethically Aligned Design guidelines.
+   - Conduct a thorough analysis of potential biases in the experimental design, including trait bundle assignments and environmental conditions.
 
 2. **Ongoing Monitoring**:
-   - Implement continuous monitoring systems to detect potential ethical issues during experiments.
-   - Regular check-ins and progress reports to the ethics committee.
-   - Establish clear protocols for pausing or terminating experiments if ethical concerns arise.
+   - Implement continuous monitoring systems to detect potential ethical issues during experiments, including emergent behaviors and unexpected agent interactions.
+   - Regular check-ins and progress reports to the ethics committee, with a focus on agent well-being and fairness metrics.
+   - Establish clear protocols for pausing or terminating experiments if ethical concerns arise, including specific thresholds for intervention.
+   - Implement real-time ethical constraint checking within the experiment execution engine.
 
 3. **Post-Experiment Analysis**:
-   - Conduct a thorough ethical analysis of experimental outcomes and implications.
-   - Document any unexpected ethical challenges or dilemmas encountered.
-   - Reflect on lessons learned and update ethical guidelines accordingly.
+   - Conduct a thorough ethical analysis of experimental outcomes and implications, including both intended and unintended consequences.
+   - Document any unexpected ethical challenges or dilemmas encountered, creating a knowledge base for future experiments.
+   - Reflect on lessons learned and update ethical guidelines accordingly, ensuring a continuous improvement process.
+   - Conduct a formal debriefing session with all involved researchers to discuss ethical aspects of the experiment.
+
+4. **Ethical Data Management**:
+   - Implement robust data anonymization techniques to protect the privacy of AI agents and any involved human participants.
+   - Establish clear data retention and deletion policies, ensuring compliance with relevant data protection regulations.
+   - Implement secure data storage and access controls to prevent unauthorized use of experimental data.
+
+5. **Transparency and Reporting**:
+   - Require detailed documentation of all ethical considerations and decisions made throughout the experiment lifecycle.
+   - Encourage publication of ethical challenges and resolutions alongside experimental results.
+   - Establish a public registry of AI behavioral experiments, including ethical reviews and outcomes.
 
 ## Oversight Mechanisms
 
