@@ -28,9 +28,15 @@ This document outlines the additional resources and documentation needed to addr
      - https://www.semanticscholar.org/paper/f0cd95fb34419399900700a277ca676d0606d70b - "Virtual Reality-Based Parallel Coordinates Plots Enhanced with Explainable AI and Data-Science Analytics for Decision-Making Processes"
      - https://arxiv.org/abs/2109.03283 - "Have a break from making decisions, have a MARS: The Multi-valued Action Reasoning System"
 
-4. [ ] Advanced bias detection and mitigation strategies for multi-agent systems
+4. [x] Advanced bias detection and mitigation strategies for multi-agent systems
    - Purpose: Address Problem Statement 4 (Bias Detection and Mitigation in AI Systems)
    - Focus: Techniques for identifying and addressing biases in complex, culturally diverse AI environments
+   - Resources:
+     - https://www.semanticscholar.org/paper/7d293ee08cfe255efd837af816e3256e09b4e9f2 - "Federated Deep Reinforcement Learning for Efficient Jamming Attack Mitigation in O-RAN" (2024)
+     - https://www.semanticscholar.org/paper/bb0661afb14f170fb2b45a46dd7881b5220673bb - "Discussing ethical considerations and solutions for ensuring fairness in AI-driven financial services" (2024)
+     - https://www.semanticscholar.org/paper/5ca7b9379e4e00d084aa08822797932237e5576a - "Ethical and Legal Implications of AI on Business and Employment: Privacy, Bias, and Accountability" (2024)
+     - https://www.semanticscholar.org/paper/75b2b52d2b95bffbff6de9f852db8b810254db84 - "From Bias to Fairness: A Review of Ethical Considerations and Mitigation Strategies in Artificial Intelligence" (2023)
+     - https://arxiv.org/abs/2401.10397 - "Analyzing and Mitigating Bias for Vulnerable Classes: Towards Balanced Representation in Dataset" (2024)
 
 5. [ ] Long-term adaptation and learning models for AI agents
    - Purpose: Address Problem Statement 5 (Long-term Adaptation and Learning in AI Agents)
