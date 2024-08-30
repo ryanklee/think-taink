@@ -1,4 +1,4 @@
-from project_integrity_system.document_types.base_document import BaseDocument
+from .base_document import BaseDocument
 from typing import List
 
 class Axiom(BaseDocument):
