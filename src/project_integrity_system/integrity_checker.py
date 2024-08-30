@@ -39,6 +39,20 @@ class IntegrityChecker:
             except ValueError as e:
                 errors.append(f"Validation error in {doc.id}: {str(e)}")
 
+            if isinstance(doc, ProblemStatement):
+                if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
+                    errors.append(f"Validation error in {doc.id}: Problem Statement must have at least one linked requirement")
+                if not any(linked_id.startswith('@RES-') for linked_id in doc.get_linked_ids()):
+                    errors.append(f"Validation error in {doc.id}: Problem Statement must have at least one linked research item")
+            elif isinstance(doc, Requirement):
+                if not any(linked_id.startswith('@PROB-') for linked_id in doc.get_linked_ids()):
+                    errors.append(f"Validation error in {doc.id}: Requirement must have at least one linked problem statement")
+                if not any(linked_id.startswith('@TEST-') for linked_id in doc.get_linked_ids()):
+                    errors.append(f"Validation error in {doc.id}: Requirement must have at least one linked test case")
+            elif isinstance(doc, Axiom):
+                if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
+                    errors.append(f"Validation error in {doc.id}: Axiom must have at least one linked requirement")
+
         return errors
 
     def validate_all(self) -> List[str]:
