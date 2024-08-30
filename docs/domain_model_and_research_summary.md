@@ -6,70 +6,9 @@ The AI Behavioral Experiment Testbed is a sophisticated platform for conducting 
 
 This system follows Domain-Driven Design (DDD) principles and is modeled using Unified Modeling Language (UML) to ensure a clear and consistent representation of the domain.
 
-### 1.1 Core Components (UML Class Diagram)
+### 1.1 Core Components
 
-```mermaid
-classDiagram
-    class Experiment {
-        <<Aggregate Root>>
-        +id: UUID
-        +name: String
-        +description: String
-        +start_date: DateTime
-        +end_date: DateTime
-        +status: ExperimentStatus
-        +run()
-        +pause()
-        +resume()
-        +stop()
-    }
-    class Agent {
-        <<Aggregate Root>>
-        +id: UUID
-        +name: String
-        +model: AIModel
-        +trait_bundle: TraitBundle
-        +performAction()
-        +communicate()
-    }
-    class TraitBundle {
-        <<Value Object>>
-        -traits: Map<String, Float>
-        +addTrait(name: String, value: Float)
-        +removeTrait(name: String)
-        +updateTrait(name: String, value: Float)
-    }
-    class ReasoningEngine {
-        <<Domain Service>>
-        +orchestrateReasoning()
-        +applyStrategy(strategy: ReasoningStrategy)
-    }
-    class KnowledgeBase {
-        <<Repository>>
-        +addConcept(concept: Concept)
-        +addRelationship(relationship: Relationship)
-        +query(query: String): QueryResult
-    }
-    class EthicsFramework {
-        <<Domain Service>>
-        +evaluateDecision(decision: Decision): EthicalAssessment
-        +flagEthicalConcern(concern: EthicalConcern)
-    }
-    class ExperimentRunner {
-        <<Application Service>>
-        +setupExperiment(config: ExperimentConfig)
-        +runExperiment(experiment: Experiment)
-        +collectData()
-        +analyzeResults()
-    }
-
-    Experiment "1" -- "*" Agent: contains
-    Agent "1" -- "1" TraitBundle: has
-    Experiment "1" -- "1" ReasoningEngine: uses
-    Experiment "1" -- "1" KnowledgeBase: uses
-    Experiment "1" -- "1" EthicsFramework: uses
-    ExperimentRunner "1" -- "*" Experiment: manages
-```
+For a detailed UML Class Diagram of the core components, please refer to the [UML Class Diagram](uml_diagrams/class_diagram.md).
 
 ### 1.2 Domain-Driven Design Concepts
 

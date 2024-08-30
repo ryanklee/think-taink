@@ -26,6 +26,8 @@ The AI Behavioral Experiment Testbed is a sophisticated platform for conducting 
 6. ExperimentRunner (Application Service): Facilitates complex experiments
 7. TraitBundle (Value Object): Defines an agent's behavioral characteristics
 
+For a complete glossary of terms and concepts used in our system, please refer to our [Ubiquitous Language](docs/ubiquitous_language.md) document.
+
 ## Research Focus Areas
 
 - Cognitive Architectures for AI

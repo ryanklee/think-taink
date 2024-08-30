@@ -31,9 +31,13 @@
 18. [Monitoring and Observability](monitoring_observability.md): Guide to system monitoring, logging, and observability tools.
 19. [Troubleshooting Guide](troubleshooting_guide.md): Common issues and their solutions.
 
+## Domain Model and Design
+20. [UML Class Diagram](uml_diagrams/class_diagram.md): Visual representation of the core components and their relationships.
+21. [Ubiquitous Language](ubiquitous_language.md): Glossary of terms and concepts used in the system.
+
 ## Miscellaneous
-20. [CHANGELOG](CHANGELOG.md): Record of all notable changes to the project.
-21. [Contributing Guidelines](CONTRIBUTING.md): Guidelines for contributing to the project.
-22. [License](LICENSE.md): Project license information.
+22. [CHANGELOG](CHANGELOG.md): Record of all notable changes to the project.
+23. [Contributing Guidelines](CONTRIBUTING.md): Guidelines for contributing to the project.
+24. [License](LICENSE.md): Project license information.
 
 Each file contains comprehensive, relevant information for our Collaborative AI Reasoning System. Refer to the specific file when you need details on a particular aspect of the system architecture, development process, or usage guidelines.
