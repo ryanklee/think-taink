@@ -40,6 +40,71 @@ classDiagram
         +updateTrait(name: String, value: Float)
     }
     class ReasoningEngine {
+        <<Domain Service>>
+        +orchestrateReasoning()
+        +applyStrategy(strategy: ReasoningStrategy)
+    }
+    class KnowledgeBase {
+        <<Repository>>
+        +addConcept(concept: Concept)
+        +addRelationship(relationship: Relationship)
+        +query(query: String): QueryResult
+    }
+    class EthicsFramework {
+        <<Domain Service>>
+        +evaluateDecision(decision: Decision): EthicalAssessment
+        +flagEthicalConcern(concern: EthicalConcern)
+    }
+    class ExperimentRunner {
+        <<Application Service>>
+        +setupExperiment(config: ExperimentConfig)
+        +runExperiment(experiment: Experiment)
+        +collectData()
+        +analyzeResults()
+    }
+
+    Experiment "1" -- "*" Agent: contains
+    Agent "1" -- "1" TraitBundle: has
+    Experiment "1" -- "1" ReasoningEngine: uses
+    Experiment "1" -- "1" KnowledgeBase: uses
+    Experiment "1" -- "1" EthicsFramework: uses
+    ExperimentRunner "1" -- "*" Experiment: manages
+```
+
+This UML class diagram represents the core domain entities, their relationships, and DDD concepts in our AI Behavioral Experiment Testbed.
+
+```mermaid
+classDiagram
+    class Experiment {
+        <<Aggregate Root>>
+        +id: UUID
+        +name: String
+        +description: String
+        +start_date: DateTime
+        +end_date: DateTime
+        +status: ExperimentStatus
+        +run()
+        +pause()
+        +resume()
+        +stop()
+    }
+    class Agent {
+        <<Aggregate Root>>
+        +id: UUID
+        +name: String
+        +model: AIModel
+        +trait_bundle: TraitBundle
+        +performAction()
+        +communicate()
+    }
+    class TraitBundle {
+        <<Value Object>>
+        -traits: Map<String, Float>
+        +addTrait(name: String, value: Float)
+        +removeTrait(name: String)
+        +updateTrait(name: String, value: Float)
+    }
+    class ReasoningEngine {
         <<Service>>
         +orchestrateReasoning()
         +applyStrategy(strategy: ReasoningStrategy)
@@ -89,17 +154,19 @@ This UML class diagram represents the core domain entities, their relationships,
 
 ### 1.2 Domain-Driven Design Concepts
 
-- **Bounded Context**: The AI Behavioral Experiment Testbed represents a single bounded context focused on AI agent experiments.
+Our AI Behavioral Experiment Testbed utilizes the following Domain-Driven Design concepts:
+
+- **Bounded Context**: The entire AI Behavioral Experiment Testbed represents a single bounded context focused on AI agent experiments.
 - **Aggregates**: 
-  - Experiment (root entity)
-  - Agent (root entity)
+  - Experiment (Aggregate Root)
+  - Agent (Aggregate Root)
 - **Entities**: Experiment, Agent
 - **Value Objects**: TraitBundle, ExperimentConfig, Decision, EthicalAssessment
 - **Domain Events**: ExperimentStarted, ExperimentCompleted, EthicalConcernRaised
-- **Repositories**: ExperimentRepository, AgentRepository, KnowledgeBase
-- **Services**: ReasoningEngine, EthicsFramework, ExperimentRunner
-- **Factories**: ExperimentFactory, AgentFactory (not shown in the diagram)
+- **Repositories**: KnowledgeBase, ExperimentRepository, AgentRepository
 - **Domain Services**: ReasoningEngine, EthicsFramework
+- **Application Services**: ExperimentRunner
+- **Factories**: ExperimentFactory, AgentFactory (not shown in the diagram)
 
 ### 1.3 DDD Patterns Applied
 
@@ -190,28 +257,29 @@ This UML class diagram represents the core domain entities and their relationshi
 
 ## 2. Core Components
 
-### 2.1 Agent Abstraction
+### 2.1 Agent (Aggregate Root)
 - Represents individual AI entities with specific behavioral traits
 - Encapsulates AI models (e.g., GPT-4, Claude), reasoning strategies, and communication interfaces
-- Implements behavioral traits based on psychological theories (e.g., Five-Factor Model)
+- Contains a TraitBundle value object implementing behavioral traits based on psychological theories (e.g., Five-Factor Model)
 - Incorporates decentralized decision-making models for autonomous behavior
 - Supports emergent language protocols for inter-agent communication
 
-### 2.2 Reasoning Engine
-- Orchestrates collaborative reasoning processes between agents
+### 2.2 ReasoningEngine (Domain Service)
+- Orchestrates collaborative reasoning processes between Agent entities
 - Implements various reasoning strategies and decision-making algorithms
-- Manages information flow and task allocation among agents
+- Manages information flow and task allocation among Agent entities
 - Incorporates swarm intelligence principles for collective decision-making
 - Balances collective exploration and exploitation in multi-agent scenarios
 - Implements cooperative control strategies inspired by swarm robotics
 
-### 2.3 Knowledge Base
-- Graph database (Neo4j) for storing concepts, relationships, and versioned configurations
+### 2.3 KnowledgeBase (Repository)
+- Implements a graph database (Neo4j) for storing concepts, relationships, and versioned configurations
 - Manages principles, heuristics, and learned information
+- Provides query interfaces for other domain components
 
-### 2.4 Ethics Framework
-- Ensures adherence to predefined ethical guidelines
-- Implements real-time ethical constraint checking
+### 2.4 EthicsFramework (Domain Service)
+- Ensures adherence to predefined ethical guidelines for all domain operations
+- Implements real-time ethical constraint checking on Agent and Experiment entities
 - Provides mechanisms for ethical impact assessment and bias detection
 - Incorporates federated learning techniques for distributed bias mitigation
 - Implements specialized strategies for addressing biases in financial services AI
@@ -219,14 +287,16 @@ This UML class diagram represents the core domain entities and their relationshi
 - Includes techniques for analyzing and mitigating biases for vulnerable classes
 - Adapts bias mitigation strategies from specialized domains to multi-agent systems
 
-### 2.5 Experiment Runner
-- Facilitates design and execution of complex behavioral-psychological experiments
+### 2.5 ExperimentRunner (Application Service)
+- Facilitates design and execution of complex behavioral-psychological Experiment entities
 - Implements the Experiment Design Language (EDL) for standardized experiment specification
 - Manages data collection, analysis, and visualization of experimental results
+- Coordinates the interaction between domain services and aggregates during experiment execution
 
-### 2.6 User Interface
-- Provides real-time, interactive web interface for experiment design and monitoring
-- Offers visualization tools for experiment progress and results analysis
+### 2.6 User Interface (Application Layer)
+- Provides real-time, interactive web interface for Experiment entity design and monitoring
+- Offers visualization tools for Experiment progress and results analysis
+- Interacts with Application Services to manage user interactions with the domain model
 
 ## 3. Key Features
 
