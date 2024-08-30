@@ -50,6 +50,8 @@ class Requirement(BaseDocument):
 
     def get_document_type(self) -> str:
         return "Requirement"
+
+__all__ = ['Requirement']
 from .base_document import BaseDocument
 from typing import List
 
