@@ -10,12 +10,18 @@ References:
 - [DOC001] Domain Model and Research Summary
 - [DOC002] Behavioral Trait Bundles
 - [DOC003] Research Needs
+- [REF001] "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
+- [REF002] "Balancing Collective Exploration and Exploitation in Multi-Agent and Multi-Robot Systems: A Review" (2022)
+- [REF003] "A review: Swarm Robotics: Cooperative Control in Multi-Agent Systems" (2022)
 
 Gaps/Inconsistencies:
 - Need for more detailed integration plans between cognitive architectures and our TraitBundle value object system
 - Lack of specific metrics for measuring emergent behaviors in multi-agent systems within our Experiment aggregate
 - Need to incorporate swarm intelligence principles and emergent language protocols into the ExperimentRunner service
 - Lack of strategies for implementing containment control in multi-agent scenarios within our domain model
+- Need for balancing collective exploration and exploitation in our multi-agent experiments
+- Lack of decentralized decision-making models in our current Agent entities
+- Need for incorporating cooperative control strategies from swarm robotics into our multi-agent system
 
 ## 2. Ethical Considerations in AI Experiments as a Domain Service
 

@@ -131,10 +131,10 @@ reproducibility:
 14. **Emergent Language Protocols**: Supports the definition and analysis of emergent communication protocols between agents.
 15. **Containment Control Mechanisms**: Allows for the implementation of containment control strategies in multi-agent scenarios.
 16. **Coevolutionary Dynamics**: Provides tools for modeling and analyzing coevolutionary processes in multi-agent systems, including integration with LLMs.
-13. **Swarm Intelligence Modeling**: Enables specification of swarm-based decision-making processes and collective behaviors.
-14. **Emergent Language Protocols**: Supports the definition and analysis of emergent communication protocols between agents.
-15. **Containment Control Mechanisms**: Allows for the implementation of containment control strategies in multi-agent scenarios.
-16. **Coevolutionary Dynamics**: Provides tools for modeling and analyzing coevolutionary processes in multi-agent systems, including integration with LLMs.
+17. **Collective Exploration-Exploitation Balance**: Supports defining and adjusting the balance between exploration and exploitation in multi-agent systems.
+18. **Decentralized Decision-Making**: Enables specification of decentralized decision-making models for individual agents and the collective.
+19. **Cooperative Control Strategies**: Incorporates cooperative control mechanisms inspired by swarm robotics principles.
+20. **Latency-Aware Optimization**: Allows for defining latency constraints and optimization strategies in multi-agent interactions.
 
 ## Implementation
 
