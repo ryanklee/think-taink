@@ -20,3 +20,4 @@ class Axiom(BaseDocument):
 
     def get_document_type(self) -> str:
         return "Axiom"
+# This file is intentionally left empty to mark the directory as a Python package
