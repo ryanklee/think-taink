@@ -34,6 +34,11 @@ class IntegrityChecker:
     def _check_linking_rules(self) -> List[str]:
         errors = []
         for doc in self.documents.values():
+            try:
+                doc.validate()
+            except ValueError as e:
+                errors.append(f"Validation error in {doc.id}: {str(e)}")
+
             if isinstance(doc, ProblemStatement):
                 if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Problem Statement {doc.id} must be linked to at least one Requirement")
@@ -50,14 +55,6 @@ class IntegrityChecker:
         return errors
 
     def validate_all(self) -> List[str]:
-        errors = []
-        for doc in self.documents.values():
-            try:
-                doc.validate()
-            except ValueError as e:
-                errors.append(f"Validation error in {doc.id}: {str(e)}")
-
+        errors = self._check_linking_rules()
         errors.extend(self._check_cross_references())
-        errors.extend(self._check_linking_rules())
-
         return list(set(errors))  # Remove duplicate errors
