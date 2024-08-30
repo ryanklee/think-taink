@@ -1,4 +1,5 @@
-from . import document_types
+from .document_types.axiom import Axiom
+from .document_types.requirement import Requirement
+from .document_types.problem_statement import ProblemStatement
 
-# Explicitly import the classes to make them available at the package level
-from .document_types import Axiom, Requirement, ProblemStatement
+__all__ = ['Axiom', 'Requirement', 'ProblemStatement']
