@@ -86,15 +86,78 @@ docs/
 
 ## Setup
 
-[Setup instructions remain the same]
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/ai-behavioral-experiment-testbed.git
+   cd ai-behavioral-experiment-testbed
+   ```
+
+2. Create a virtual environment and activate it:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+   ```
+
+3. Install the required dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+4. Set up the necessary environment variables:
+   ```
+   export OPENAI_API_KEY=your_openai_api_key
+   export ANTHROPIC_API_KEY=your_anthropic_api_key
+   ```
+
+5. Initialize the database:
+   ```
+   python manage.py db init
+   python manage.py db migrate
+   python manage.py db upgrade
+   ```
 
 ## Usage
 
-[Usage instructions remain the same]
+1. Start the application:
+   ```
+   python app.py
+   ```
+
+2. Open a web browser and navigate to `http://localhost:5000`.
+
+3. Use the web interface to:
+   - Design and configure experiments
+   - Run experiments
+   - Monitor ongoing experiments
+   - Analyze results
+   - Manage the LLM pool and trait bundles
+
+4. For programmatic access, use the provided API endpoints. Refer to the API documentation for details.
 
 ## Testing
 
-[Testing instructions remain the same]
+1. Ensure you're in the project root directory and your virtual environment is activated.
+
+2. Run the test suite:
+   ```
+   pytest
+   ```
+
+3. For more verbose output, use:
+   ```
+   pytest -v
+   ```
+
+4. To run tests with coverage report:
+   ```
+   pytest --cov=src tests/
+   ```
+
+5. To run specific test files or classes:
+   ```
+   pytest tests/test_agent.py
+   pytest tests/test_experiment_runner.py::TestExperimentRunner
+   ```
 
 ## Contributing
 
