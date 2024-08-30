@@ -18,9 +18,15 @@ This document outlines the additional resources and documentation needed to addr
    - Purpose: Address Problem Statement 2 (Ethical Considerations in AI Experiments)
    - Focus: Guidelines for extended studies and experiments in sensitive domains like healthcare
 
-3. [ ] State-of-the-art explainable AI (XAI) techniques for complex systems
+3. [x] State-of-the-art explainable AI (XAI) techniques for complex systems
    - Purpose: Address Problem Statement 3 (Explainable AI in Complex Systems)
    - Focus: Methods for providing meaningful insights into multi-agent decision-making processes
+   - Resources:
+     - https://www.semanticscholar.org/paper/6f8f5beb14666315e92534a5284f7e7328e433e1 - "Explainable and Transparent AI and Multi-Agent Systems: Third International Workshop, EXTRAAMAS 2021"
+     - https://arxiv.org/abs/2110.01307 - "Collective eXplainable AI: Explaining Cooperative Strategies and Agent Contribution in Multiagent Reinforcement Learning With Shapley Values"
+     - https://www.semanticscholar.org/paper/2c4d22105bc0ab753baea3fff80a33b9c3fe5b38 - "Explainable Fuzzy AI Challenge 2022: Winner's Approach to a Computationally Efficient and Explainable Solution"
+     - https://www.semanticscholar.org/paper/f0cd95fb34419399900700a277ca676d0606d70b - "Virtual Reality-Based Parallel Coordinates Plots Enhanced with Explainable AI and Data-Science Analytics for Decision-Making Processes"
+     - https://arxiv.org/abs/2109.03283 - "Have a break from making decisions, have a MARS: The Multi-valued Action Reasoning System"
 
 4. [ ] Advanced bias detection and mitigation strategies for multi-agent systems
    - Purpose: Address Problem Statement 4 (Bias Detection and Mitigation in AI Systems)

@@ -30,15 +30,18 @@ Gaps/Inconsistencies:
 
 ## 3. Explainable AI in Complex Systems
 
-Problem Statement: There is a significant challenge in developing explainable AI techniques that can provide meaningful insights into the decision-making processes of complex, multi-agent systems while maintaining system performance.
+Problem Statement: There is a significant challenge in developing explainable AI techniques that can provide meaningful insights into the decision-making processes of complex, multi-agent systems while maintaining system performance. This includes explaining cooperative strategies, agent contributions, and decision-making processes in multi-agent environments.
 
 References:
 - [DOC001] Domain Model and Research Summary
 - [DOC003] Research Needs
 
 Gaps/Inconsistencies:
-- Lack of specific strategies for balancing explainability with performance in our system
-- Need for more detailed plans on implementing XAI techniques in the context of multi-agent experiments
+- Need for implementation strategies for collective explainable AI techniques in our multi-agent system
+- Lack of specific plans for integrating Shapley value-based explanations for agent contributions
+- Need to explore the potential of fuzzy AI approaches for computationally efficient explanations
+- Lack of visualization techniques, such as virtual reality-based parallel coordinate plots, for complex decision-making processes
+- Need to investigate the applicability of multi-valued action reasoning systems in our context
 
 ## 4. Bias Detection and Mitigation in AI Systems
 
