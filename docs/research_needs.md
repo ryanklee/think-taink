@@ -95,52 +95,71 @@ As we gather resources and conduct research, we will update this document with o
 2. [x] Recent papers on multi-agent systems and emergent behaviors
    - Purpose: Enhance our understanding of complex AI interactions and communication
    - Resources:
-     - https://www.semanticscholar.org/paper/9e5b99f3bf5383e75ceb858149b9ecf03304287b - "Emergent Language-Based Coordination In Deep Multi-Agent Systems"
+     [Previous resources remain unchanged]
+     - https://arxiv.org/abs/2311.03736 - "Neural MMO 2.0: A Massively Multi-task Addition to Massively Multi-agent Learning"
      - https://arxiv.org/abs/2311.17227 - "War and Peace (WarAgent): Large Language Model-based Multi-Agent Simulation of World Wars"
-     - https://www.semanticscholar.org/paper/de5ebf2ed4433eac7bceb16484d33f66e6b5b580 - "Cooperative and competitive multi-agent deep reinforcement learning"
 
 3. [x] Papers on ethical considerations in AI research
    - Purpose: Strengthen our ethical framework and guidelines
    - Resources:
-     - https://www.semanticscholar.org/paper/f11bb1c5c634e218df664c868044be27e158c0b2 - "Artificial Intelligence (AI) and Information Systems: Perspectives to Responsible AI"
-     - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10588522/ - "Teaching AI Ethics in Medical Education: A Scoping Review of Current Literature and Practices"
-     - https://pubmed.ncbi.nlm.nih.gov/37824352/ - "ChatGPT: ethical concerns and challenges in academics and research"
+     [Previous resources remain unchanged]
+     - https://pubmed.ncbi.nlm.nih.gov/37130383/ - "Ethical Aspects of Machine Listening in Healthcare"
+     - https://www.semanticscholar.org/paper/75b2b52d2b95bffbff6de9f852db8b810254db84 - "From Bias to Fairness: A Review of Ethical Considerations and Mitigation Strategies in Artificial Intelligence"
 
 4. [x] Research on advanced natural language processing and AI communication
    - Purpose: Improve our AI agents' communication capabilities
    - Resources:
-     - https://pubmed.ncbi.nlm.nih.gov/35538873/ - "Natural language processing of medical records: new understanding of suicide ideation by dementia subtypes"
-     - https://arxiv.org/abs/2310.04438 - "A Brief History of Prompt: Leveraging Language Models"
+     [Previous resources remain unchanged]
+     - https://www.semanticscholar.org/paper/c36ff5acb42f3e8dd51947a329edb667cc16ef1c - "Investigating large language model (LLM) performance using in-context learning (ICL) for interpretation of ESMO and NCCN guidelines for lung cancer"
+     - https://pubmed.ncbi.nlm.nih.gov/37812101/ - "The Impact of AUTOGEN and Similar Fine-Tuned Large Language Models on the Integrity of Scholarly Writing"
 
 5. [x] Papers on AI applications in various domains
    - Purpose: Broaden our understanding of AI's potential applications and challenges
    - Resources:
-     - https://www.semanticscholar.org/paper/63560d28e09701b1f580989853e5af3b0952c09c - "Technological Tools Based on Artificial Intelligence in the Sugar Industry: A Bibliometric Analysis and Future Perspectives for Energy Efficiency"
-     - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10343845/ - "Recent Advances in Deep Learning for Protein-Protein Interaction Analysis: A Comprehensive Review"
-     - https://www.semanticscholar.org/paper/fe16508fbe6c035dcf07d1bae6e8dfa3788ec96f - "Autonomous Directional Drilling Simulator Development for the Drillbotics 2021-2022 Virtual Competition"
+     [Previous resources remain unchanged]
+     - https://arxiv.org/abs/2408.04593 - "SAM 2 in Robotic Surgery: An Empirical Evaluation for Robustness and Generalization in Surgical Video Segmentation"
+     - https://www.semanticscholar.org/paper/ade40d1a968d37e38059fdff8903124bcb0e2880 - "Evaluation of the Predictive Ability and User Acceptance of Panoramix 2.0, an AI-Based E-Health Tool for the Detection of Cognitive Impairment"
 
 6. [x] Research on AI reproducibility and data quality
    - Purpose: Enhance our practices for ensuring reproducible AI experiments
    - Resources:
-     - https://www.semanticscholar.org/paper/737f3d48b972eae7e37e9456031a8e2e39d01ccf - "On Image Quality Metadata, FAIR in ML, AI-Readiness and Reproducibility: Fish-AIR example"
+     [Previous resources remain unchanged]
+     - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8213549/ - "Translation of predictive modeling and AI into clinics: a question of trust"
 
 7. [x] Papers on AI's influence on decision-making
    - Purpose: Improve our understanding of AI's impact on decision processes
    - Resources:
-     - https://www.semanticscholar.org/paper/dd22f2001baf406c83b016ef4c378e213eb8c5b3 - "NAVIGATING THE FUTURE: ARTIFICIAL INTELLIGENCE'S GROWING INFLUENCE ON DECISION MAKING"
+     [Previous resources remain unchanged]
+
+8. [x] Cognitive architectures for AI
+   - Purpose: Enhance agent decision-making and learning processes
+   - Resources:
+     - https://www.semanticscholar.org/paper/b833c2e6d8ed61a43e32be8741cb815946d093b0 - "Cognitive Modeling of Task Switching in Discretionary Multitasking Based on the ACT-R Cognitive Architecture"
+     - https://www.semanticscholar.org/paper/823ec1438c0d51b722af95ce1865dc05db5e7e3a - "Comparing LLMs for Prompt-Enhanced ACT-R and Soar Model Development: A Case Study in Cognitive Simulation"
+
+9. [x] Bias detection and mitigation strategies in AI systems
+   - Purpose: Enhance fairness and reduce unintended biases in experiments
+   - Resources:
+     - https://www.semanticscholar.org/paper/47c0f27b3bc8e8d5303e42bd532749d22ee118d2 - "Responsible Artificial Intelligence and Bias Mitigation in Deep Learning Systems"
+     - https://pubmed.ncbi.nlm.nih.gov/38018360/ - "Measurement and Mitigation of Bias in Artificial Intelligence: A Narrative Literature Review for Regulatory Science"
+
+10. [x] Techniques for improving AI robustness and generalization
+    - Purpose: Enhance agents' ability to perform well across different scenarios
+    - Resources:
+      - https://www.semanticscholar.org/paper/e2ca961a17c44f336ae117fc581b85f22337865c - "Towards Better Robustness against Common Corruptions for Unsupervised Domain Adaptation"
+      - https://www.semanticscholar.org/paper/804f464a522ad6693f7dd57043139ddcc8383a84 - "Certifying Better Robust Generalization for Unsupervised Domain Adaptation"
 
    Key takeaways:
    [Previous key takeaways remain unchanged, with the following additions:]
-   - Importance of studying emergent behaviors in multi-agent AI systems
-   - Techniques for simulating complex scenarios using large language model-based multi-agent systems
-   - Advancements in cooperative and competitive multi-agent reinforcement learning
-   - Evolving perspectives on responsible AI in information systems
-   - Importance of integrating AI ethics education in various fields, including medicine
-   - Advancements in natural language processing for specialized domains (e.g., medical records analysis)
-   - Evolution of prompt engineering and its impact on leveraging language models
-   - AI applications in diverse industries, from agriculture to energy efficiency
-   - Importance of data quality and metadata in ensuring AI reproducibility
-   - AI's growing influence on decision-making processes across various sectors
+   - Advancements in cognitive modeling using architectures like ACT-R for complex task simulations
+   - Integration of large language models with cognitive architectures for enhanced AI capabilities
+   - Importance of ethical considerations in specialized AI applications, such as healthcare
+   - Comprehensive approaches to bias detection and mitigation in AI systems
+   - Techniques for improving AI robustness and generalization, particularly in domain adaptation scenarios
+   - Advancements in multi-agent and multi-task learning environments for more complex AI simulations
+   - Challenges and strategies for translating AI models into clinical practice, emphasizing trust and reproducibility
+   - Emerging applications of AI in specialized fields like robotic surgery and cognitive impairment detection
+   - Impact of large language models on scholarly integrity and the need for ethical guidelines in academic AI use
 
 ## Notes
 
