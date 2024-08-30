@@ -201,6 +201,9 @@ Gaps/Inconsistencies:
 - Lack of frameworks for simulating complex historical scenarios using LLM-based multi-agent systems in our Experiment aggregate
 - Need for integrating knowledge-driven approaches in our multi-agent framework, particularly for specialized domains like autonomous driving
 - Lack of mechanisms for propagating intentions and reasoning across agents using large language models in our ReasoningEngine service
+- Need for implementing behavior tree generation using large language models in our Agent entities for multi-agent robot systems
+- Lack of advanced dialogue systems enhanced by large language models in our multi-agent environment
+- Need for developing methods to measure and improve trustworthiness of large language models within our multi-agent system
 
 ## 7. Privacy-Preserving AI in Experimental Settings as a Cross-Cutting Concern
 
