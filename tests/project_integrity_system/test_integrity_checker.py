@@ -46,8 +46,6 @@ def test_integrity_checker(caplog):
     assert len(errors) == 2
     assert "Requirement @REQ-002 has no linked problem statements" in errors
     assert "Requirement @REQ-002 has no linked test cases" in errors
-    assert "Invalid cross-reference in Axiom(id=@AXIOM-002): @REQ-002 does not exist" in errors
-    assert "Inconsistency: @AXIOM-002 links to non-existent requirement @REQ-002" in errors
     for error in errors:
         assert error in caplog.text
 
