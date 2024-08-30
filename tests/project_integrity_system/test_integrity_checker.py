@@ -23,6 +23,7 @@ def test_integrity_checker(caplog):
     # Test valid configuration
     errors = checker.validate_all()
     assert errors == []
+    assert "Starting validation of all documents" in caplog.text
     assert "Validation complete. Found 0 errors." in caplog.text
     assert "Starting validation of all documents" in caplog.text
 
