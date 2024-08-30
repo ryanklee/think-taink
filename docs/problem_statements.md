@@ -2,7 +2,7 @@
 
 ## 1. Complex Multi-Agent Interactions
 
-Problem Statement: Current AI behavioral experiment platforms lack robust mechanisms for modeling and analyzing complex, multi-agent interactions with varying personality traits and cognitive architectures.
+Problem Statement: Current AI behavioral experiment platforms lack robust mechanisms for modeling and analyzing complex, multi-agent interactions with varying personality traits, cognitive architectures, and emergent behaviors such as swarm intelligence and language-based coordination.
 
 References:
 - docs/domain_model_and_research_summary.md: Sections 4.1, 4.2
@@ -12,6 +12,8 @@ References:
 Gaps/Inconsistencies:
 - Need for more detailed integration plans between cognitive architectures and our trait bundle system
 - Lack of specific metrics for measuring emergent behaviors in multi-agent systems
+- Need to incorporate swarm intelligence principles and emergent language protocols into the experimental framework
+- Lack of strategies for implementing containment control in multi-agent scenarios
 
 ## 2. Ethical Considerations in AI Experiments
 
@@ -64,7 +66,7 @@ Gaps/Inconsistencies:
 
 ## 6. Advanced Natural Language Processing for AI Communication
 
-Problem Statement: Integrating advanced NLP capabilities, particularly large language models, into multi-agent systems poses challenges in terms of coherent communication, context awareness, and maintaining individual agent characteristics.
+Problem Statement: Integrating advanced NLP capabilities, particularly large language models, into multi-agent systems poses challenges in terms of coherent communication, context awareness, maintaining individual agent characteristics, and facilitating emergent language-based coordination.
 
 References:
 - docs/domain_model_and_research_summary.md: Section 4.10
@@ -73,6 +75,8 @@ References:
 Gaps/Inconsistencies:
 - Lack of specific plans for integrating large language models with our trait bundle system
 - Need for more detailed strategies on maintaining agent individuality in language-based interactions
+- Lack of frameworks for studying and implementing emergent language protocols in deep multi-agent systems
+- Need for strategies to balance individual agent traits with collective language evolution
 
 ## 7. Privacy-Preserving AI in Experimental Settings
 
