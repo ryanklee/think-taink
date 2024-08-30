@@ -1,5 +1,8 @@
 import pytest
 from src.project_integrity_system import Axiom, Requirement, ProblemStatement
+from src.project_integrity_system import run_cli
+from unittest.mock import patch
+from io import StringIO
 
 def test_axiom():
     data = {
@@ -75,3 +78,115 @@ def test_from_yaml():
     assert axiom.id == '@AXIOM-001'
     assert axiom.description == 'Test axiom'
     assert axiom.linked_requirements == ['@REQ-001']
+
+@pytest.fixture
+def mock_input_files(tmp_path):
+    axiom_file = tmp_path / "axiom.yaml"
+    axiom_file.write_text("""
+id: '@AXIOM-001'
+description: Test axiom
+linked_requirements:
+  - '@REQ-001'
+""")
+    
+    req_file = tmp_path / "requirement.yaml"
+    req_file.write_text("""
+id: '@REQ-001'
+description: Test requirement
+linked_problem_statements:
+  - '@PROB-001'
+linked_test_cases:
+  - '@TEST-001'
+""")
+    
+    prob_file = tmp_path / "problem.yaml"
+    prob_file.write_text("""
+id: '@PROB-001'
+description: Test problem statement
+linked_research_items:
+  - '@RES-001'
+linked_requirements:
+  - '@REQ-001'
+""")
+    
+    return [str(axiom_file), str(req_file), str(prob_file)]
+
+def test_cli_validate(mock_input_files):
+    with patch('sys.stdout', new=StringIO()) as fake_out:
+        run_cli(['validate', '--input'] + mock_input_files)
+        assert "No validation errors found." in fake_out.getvalue()
+
+def test_cli_report(mock_input_files):
+    with patch('sys.stdout', new=StringIO()) as fake_out:
+        run_cli(['report', '--input'] + mock_input_files)
+        output = fake_out.getvalue()
+        assert "Project Document Summary" in output
+        assert "Validation Report" in output
+        assert "Total Documents: 3" in output
+        assert "No errors found." in output
+
+def test_cli_invalid_command():
+    with pytest.raises(SystemExit):
+        run_cli(['invalid_command'])
+
+def test_cli_missing_input():
+    with pytest.raises(SystemExit):
+        run_cli(['validate'])
+import pytest
+from unittest.mock import patch
+from io import StringIO
+from src.project_integrity_system import run_cli
+
+@pytest.fixture
+def mock_input_files(tmp_path):
+    axiom_file = tmp_path / "axiom.yaml"
+    axiom_file.write_text("""
+id: '@AXIOM-001'
+description: Test axiom
+linked_requirements:
+  - '@REQ-001'
+""")
+    
+    req_file = tmp_path / "requirement.yaml"
+    req_file.write_text("""
+id: '@REQ-001'
+description: Test requirement
+linked_problem_statements:
+  - '@PROB-001'
+linked_test_cases:
+  - '@TEST-001'
+""")
+    
+    prob_file = tmp_path / "problem.yaml"
+    prob_file.write_text("""
+id: '@PROB-001'
+description: Test problem statement
+linked_research_items:
+  - '@RES-001'
+linked_requirements:
+  - '@REQ-001'
+""")
+    
+    return [str(axiom_file), str(req_file), str(prob_file)]
+
+def test_cli_validate(mock_input_files):
+    with patch('sys.stdout', new=StringIO()) as fake_out:
+        run_cli(['validate', '--input'] + mock_input_files)
+        assert "No validation errors found." in fake_out.getvalue()
+
+def test_cli_report(mock_input_files):
+    with patch('sys.stdout', new=StringIO()) as fake_out:
+        run_cli(['report', '--input'] + mock_input_files)
+        output = fake_out.getvalue()
+        assert "Project Document Summary" in output
+        assert "Validation Report" in output
+        assert "Total Documents: 3" in output
+        assert "No errors found." in output
+
+def test_cli_invalid_command():
+    with pytest.raises(SystemExit):
+        run_cli(['invalid_command'])
+
+def test_cli_missing_input():
+    with pytest.raises(SystemExit):
+        run_cli(['validate'])
