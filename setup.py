@@ -23,3 +23,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/yourusername/multi-llm-think-tank",
 )
+
+# Download required NLTK data
+import nltk
+nltk.download('punkt')

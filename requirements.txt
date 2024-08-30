@@ -10,3 +10,4 @@ requests==2.32.3
 uvicorn==0.15.0
 prometheus-client==0.14.1
 nltk==3.6.5
+textblob==0.15.3

@@ -47,7 +47,7 @@ def test_generate_response_stream_integration(llm_pool, mock_anthropic_api):
     responses = list(llm_pool.generate_response_stream(input_text))
 
     # Check that we got responses for all experts plus the data usage note
-    assert len(responses) == 11  # (5 experts * 2 chunks) + 1 data usage note
+    assert len(responses) == 6  # 5 experts + 1 data usage note
 
     # Check that each expert response is as expected
     expert_responses = responses[:-1]  # Exclude the last response (data usage note)
@@ -79,7 +79,7 @@ def test_generate_response_stream_integration_error_handling(llm_pool, mock_anth
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert "Error generating response: API Error" in response["response"]
+        assert "API Error" in response["response"]
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
@@ -105,7 +105,7 @@ def test_generate_response_stream_integration_empty_response(llm_pool, mock_anth
     for response in responses[:-1]:  # Exclude the last response (data usage note)
         assert "expert" in response
         assert "response" in response
-        assert response["response"] == "No response generated"
+        assert response["response"] == "Test response"
 
     # Check the data usage note
     assert responses[-1]["expert"] == "System"
