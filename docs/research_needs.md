@@ -63,6 +63,15 @@ This document outlines the additional resources and documentation needed to refi
      - https://www.semanticscholar.org/paper/6e06f5132c4b91b8743868f9c46d4879777cb646 - "Virtual Research Ethics: A Content Analysis of Surveys and Experiments Online"
      - https://www.semanticscholar.org/paper/a91d205b46b80cfc93700f34c6ad9f881bf1d30a - "BOOM-Explorer: RISC-V BOOM Microarchitecture Design Space Exploration Framework"
      - https://www.semanticscholar.org/paper/2a3cab384e761c4f5e54fffba67f8aa0bad6cd9c - "Development of Intellectual Decision Making System for Logistic Business Process Management"
+     - https://arxiv.org/abs/2310.04438 - "A Brief History of Prompt: Leveraging Language Models"
+     - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10588522/ - "Teaching AI Ethics in Medical Education: A Scoping Review of Current Literature and Practices"
+     - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10343845/ - "Recent Advances in Deep Learning for Protein-Protein Interaction Analysis: A Comprehensive Review"
+     - https://www.semanticscholar.org/paper/737f3d48b972eae7e37e9456031a8e2e39d01ccf - "On Image Quality Metadata, FAIR in ML, AI-Readiness and Reproducibility: Fish-AIR example"
+     - https://www.semanticscholar.org/paper/fe16508fbe6c035dcf07d1bae6e8dfa3788ec96f - "Autonomous Directional Drilling Simulator Development for the Drillbotics 2021-2022 Virtual Competition"
+     - https://www.semanticscholar.org/paper/dd22f2001baf406c83b016ef4c378e213eb8c5b3 - "NAVIGATING THE FUTURE: ARTIFICIAL INTELLIGENCE'S GROWING INFLUENCE ON DECISION MAKING"
+     - https://www.semanticscholar.org/paper/389fea1582bce0da12883f5d7631a9c902c9fc48 - "Deepfakes and Cybersecurity: Detection and Mitigation"
+     - https://pubmed.ncbi.nlm.nih.gov/37357892/ - "The Impact of Artificial Intelligence on Psychiatry: Benefits and Concerns-An assay from a disputed 'author'"
+     - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10370440/ - "REVOLUTIONIZING ANTIBODY DISCOVERY INDUSTRY WITH HIGHLY EFFICIENT AND ACCURATE AI-BASED EPITOPE-SPECIFIC ANTIBODY DE NOVO DESIGN WORKFLOW"
 
    Key takeaways:
    - Importance of standardized protocols for AI experiments
@@ -88,6 +97,15 @@ This document outlines the additional resources and documentation needed to refi
    - Ethical considerations in online research and virtual environments
    - Innovative approaches to design space exploration
    - Applications of machine learning models in decision-making systems
+   - Evolution of prompt engineering techniques for language models
+   - Integration of AI ethics in medical education and research
+   - Novel methods for analyzing complex AI interactions
+   - Best practices for ensuring reproducibility in AI experiments and data preparation
+   - Innovative approaches to AI integration in complex systems simulation
+   - AI's growing influence on decision-making processes
+   - Advanced techniques in AI detection and mitigation for ensuring experiment integrity
+   - Insights into AI applications in behavioral sciences
+   - Potential parallels between AI applications in complex biological systems and behavioral experiments
 
 ## Notes
 
