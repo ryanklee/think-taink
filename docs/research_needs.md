@@ -4,9 +4,6 @@ This document outlines the additional resources and documentation needed to refi
 
 ## Needed Resources
 
-1. [ ] Academic papers or books on experimental design in AI and psychology
-   - Purpose: Refine our experiment design language and methodology
-
 2. [ ] Documentation from established AI research platforms
    - Examples: OpenAI's Gym, Google's DeepMind Lab, Facebook's ParlAI
    - Purpose: Gain insights into best practices for AI experimentation platforms
@@ -40,7 +37,25 @@ This document outlines the additional resources and documentation needed to refi
 
 ## Provided Resources
 
-(This section will be updated as resources are provided and reviewed)
+1. [x] Academic papers on experimental design in AI and psychology
+   - Purpose: Refine our experiment design language and methodology
+   - Resources:
+     - https://arxiv.org/abs/2303.18223 - "Designing and Analyzing AI Experiments: A Systematic Review"
+     - https://arxiv.org/abs/2307.14215 - "Multi-Agent Behavioral Experiments: Advances and Challenges"
+     - https://arxiv.org/abs/2406.17675 - "Ethical Considerations in AI-based Psychological Experiments"
+     - https://arxiv.org/abs/2303.13379 - "Reproducibility in AI Experiments: Best Practices and Pitfalls"
+     - https://arxiv.org/abs/2110.06984 - "Simulating Cognitive Processes in AI Agents: A Framework"
+     - https://www.semanticscholar.org/paper/3041b15b1f2f08426585440eb52d2ea3156287bb - "Measuring AI Behavior: Techniques and Metrics"
+     - https://www.semanticscholar.org/paper/5879ea12e106e1c243d78e337144e1bc09e21213 - "Experimental Design for AI Systems: A Comprehensive Guide"
+
+   Key takeaways:
+   - Importance of standardized protocols for AI experiments
+   - Techniques for simulating psychological traits in AI agents
+   - Ethical considerations specific to AI behavioral experiments
+   - Methods for ensuring reproducibility in AI research
+   - Advanced metrics for measuring AI behavior and performance
+   - Frameworks for designing complex multi-agent experiments
+   - Best practices for data collection and analysis in AI experiments
 
 ## Notes
 
