@@ -1,3 +1,3 @@
-from .document_types import Axiom, Requirement, ProblemStatement, BaseDocument
+from . import document_types
 
-__all__ = ['Axiom', 'Requirement', 'ProblemStatement', 'BaseDocument']
+__all__ = ['document_types']
