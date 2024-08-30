@@ -30,7 +30,7 @@ def test_integrity_checker(caplog):
     assert "Validation complete. Found 0 errors." in caplog.text
 
     # Test invalid cross-reference
-    invalid_axiom = Axiom('@AXIOM-002', 'Invalid axiom', ['@REQ-002'])
+    invalid_axiom = Axiom({'id': '@AXIOM-002', 'description': 'Invalid axiom', 'linked_requirements': ['@REQ-002']})
     checker.add_document(invalid_axiom)
     errors = checker.validate_all()
     assert len(errors) == 1
