@@ -9,6 +9,7 @@ sys.path.insert(0, src_path)
 from src.project_integrity_system import Axiom, Requirement, ProblemStatement
 from src.project_integrity_system.document_types.base_document import BaseDocument as Document
 from src.project_integrity_system import cli
+from src.project_integrity_system import cli
 
 # You can add any other necessary setup for your tests here
 
