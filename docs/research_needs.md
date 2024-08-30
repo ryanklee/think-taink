@@ -59,6 +59,18 @@ This document outlines the additional resources and documentation needed to addr
      - https://www.semanticscholar.org/paper/b2eba22db348cbae75e9d43360b5a47d0cf86535 - "Optimizing Long-Term Efficiency and Fairness in Ride-Hailing via Joint Order Dispatching and Driver Repositioning" (2022)
      - https://www.semanticscholar.org/paper/61c9476b54472c0253ba8c74b5bd4cd9524a980d - "Metareasoning for multi-criteria decision making using complex information sources" (2022)
      - https://www.semanticscholar.org/paper/ca71f33a3d5e15882330b2b9ba0c92eaa453b5e2 - "Forecasting Evolution of Clusters in StarCraft II with Hebbian Learning" (2022)
+     - https://www.semanticscholar.org/paper/5b463358e4f97123277044880c435d2dd62eaf25 - "HCTA: Hierarchical Cooperative Task Allocation in Multi-Agent Reinforcement Learning" (2023)
+     - https://www.semanticscholar.org/paper/c206994f9f8a9e0a1fee468b91f12c38b36e51e8 - "Multi-Agent Deep Reinforcement Learning-Empowered Channel Allocation in Vehicular Networks" (2022)
+     - https://www.semanticscholar.org/paper/a8e11cf715c4a1994c076533c831a5046f67a8f5 - "Multi-agent and Reinforcement Learning Schemes for Demand Response Estimation in Distributed Microgrids" (2023)
+     - https://arxiv.org/abs/2206.15378 - "Mastering the game of Stratego with model-free multiagent reinforcement learning" (2022)
+
+   Remaining research needs:
+   - Develop specific implementation strategies for hierarchical cooperative task allocation in our multi-agent system
+   - Create detailed plans for integrating LSTM-based deep reinforcement learning techniques in our Agent entities for dynamic resource allocation
+   - Design a framework for multi-agent coordination control in distributed systems within our ExperimentRunner and ReasoningEngine services
+   - Investigate the applicability of advanced model-free multiagent reinforcement learning techniques for complex strategic decision-making in our AI agents
+   - Develop metrics and evaluation methods for assessing long-term learning and adaptation in dynamic, multi-agent scenarios
+   - Create strategies for balancing stability and plasticity in AI agent learning across diverse domains
 
 6. [ ] Integration techniques for large language models in multi-agent systems
    - Purpose: Address Problem Statement 6 (Advanced Natural Language Processing for AI Communication)
