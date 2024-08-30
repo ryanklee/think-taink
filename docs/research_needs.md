@@ -72,9 +72,22 @@ This document outlines the additional resources and documentation needed to addr
    - Develop metrics and evaluation methods for assessing long-term learning and adaptation in dynamic, multi-agent scenarios
    - Create strategies for balancing stability and plasticity in AI agent learning across diverse domains
 
-6. [ ] Integration techniques for large language models in multi-agent systems
+6. [x] Integration techniques for large language models in multi-agent systems
    - Purpose: Address Problem Statement 6 (Advanced Natural Language Processing for AI Communication)
    - Focus: Methods for maintaining agent individuality and coherent communication in language-based interactions
+   - Resources:
+     - https://www.semanticscholar.org/paper/9e5b99f3bf5383e75ceb858149b9ecf03304287b - "Emergent Language-Based Coordination In Deep Multi-Agent Systems" (2022)
+     - https://www.semanticscholar.org/paper/dfe17abe75f36a787c7511a178827c34864fe550 - "Emergent Cooperation and Strategy Adaptation in Multi-Agent Systems: An Extended Coevolutionary Theory with LLMs" (2023)
+     - https://www.semanticscholar.org/paper/0d242fc8e910da59a74e258a70a9bdb836ce44d8 - "On the Nature of Information: How FAIR Digital Objects are Building-up Semantic Space" (2022)
+     - https://www.semanticscholar.org/paper/d20cd53f97810de193f75ccc6ab2850745221ab3 - "A Socio-Cognitive Perspective on the Factors Affecting Malaysian Business Students' Learning when Spoken in English in a Second-Language Classroom" (2022)
+     - https://www.semanticscholar.org/paper/87a57b62f8bd4768f14cace8738617ec522ba1fb - "Scale-Free Collaborative Protocol Design for Output Synchronization of Heterogeneous Multi-Agent Systems With Nonuniform Communication Delays" (2022)
+
+   Remaining research needs:
+   - Develop specific implementation strategies for emergent language-based coordination in our multi-agent system
+   - Create detailed plans for integrating LLM-based strategy recommendations in our ReasoningEngine
+   - Design a framework for representing and managing semantic space in our KnowledgeBase
+   - Investigate methods for adapting ecological interaction models to language-based interactions in our multi-agent system
+   - Develop scale-free design principles for managing complex language-based interactions across heterogeneous agents in our ExperimentRunner
 
 7. [ ] Privacy-preserving AI techniques for experimental settings
    - Purpose: Address Problem Statement 7 (Privacy-Preserving AI in Experimental Settings)

@@ -130,12 +130,22 @@ Problem Statement: Integrating advanced NLP capabilities, particularly large lan
 References:
 - [DOC001] Domain Model and Research Summary
 - [DOC003] Research Needs
+- [REF001] "Emergent Language-Based Coordination In Deep Multi-Agent Systems" (2022)
+- [REF002] "Emergent Cooperation and Strategy Adaptation in Multi-Agent Systems: An Extended Coevolutionary Theory with LLMs" (2023)
+- [REF003] "On the Nature of Information: How FAIR Digital Objects are Building-up Semantic Space" (2022)
+- [REF004] "A Socio-Cognitive Perspective on the Factors Affecting Malaysian Business Students' Learning when Spoken in English in a Second-Language Classroom" (2022)
+- [REF005] "Scale-Free Collaborative Protocol Design for Output Synchronization of Heterogeneous Multi-Agent Systems With Nonuniform Communication Delays" (2022)
 
 Gaps/Inconsistencies:
 - Lack of specific plans for integrating large language models with our TraitBundle value object system
 - Need for more detailed strategies on maintaining Agent entity individuality in language-based interactions
 - Lack of frameworks for studying and implementing emergent language protocols in deep multi-agent systems within our Experiment aggregate
 - Need for strategies to balance individual Agent traits with collective language evolution in our ReasoningEngine service
+- Lack of mechanisms for inducing and analyzing emergent communication protocols between neural network agents in our Agent entities
+- Need for integration of LLM-based strategy recommendations in our ReasoningEngine for managing complex language-based interactions
+- Lack of a framework for understanding and representing semantic space in our KnowledgeBase to support agent individuality in language-based interactions
+- Need for adapting ecological interaction models to language-based interactions in our multi-agent system
+- Lack of scale-free design principles in our ExperimentRunner for managing complex language-based interactions across heterogeneous agents
 
 ## 7. Privacy-Preserving AI in Experimental Settings as a Cross-Cutting Concern
 
