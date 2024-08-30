@@ -126,7 +126,7 @@ Gaps/Inconsistencies:
 
 ## 6. Advanced Natural Language Processing for AI Communication as a Domain Service
 
-Problem Statement: Integrating advanced NLP capabilities, particularly large language models, into our multi-agent system poses challenges in terms of coherent communication, context awareness, maintaining individual agent characteristics (represented by TraitBundle value objects), and facilitating emergent language-based coordination within our Experiment aggregate.
+Problem Statement: Integrating advanced NLP capabilities, particularly large language models, into our multi-agent system poses challenges in terms of coherent communication, context awareness, maintaining individual agent characteristics (represented by TraitBundle value objects), and facilitating emergent language-based coordination within our Experiment aggregate. Additionally, there are challenges in developing hierarchical reference systems and knowledge graph-enhanced collaborative systems.
 
 References:
 - [DOC001] Domain Model and Research Summary
@@ -137,6 +137,8 @@ References:
 - [REF007] "War and Peace (WarAgent): Large Language Model-based Multi-Agent Simulation of World Wars" (2023)
 - [REF008] "KoMA: Knowledge-driven Multi-agent Framework for Autonomous Driving with Large Language Models" (2024)
 - [REF009] "Towards Collaborative Intelligence: Propagating Intentions and Reasoning for Multi-Agent Coordination with Large Language Models" (2024)
+- [REF010] "Emergence of Hierarchical Reference Systems in Multi-agent Communication" (2022)
+- [REF011] "Chatlaw: A Multi-Agent Collaborative Legal Assistant with Knowledge Graph Enhanced Mixture-of-Experts Large Language Model" (2023)
 
 Gaps/Inconsistencies:
 - Lack of specific plans for integrating large language models with our TraitBundle value object system
@@ -149,6 +151,8 @@ Gaps/Inconsistencies:
 - Need for integrating knowledge-driven approaches in our multi-agent framework, particularly for specialized domains like autonomous driving
 - Lack of mechanisms for propagating intentions and reasoning across agents using large language models in our ReasoningEngine service
 - Need for developing methods to measure and improve trustworthiness of large language models within our multi-agent system
+- Lack of mechanisms for developing and analyzing hierarchical reference systems in multi-agent communication
+- Need for integrating knowledge graph-enhanced collaborative systems within our multi-agent framework
 
 ## 7. Privacy-Preserving AI in Experimental Settings as a Cross-Cutting Concern
 
