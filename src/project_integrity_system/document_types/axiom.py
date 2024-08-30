@@ -1,5 +1,4 @@
 from .base_document import BaseDocument
-from .requirement import Requirement
 from typing import List
 
 class Axiom(BaseDocument):
@@ -21,11 +20,12 @@ class Axiom(BaseDocument):
 
     def get_document_type(self) -> str:
         return "Axiom"
+from .base_document import BaseDocument
 from .axiom import Axiom
 from .requirement import Requirement
 from .problem_statement import ProblemStatement
 
-__all__ = ['Axiom', 'Requirement', 'ProblemStatement']
+__all__ = ['BaseDocument', 'Axiom', 'Requirement', 'ProblemStatement']
 from .base_document import BaseDocument
 from typing import List
 
