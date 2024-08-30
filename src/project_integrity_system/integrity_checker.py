@@ -37,6 +37,16 @@ class IntegrityChecker:
     def _check_linking_rules(self) -> List[str]:
         errors = []
         for doc in self.documents.values():
+            if isinstance(doc, Requirement):
+                if not doc.linked_problem_statements:
+                    errors.append(f"Validation error in {doc.id}: Requirement must have at least one linked problem statement")
+                if not doc.linked_test_cases:
+                    errors.append(f"Validation error in {doc.id}: Requirement must have at least one linked test case")
+        return errors
+
+    def _check_linking_rules(self) -> List[str]:
+        errors = []
+        for doc in self.documents.values():
             if isinstance(doc, ProblemStatement):
                 if not any(linked_id.startswith('@REQ-') for linked_id in doc.get_linked_ids()):
                     errors.append(f"Validation error in {doc.id}: Problem Statement must have at least one linked requirement")
