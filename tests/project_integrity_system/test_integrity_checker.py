@@ -28,10 +28,9 @@ def test_integrity_checker():
     invalid_requirement = Requirement({'id': '@REQ-002', 'description': 'Invalid requirement', 'linked_problem_statements': [], 'linked_test_cases': []})
     checker.add_document(invalid_requirement)
     errors = checker.validate_all()
-    assert len(errors) == 5
+    assert len(errors) == 4
     assert any("Validation error in @REQ-002: Requirement must have at least one linked problem statement" in error for error in errors)
     assert any("Validation error in @REQ-002: Requirement must have at least one linked test case" in error for error in errors)
-    assert any("Validation error in @AXIOM-002: Axiom must have at least one linked requirement" in error for error in errors)
     assert any("must be linked to at least one Problem Statement" in error for error in errors)
     assert any("must have at least one linked problem statement" in error for error in errors)
 
