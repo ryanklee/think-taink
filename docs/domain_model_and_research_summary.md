@@ -79,6 +79,81 @@ This UML class diagram represents the core domain entities and their relationshi
 - **Domain Events**: ExperimentStarted, ExperimentCompleted, EthicalConcernRaised
 - **Repositories**: ExperimentRepository, AgentRepository, KnowledgeBaseRepository
 
+This system is modeled using Unified Modeling Language (UML) and follows Domain-Driven Design (DDD) principles to ensure a clear and consistent representation of the domain.
+
+### 1.1 UML Diagram
+
+```mermaid
+classDiagram
+    class Experiment {
+        +id: UUID
+        +name: String
+        +description: String
+        +start_date: DateTime
+        +end_date: DateTime
+        +status: ExperimentStatus
+        +run()
+        +pause()
+        +resume()
+        +stop()
+    }
+    class Agent {
+        +id: UUID
+        +name: String
+        +model: AIModel
+        +trait_bundle: TraitBundle
+        +performAction()
+        +communicate()
+    }
+    class TraitBundle {
+        +id: UUID
+        +traits: Map<String, Float>
+        +addTrait(name: String, value: Float)
+        +removeTrait(name: String)
+        +updateTrait(name: String, value: Float)
+    }
+    class ReasoningEngine {
+        +orchestrateReasoning()
+        +applyStrategy(strategy: ReasoningStrategy)
+    }
+    class KnowledgeBase {
+        +addConcept(concept: Concept)
+        +addRelationship(relationship: Relationship)
+        +query(query: String): QueryResult
+    }
+    class EthicsFramework {
+        +evaluateDecision(decision: Decision): EthicalAssessment
+        +flagEthicalConcern(concern: EthicalConcern)
+    }
+    class ExperimentRunner {
+        +setupExperiment(config: ExperimentConfig)
+        +runExperiment(experiment: Experiment)
+        +collectData()
+        +analyzeResults()
+    }
+
+    Experiment "1" -- "many" Agent: contains
+    Agent "1" -- "1" TraitBundle: has
+    Experiment "1" -- "1" ReasoningEngine: uses
+    Experiment "1" -- "1" KnowledgeBase: uses
+    Experiment "1" -- "1" EthicsFramework: uses
+    ExperimentRunner "1" -- "many" Experiment: manages
+```
+
+This UML class diagram represents the core domain entities and their relationships in our AI Behavioral Experiment Testbed.
+
+### 1.2 Domain-Driven Design Concepts
+
+- **Bounded Context**: The AI Behavioral Experiment Testbed represents a single bounded context focused on AI agent experiments.
+- **Aggregates**: 
+  - Experiment (root entity)
+  - Agent (root entity)
+  - TraitBundle (value object)
+- **Entities**: Experiment, Agent, ReasoningEngine, KnowledgeBase, EthicsFramework, ExperimentRunner
+- **Value Objects**: TraitBundle, ExperimentConfig, Decision, EthicalAssessment
+- **Domain Events**: ExperimentStarted, ExperimentCompleted, EthicalConcernRaised
+- **Repositories**: ExperimentRepository, AgentRepository, KnowledgeBaseRepository
+
 ## 2. Core Components
 
 ### 2.1 Agent Abstraction
