@@ -4,9 +4,15 @@ This document outlines the additional resources and documentation needed to addr
 
 ## Needed Resources
 
-1. [ ] Advanced multi-agent interaction models
+1. [x] Advanced multi-agent interaction models
    - Purpose: Address Problem Statement 1 (Complex Multi-Agent Interactions)
    - Focus: Models for emergent behaviors, communication protocols, and collective decision-making
+   - Resources:
+     - https://www.semanticscholar.org/paper/1a8e0929c9bc7aa96757a161528f836932a191fd - "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
+     - https://www.semanticscholar.org/paper/ddbbd2213767025e15b9eb80373c02c2ab4d753a - "A review: Swarm Robotics: Cooperative Control in Multi-Agent Systems"
+     - https://www.semanticscholar.org/paper/dfe17abe75f36a787c7511a178827c34864fe550 - "Emergent Cooperation and Strategy Adaptation in Multi-Agent Systems: An Extended Coevolutionary Theory with LLMs" (2023)
+     - https://www.semanticscholar.org/paper/9e5b99f3bf5383e75ceb858149b9ecf03304287b - "Emergent Language-Based Coordination In Deep Multi-Agent Systems"
+     - https://www.semanticscholar.org/paper/3349a4f5a000b4e3a4458628d8f95a9d5b158f35 - "Survey of containment control in multi-agent systems: concepts, communication, dynamics, and controller design" (2023)
 
 2. [ ] Ethical frameworks for long-term AI experiments
    - Purpose: Address Problem Statement 2 (Ethical Considerations in AI Experiments)

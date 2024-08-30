@@ -34,6 +34,10 @@ This document outlines the plan for refining the domain model and documentation 
 - [ ] Design mechanisms for integrating civil society input in experiment design, execution, and governance of AI systems
 - [ ] Develop framework for assessing and mitigating potential biases in experimental designs, incorporating recent research on bias detection and mitigation in AI systems
 - [ ] Plan for integration of multi-agent behavioral experiments, considering recent advances and challenges in this field
+- [ ] Incorporate swarm intelligence principles for decentralized decision-making in multi-agent experiments
+- [ ] Design protocols for emergent language-based coordination in deep multi-agent systems
+- [ ] Develop strategies for implementing containment control in multi-agent experimental scenarios
+- [ ] Plan for integration of coevolutionary theory with LLMs in multi-agent cooperation experiments
 
 ## 4. Behavioral Trait Bundle System Planning
 - [x] Define taxonomy of behavioral traits based on psychological research and recent advancements in AI-specific traits

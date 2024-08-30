@@ -55,12 +55,16 @@ The AI Behavioral Experiment Testbed is a sophisticated platform designed for co
 - Comparing the effectiveness of different cognitive architectures in AI agent development
 
 ### 4.2 Multi-Agent Interactions
-- Exploring emergent behaviors in multi-agent systems, including language-based coordination
+- Exploring emergent behaviors in multi-agent systems, including language-based coordination and swarm intelligence
 - Analyzing the effects of different communication protocols on collaborative outcomes
 - Investigating cooperative and competitive dynamics in multi-agent deep reinforcement learning
 - Simulating complex scenarios using large language model-based multi-agent systems
 - Developing massively multi-task environments for more comprehensive AI agent training
 - Studying the emergence of complex behaviors in large-scale multi-agent simulations
+- Implementing swarm robotics principles for cooperative control in multi-agent systems
+- Exploring containment control strategies in multi-agent systems
+- Investigating the role of emergent language in deep multi-agent coordination
+- Applying coevolutionary theory with LLMs for emergent cooperation and strategy adaptation
 
 ### 4.3 Ethical AI and Decision Making
 - Implementing and evaluating various ethical frameworks in AI systems

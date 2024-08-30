@@ -117,7 +117,7 @@ reproducibility:
 
 1. **Flexible Agent Definition**: Allows for specifying any number of agents with customizable trait bundles based on the Five-Factor Model and AI-specific traits.
 2. **Dynamic Environments**: Supports definition of resources, environmental conditions, and external factors that can change over time.
-3. **Complex Interactions**: Enables specification of various interaction types and rules between agents, including communication and alliance formation.
+3. **Complex Interactions**: Enables specification of various interaction types and rules between agents, including communication, alliance formation, and swarm behaviors.
 4. **Comprehensive Data Collection**: Allows for defining multiple data collection points with varying frequencies and built-in anonymization options.
 5. **Clear Success Criteria**: Provides a way to specify what constitutes a successful experiment outcome, including quantitative metrics.
 6. **Ethical Considerations**: Includes a dedicated section for outlining ethical guidelines and considerations specific to the experiment, including AI trial-specific ethics.
@@ -127,6 +127,10 @@ reproducibility:
 10. **Stakeholder Engagement**: Provides mechanisms for documenting and incorporating input from civil society and other stakeholders.
 11. **Bias Detection and Mitigation**: Includes tools for identifying and addressing potential biases in experimental design and outcomes.
 12. **Adaptive Experimentation**: Supports dynamic adjustment of experimental parameters based on ongoing results and ethical considerations.
+13. **Swarm Intelligence Modeling**: Enables specification of swarm-based decision-making processes and collective behaviors.
+14. **Emergent Language Protocols**: Supports the definition and analysis of emergent communication protocols between agents.
+15. **Containment Control Mechanisms**: Allows for the implementation of containment control strategies in multi-agent scenarios.
+16. **Coevolutionary Dynamics**: Provides tools for modeling and analyzing coevolutionary processes in multi-agent systems, including integration with LLMs.
 
 ## Implementation
 
