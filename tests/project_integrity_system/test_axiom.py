@@ -75,9 +75,3 @@ def test_from_yaml():
     assert axiom.id == '@AXIOM-001'
     assert axiom.description == 'Test axiom'
     assert axiom.linked_requirements == ['@REQ-001']
-import pytest
-from unittest.mock import patch, mock_open
-from src.project_integrity_system.cli import parse_arguments, load_documents, run_cli
-from src.project_integrity_system.document_types import Axiom, Requirement, ProblemStatement
-
-# CLI-related tests have been removed
