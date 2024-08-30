@@ -22,6 +22,11 @@ This document outlines the plan for implementing the AI Behavioral Experiment Te
 - [ ] Implement advanced natural language processing capabilities for agent communication
 - [ ] Incorporate multi-agent simulation techniques within the Experiment Aggregate
 - [ ] Develop mechanisms for emergent behavior detection and analysis
+- [ ] Implement swarm intelligence principles for decentralized decision-making in Agent entities
+- [ ] Develop self-adaptive swarm system mechanisms within the ExperimentRunner Service
+- [ ] Implement scalable frameworks for autonomous separation assurance using heterogeneous multi-agent reinforcement learning
+- [ ] Design and implement algorithms for reducing conflicts in hybrid intelligent multi-agent systems
+- [ ] Develop bandit approaches for conflict-free multi-agent Q-learning, with consideration for photonic implementations
 
 ## 2. Develop Comprehensive Ethics Framework
 - [ ] Refine EthicsFramework Domain Service, incorporating IEEE and ACM guidelines

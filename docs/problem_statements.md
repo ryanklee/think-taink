@@ -23,6 +23,7 @@ References:
 - [REF011] "Scheduling Management of Controllable Load Participating in Power Grid Enhanced by Double-Chain Structure" (2022)
 - [REF012] "Emergent behaviours in multi-agent systems with Evolutionary Game Theory" (2022)
 - [REF013] "Understanding Emergent Behaviours in Multi-Agent Systems with Evolutionary Game Theory" (2022)
+- [REF014] "Self-Adaptive Swarm System (SASS)" (2021)
 
 Gaps/Inconsistencies:
 - Need for more detailed integration plans between cognitive architectures and our TraitBundle value object system
@@ -42,6 +43,9 @@ Gaps/Inconsistencies:
 - Need for decentralized scheduling management strategies for controllable loads in our ExperimentRunner service
 - Lack of integration of Evolutionary Game Theory principles in our Agent and Experiment aggregates for modeling emergent behaviors
 - Need for agent-based modeling techniques to study the evolution of collective behaviors in our multi-agent experiments
+- Lack of self-adaptive mechanisms in our swarm systems for balancing individual agent goals with collective swarm objectives
+- Need for implementation of scalable frameworks for autonomous separation assurance using heterogeneous multi-agent reinforcement learning
+- Lack of photonic implementations for conflict-free multi-agent Q-learning in our system
 
 ## 2. Ethical Considerations in AI Experiments as a Domain Service
 

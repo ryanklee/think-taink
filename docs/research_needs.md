@@ -51,9 +51,22 @@ This document outlines the additional resources and documentation needed to addr
    - Source: "Understanding Emergent Behaviours in Multi-Agent Systems with Evolutionary Game Theory" (2022)
    - URL: https://arxiv.org/abs/2205.07369
    - Key findings: Discusses the use of Evolutionary Game Theory and agent-based modeling techniques to study the emergence and evolution of collective behaviors in dynamic multi-agent systems.
-11. [ ] Methods for balancing individual agent goals with collective swarm objectives
+
+   - Source: "Swarm Intelligence Decentralized Decision Making In Multi-Agent System" (2023)
+   - URL: https://www.semanticscholar.org/paper/1a8e0929c9bc7aa96757a161528f836932a191fd
+   - Key findings: Explores swarm intelligence principles for decentralized decision-making in multi-agent systems, providing insights into collective behavior and emergent properties.
+
+11. [x] Methods for balancing individual agent goals with collective swarm objectives
+   - Source: "Self-Adaptive Swarm System (SASS)" (2021)
+   - URL: https://arxiv.org/abs/2106.04679
+   - Key findings: Introduces a self-adaptive swarm system that balances individual agent goals with collective swarm objectives, demonstrating improved cooperation and decision-making in dynamic environments.
+
 12. [ ] Strategies for integrating emergent communication protocols with existing language models
-13. [ ] Techniques for scaling decentralized decision-making to complex, real-world scenarios
+13. [x] Techniques for scaling decentralized decision-making to complex, real-world scenarios
+   - Source: "Scalable Autonomous Separation Assurance With Heterogeneous Multi-Agent Reinforcement Learning" (2022)
+   - URL: https://www.semanticscholar.org/paper/a9eebb54c1d55b45d52169121c1e48c55014931a
+   - Key findings: Presents a scalable framework for autonomous separation assurance in complex scenarios using heterogeneous multi-agent reinforcement learning, demonstrating applicability to real-world air traffic management.
+
 14. [ ] Approaches for ensuring ethical considerations in large-scale multi-agent simulations
 15. [ ] Techniques for implementing continual learning in AI agents for long-term knowledge retention and transfer
 16. [ ] Methods for improving cross-user generalization and few-shot learning in multi-agent systems
@@ -61,9 +74,21 @@ This document outlines the additional resources and documentation needed to addr
 18. [ ] Approaches for creating foundation decision models for generalization across various tasks
 19. [ ] Techniques for integrating human-in-the-loop learning in multi-agent systems for long-term adaptation
 20. [ ] Methods for addressing policy-value alignment and robustness in search-based multi-agent learning
-21. [ ] Algorithms for reducing conflicts in hybrid intelligent multi-agent systems
-22. [ ] Bandit approaches for conflict-free multi-agent Q-learning in photonic implementations
-23. [ ] Scalable frameworks for autonomous separation assurance using heterogeneous multi-agent reinforcement learning
+21. [x] Algorithms for reducing conflicts in hybrid intelligent multi-agent systems
+   - Source: "Algorithm for Reducing the Intensity of Conflicts in Hybrid Intelligent Multi-Agent Systems" (2022)
+   - URL: https://www.semanticscholar.org/paper/cb6bcd75442fdacad193dda9322fbf77ef1ad30e
+   - Key findings: Proposes an algorithm for reducing conflicts in hybrid intelligent multi-agent systems, improving overall system performance and cooperation.
+
+22. [x] Bandit approaches for conflict-free multi-agent Q-learning in photonic implementations
+   - Source: "Bandit approach to conflict-free multi-agent Q-learning in view of photonic implementation" (2022)
+   - URL: https://arxiv.org/abs/2212.09926
+   - Key findings: Introduces a bandit approach for conflict-free multi-agent Q-learning, specifically designed for photonic implementations, demonstrating improved scalability and efficiency.
+
+23. [x] Scalable frameworks for autonomous separation assurance using heterogeneous multi-agent reinforcement learning
+   - Source: "Scalable Autonomous Separation Assurance With Heterogeneous Multi-Agent Reinforcement Learning" (2022)
+   - URL: https://www.semanticscholar.org/paper/a9eebb54c1d55b45d52169121c1e48c55014931a
+   - Key findings: Develops a scalable framework for autonomous separation assurance using heterogeneous multi-agent reinforcement learning, applicable to complex air traffic management scenarios.
+
 24. [ ] Socially-attentive policy optimization techniques for multi-agent self-driving systems
 25. [ ] Decentralized scheduling management strategies for controllable loads in power grids using blockchain technology
 26. [x] Frameworks for building proactive cooperative agents using large language models

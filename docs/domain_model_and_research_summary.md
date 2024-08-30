@@ -350,6 +350,11 @@ This UML class diagram represents the core domain entities and their relationshi
 - Investigating techniques for propagating intentions and reasoning in multi-agent coordination using large language models
 - Applying Evolutionary Game Theory to analyze and model emergent behaviors in multi-agent systems
 - Utilizing agent-based modeling techniques to study the evolution of collective behaviors in dynamic multi-agent environments
+- Implementing swarm intelligence principles for decentralized decision-making in multi-agent systems
+- Developing self-adaptive swarm systems that balance individual agent goals with collective swarm objectives
+- Creating scalable frameworks for autonomous separation assurance using heterogeneous multi-agent reinforcement learning
+- Designing algorithms for reducing the intensity of conflicts in hybrid intelligent multi-agent systems
+- Implementing bandit approaches for conflict-free multi-agent Q-learning in photonic systems
 
 ### 4.3 Ethical AI and Decision Making
 - Implementing and evaluating various ethical frameworks in AI systems
