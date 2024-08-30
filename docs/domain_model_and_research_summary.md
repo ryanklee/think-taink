@@ -194,11 +194,16 @@ This UML class diagram represents the core domain entities and their relationshi
 - Represents individual AI entities with specific behavioral traits
 - Encapsulates AI models (e.g., GPT-4, Claude), reasoning strategies, and communication interfaces
 - Implements behavioral traits based on psychological theories (e.g., Five-Factor Model)
+- Incorporates decentralized decision-making models for autonomous behavior
+- Supports emergent language protocols for inter-agent communication
 
 ### 2.2 Reasoning Engine
 - Orchestrates collaborative reasoning processes between agents
 - Implements various reasoning strategies and decision-making algorithms
 - Manages information flow and task allocation among agents
+- Incorporates swarm intelligence principles for collective decision-making
+- Balances collective exploration and exploitation in multi-agent scenarios
+- Implements cooperative control strategies inspired by swarm robotics
 
 ### 2.3 Knowledge Base
 - Graph database (Neo4j) for storing concepts, relationships, and versioned configurations
